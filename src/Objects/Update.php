@@ -25,6 +25,8 @@ class Update extends BaseObject
         return [
             'message'              => Message::class,
             'edited_message'       => EditedMessage::class,
+            'channel_post'         => Message::class,
+            'edited_channel_post'  => EditedMessage::class,
             'inline_query'         => InlineQuery::class,
             'chosen_inline_result' => ChosenInlineResult::class,
             'callback_query'       => CallbackQuery::class,
@@ -67,6 +69,8 @@ class Update extends BaseObject
         $types = [
             'message',
             'edited_message',
+            'channel_post',
+            'edited_channel_post',
             'inline_query',
             'chosen_inline_result',
             'callback_query',

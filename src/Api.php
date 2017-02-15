@@ -18,6 +18,7 @@ use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
 use Telegram\Bot\Objects\UserProfilePhotos;
+use Telegram\Bot\Objects\WebhookInfo;
 
 /**
  * Class Api.
@@ -602,6 +603,41 @@ class Api
 
         return new Message($response->getDecodedBody());
     }
+
+    /**
+     * Send send a game.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'game_short_name'      => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendgame
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['game_short_name']
+     * @var bool       $params ['disable_notification']
+     * @var string     $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message
+     */
+    public function sendGame(array $params)
+    {
+        $response = $this->uploadFile('sendGame', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
 
     /**
      * Send general files.
@@ -1437,6 +1473,27 @@ class Api
         }
 
         return $this->uploadFile('setWebhook', $params);
+    }
+
+    /**
+     * Use this method to get current webhook status. Requires no parameters.
+     * On success, returns a WebhookInfo object. If the bot is using getUpdates,
+     * will return an object with the url field empty.
+     *
+     *
+     * @link https://core.telegram.org/bots/api#setwebhook
+     *
+     *
+     * @throws TelegramSDKException
+     *
+     * @return WebhookInfo
+     */
+    public function getWebhookInfo()
+    {
+
+        $response = $this->post('getWebhookInfo');
+
+        return new WebhookInfo($response->getDecodedBody());
     }
 
     /**

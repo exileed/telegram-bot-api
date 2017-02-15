@@ -34,6 +34,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
 
 class InlineQueryResultMpeg4Gif extends InlineBaseObject
 {
+    /** {@inheritdoc} */
     public function __construct($params = [])
     {
         parent::__construct($params);

@@ -6,6 +6,9 @@ use League\Event\AbstractEvent;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
+/**
+ * Class UpdateWasReceived
+ */
 class UpdateWasReceived extends AbstractEvent
 {
     /**
@@ -26,7 +29,7 @@ class UpdateWasReceived extends AbstractEvent
      */
     public function __construct(Update $update, Api $telegram)
     {
-        $this->update = $update;
+        $this->update   = $update;
         $this->telegram = $telegram;
     }
 

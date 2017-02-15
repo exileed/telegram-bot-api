@@ -773,6 +773,33 @@ class Api
     }
 
     /**
+     * Leave a group, supergroup or channel.
+     *
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#leavechat
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function leaveChat(array $params)
+    {
+        $this->post('leaveChat', $params);
+
+        return true;
+    }
+
+    /**
      * Unban a previously kicked user in a supergroup.
      *
      * The user will not return to the group automatically, but will be able to join via link, etc.

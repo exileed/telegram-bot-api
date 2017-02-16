@@ -8,7 +8,9 @@ namespace Telegram\Bot\Objects;
  *
  * @method int                  getUpdateId()               The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially.
  * @method Message              getMessage()                (Optional). New incoming message of any kind - text, photo, sticker, etc.
- * @method EditedMessage        getEditedMessage()          (Optional). New version of a message that is known to the bot and was edited.
+ * @method Message              getEditedMessage()          (Optional). New version of a message that is known to the bot and was edited.
+ * @method Message              getChannelPost()            (Optional). New incoming channel post of any kind — text, photo, sticker, etc.
+ * @method Message              getEditedChannelPost()      (Optional). New version of a channel post that is known to the bot and was edited.
  * @method InlineQuery          getInlineQuery()            (Optional). New incoming inline query.
  * @method ChosenInlineResult   getChosenInlineResult()     (Optional). A result of an inline query that was chosen by the user and sent to their chat partner.
  * @method CallbackQuery        getCallbackQuery()          (Optional). Incoming callback query.
@@ -42,11 +44,11 @@ class Update extends BaseObject
     {
         return new static($this->last());
     }
-    
+
     /**
      * Determine if the update is of given type
      *
-     * @param string         $type
+     * @param string $type
      *
      * @return bool
      */
@@ -55,10 +57,10 @@ class Update extends BaseObject
         if ($this->has(strtolower($type))) {
             return true;
         }
-    
+
         return $this->detectType() === $type;
     }
-    
+
     /**
      * Detect type based on properties.
      *
@@ -77,10 +79,32 @@ class Update extends BaseObject
         ];
 
         return $this->keys()
-            ->intersect($types)
-            ->pop();
+                    ->intersect($types)
+                    ->pop();
     }
-    
+
+    /**
+     * Return the related message.
+     *
+     * @return null|Message
+     */
+    public function getRelatedMessage()
+    {
+        if ($this->has('message')) {
+            return $this->getMessage();
+        } elseif ($this->has('edited_message')) {
+            return $this->getEditedMessage();
+        } elseif ($this->has('callback_query')) {
+            return $this->getCallbackQuery()->getMessage();
+        } elseif ($this->has('channel_post')) {
+            return $this->getChannelPost();
+        } elseif ($this->has('edited_channel_post')) {
+            return $this->getEditedChannelPost();
+        }
+
+        return null;
+    }
+
     /**
      * Get message object (if exists)
      *
@@ -88,8 +112,7 @@ class Update extends BaseObject
      */
     public function getChat()
     {
-        switch ($this->detectType())
-        {
+        switch ($this->detectType()) {
             case 'message':
                 return $this->getMessage()->getChat();
             case 'callback_query':
@@ -98,5 +121,31 @@ class Update extends BaseObject
                 // nothing to return
                 return null;
         }
+    }
+
+    /**
+     * Return the related user that created the update.
+     *
+     * @return null|User
+     */
+    public function getFrom()
+    {
+        if ($this->has('message')) {
+            return $this->getMessage()->getFrom();
+        } elseif ($this->has('edited_message')) {
+            return $this->getEditedMessage()->getFrom();
+        } elseif ($this->has('inline_query')) {
+            return $this->getInlineQuery()->getFrom();
+        } elseif ($this->has('chosen_inline_result')) {
+            return $this->getChosenInlineResult()->getFrom();
+        } elseif ($this->has('callback_query')) {
+            return $this->getCallbackQuery()->getFrom();
+        } elseif ($this->has('channel_post')) {
+            return $this->getChannelPost()->getFrom();
+        } elseif ($this->has('edited_channel_post')) {
+            return $this->getEditedChannelPost()->getFrom();
+        }
+
+        return null;
     }
 }

@@ -23,4 +23,14 @@ class Chat extends BaseObject
     {
         return [];
     }
+
+    /**
+     * Check if this is a private chat.
+     *
+     * @return bool
+     */
+    public function isPrivate()
+    {
+        return $this->getType() === 'private';
+    }
 }

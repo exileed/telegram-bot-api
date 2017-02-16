@@ -19,4 +19,15 @@ class File extends BaseObject
     {
         return [];
     }
+
+
+    /**
+     * @param  string $token the bot token
+     *
+     * @return string the http url of the file
+     */
+    public function getUrl($token)
+    {
+        return 'https://api.telegram.org/file/bot'.$token.'/'.$this->getFilePath();
+    }
 }

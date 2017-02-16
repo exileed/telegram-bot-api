@@ -130,59 +130,6 @@ class Api
         return new BotsManager($config);
     }
 
-    /**
-     * Hide the current custom keyboard and display the default letter-keyboard.
-     *
-     * <code>
-     * $params = [
-     *   'hide_keyboard' => true,
-     *   'selective'     => false,
-     * ];
-     * </code>
-     *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::hide(array $params = []) instead.
-     *             To be removed in next major version.
-     *
-     * @link       https://core.telegram.org/bots/api#replykeyboardhide
-     *
-     * @param array $params
-     *
-     * @var bool    $params ['hide_keyboard']
-     * @var bool    $params ['selective']
-     *
-     * @return string
-     */
-    public static function replyKeyboardHide(array $params = [])
-    {
-        return Keyboard::hide($params);
-    }
-
-    /**
-     * Display a reply interface to the user (act as if the user has selected the bot‘s message and tapped ’Reply').
-     *
-     * <code>
-     * $params = [
-     *   'force_reply' => true,
-     *   'selective'   => false,
-     * ];
-     * </code>
-     *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::forceReply(array $params = []) instead.
-     *             To be removed in next major version.
-     *
-     * @link       https://core.telegram.org/bots/api#forcereply
-     *
-     * @param array $params
-     *
-     * @var bool    $params ['force_reply']
-     * @var bool    $params ['selective']
-     *
-     * @return Keyboard
-     */
-    public static function forceReply(array $params = [])
-    {
-        return Keyboard::forceReply($params);
-    }
 
     /**
      * Set the IoC Container.
@@ -1526,36 +1473,6 @@ class Api
         return $this->post('setWebhook', compact('url'));
     }
 
-    /**
-     * Builds a custom keyboard markup.
-     *
-     * <code>
-     * $params = [
-     *   'keyboard'          => '',
-     *   'resize_keyboard'   => '',
-     *   'one_time_keyboard' => '',
-     *   'selective'         => '',
-     * ];
-     * </code>
-     *
-     * @deprecated Use Telegram\Bot\Keyboard\Keyboard::make(array $params = []) instead.
-     *             To be removed in next major version.
-     *
-     * @link       https://core.telegram.org/bots/api#replykeyboardmarkup
-     *
-     * @param array $params
-     *
-     * @var array   $params ['keyboard']
-     * @var bool    $params ['resize_keyboard']
-     * @var bool    $params ['one_time_keyboard']
-     * @var bool    $params ['selective']
-     *
-     * @return string
-     */
-    public function replyKeyboardMarkup(array $params)
-    {
-        return Keyboard::make($params);
-    }
 
     /**
      * Processes Inbound Commands.
@@ -1567,7 +1484,7 @@ class Api
     public function commandsHandler($webhook = false)
     {
         if ($webhook) {
-            $update = $this->getWebhookUpdates();
+            $update = $this->getWebhookUpdate();
             $this->processCommand($update);
 
             return $update;
@@ -1592,20 +1509,6 @@ class Api
         return $updates;
     }
 
-    /**
-     * Alias for getWebhookUpdate
-     *
-     * @deprecated Call method getWebhookUpdate (note lack of letter s at end)
-     *             To be removed in next major version.
-     *
-     * @param bool $shouldEmitEvent
-     *
-     * @return Update
-     */
-    public function getWebhookUpdates($shouldEmitEvent = true)
-    {
-        return $this->getWebhookUpdate($shouldEmitEvent);
-    }
 
     /**
      * Returns a webhook update sent by Telegram.
@@ -1723,45 +1626,6 @@ class Api
         return $this->getCommandBus()->execute($name, $update->getMessage()->getText(), $update);
     }
 
-    /**
-     * Determine if a given type is the message.
-     *
-     * @deprecated Call method isType directly on Message object
-     *             To be removed in next major version.
-     *
-     * @param string         $type
-     * @param Update|Message $object
-     *
-     * @throws \ErrorException
-     *
-     */
-    public function isMessageType($type, $object)
-    {
-        trigger_error(
-            'This method has been deprecated. Use isType() on the Message object instead.',
-            E_USER_DEPRECATED
-        );
-    }
-
-    /**
-     * Detect Message Type Based on Update or Message Object.
-     *
-     * @deprecated Call method detectType directly on Message object
-     *             To be removed in next major version.
-     *
-     * @param Update|Message $object
-     *
-     * @throws \ErrorException
-     *
-     * @return string|null
-     */
-    public function detectMessageType($object)
-    {
-        trigger_error(
-            'This method has been deprecated. Use detectType() on the Message object instead.',
-            E_USER_DEPRECATED
-        );
-    }
 
     /**
      * Magic method to process any "get" requests.

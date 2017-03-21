@@ -3,7 +3,7 @@
 namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
-use Telegram\Bot\Callback\CallbackCommandBus;
+use Telegram\Bot\Callbacks\CallbackCommandBus;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\EmitsEvents;
 use Telegram\Bot\Events\UpdateWasReceived;

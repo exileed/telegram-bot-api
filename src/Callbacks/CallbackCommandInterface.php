@@ -5,7 +5,7 @@
  * @link    http://exileed.com
  */
 
-namespace Telegram\Bot\Callback;
+namespace Telegram\Bot\Callbacks;
 
 use Telegram\Bot\Api as Telegram;
 use Telegram\Bot\Objects\CallbackQuery;

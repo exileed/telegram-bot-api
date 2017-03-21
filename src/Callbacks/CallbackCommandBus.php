@@ -1,6 +1,6 @@
 <?php
 
-namespace Telegram\Bot\Callback;
+namespace Telegram\Bot\Callbacks;
 
 use Telegram\Bot\Answers\AnswerBus;
 use Telegram\Bot\Api;

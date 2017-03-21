@@ -37,6 +37,13 @@ return [
     |               Acme\Project\Commands\BotFather\HelloCommand::class,
     |               Acme\Project\Commands\BotFather\ByeCommand::class,
     |             ]
+    | - callbacks: (Optional) Callbacks to register for this bot,
+    |             Supported Values: "Callbacks Group Name", "Shared Callbacks Name", "Full Path to Class".
+    |             Default: Registers Global Callbacks.
+    |             Example: (array) [
+    |               Acme\Project\Commands\BotFather\HelloCallbackCommand::class,
+    |               Acme\Project\Commands\BotFather\ByeCallbackCommand::class,
+    |             ]
     */
     'bots' => [
         'common' => [
@@ -44,6 +51,9 @@ return [
             'token' => env('TELEGRAM_BOT_TOKEN', 'YOUR-BOT-TOKEN'),
             'commands' => [
 //                Acme\Project\Commands\MyTelegramBot\BotCommand::class
+            ],
+            'callbacks' => [
+//                Acme\Project\Commands\MyTelegramBot\CallbackCommand::class
             ],
         ],
 
@@ -111,6 +121,9 @@ return [
     */
     'commands' => [
         Telegram\Bot\Commands\HelpCommand::class,
+    ],
+
+    'callbacks' => [
     ],
 
     /*
@@ -191,6 +204,12 @@ return [
     |
     */
     'shared_commands' => [
+        // 'start' => Acme\Project\Commands\StartCommand::class,
+        // 'stop' => Acme\Project\Commands\StopCommand::class,
+        // 'status' => Acme\Project\Commands\StatusCommand::class,
+    ],
+
+    'shared_callbacks' => [
         // 'start' => Acme\Project\Commands\StartCommand::class,
         // 'stop' => Acme\Project\Commands\StopCommand::class,
         // 'status' => Acme\Project\Commands\StatusCommand::class,

@@ -3,13 +3,13 @@
 namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
+use Telegram\Bot\Callback\CallbackCommandBus;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Events\EmitsEvents;
 use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
-use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Objects\Chat;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\Objects\File;
@@ -32,7 +32,7 @@ class Api
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '3.0.0';
+    const VERSION = '0.1.0';
 
     /**
      * @var string The name of the environment variable that contains the Telegram Bot API Access Token.
@@ -62,6 +62,12 @@ class Api
      * @var CommandBus|null Telegram Command Bus.
      */
     protected $commandBus = null;
+
+    /**
+     * @var CallbackCommandBus|null Telegram Command Bus.
+     */
+    protected $callbackBus = null;
+
     /**
      * Timeout of the request in seconds.
      *
@@ -100,8 +106,9 @@ class Api
             $this->setAsyncRequest($async);
         }
 
-        $this->client     = new TelegramClient($httpClientHandler);
-        $this->commandBus = new CommandBus($this);
+        $this->client      = new TelegramClient($httpClientHandler);
+        $this->commandBus  = new CommandBus($this);
+        $this->callbackBus = new CallbackCommandBus($this);
     }
 
     /**
@@ -1486,6 +1493,7 @@ class Api
         if ($webhook) {
             $update = $this->getWebhookUpdate();
             $this->processCommand($update);
+            $this->processCallback($update);
 
             return $update;
         }
@@ -1496,6 +1504,7 @@ class Api
         foreach ($updates as $update) {
             $highestId = $update->getUpdateId();
             $this->processCommand($update);
+            $this->processCallback($update);
         }
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
@@ -1553,6 +1562,30 @@ class Api
     public function getCommandBus()
     {
         return $this->commandBus;
+    }
+
+    /**
+     * Check update object for a command and process.
+     *
+     * @param Update $update
+     */
+    public function processCallback(Update $update)
+    {
+        $message = $update->getCallbackQuery();
+
+        if ($message !== null) {
+            $this->getCallbackBus()->handler($message->getData(), $update);
+        }
+    }
+
+    /**
+     * Returns SDK's Callback Command Bus.
+     *
+     * @return CallbackCommandBus
+     */
+    public function getCallbackBus()
+    {
+        return $this->callbackBus;
     }
 
     /**

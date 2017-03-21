@@ -46,47 +46,6 @@ class BotsManager
     }
 
     /**
-     * Get the configuration for a bot.
-     *
-     * @param string|null $name
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return array
-     */
-    public function getBotConfig($name = null)
-    {
-        $name = $name ?: $this->getDefaultBot();
-
-        $bots = $this->getConfig('bots');
-        if (!is_array($config = array_get($bots, $name)) && !$config) {
-            throw new InvalidArgumentException("Bot [$name] not configured.");
-        }
-
-        $config['bot'] = $name;
-
-        return $config;
-    }
-
-    /**
-     * Get a bot instance.
-     *
-     * @param string $name
-     *
-     * @return Api
-     */
-    public function bot($name = null)
-    {
-        $name = $name ?: $this->getDefaultBot();
-
-        if (!isset($this->bots[$name])) {
-            $this->bots[$name] = $this->makeBot($name);
-        }
-
-        return $this->bots[$name];
-    }
-
-    /**
      * Reconnect to the given bot.
      *
      * @param string $name
@@ -111,66 +70,25 @@ class BotsManager
     public function disconnect($name = null)
     {
         $name = $name ?: $this->getDefaultBot();
-        unset($this->bots[$name]);
+        unset($this->bots[ $name ]);
     }
 
     /**
-     * Get the specified configuration value for Telegram.
-     *
-     * @param  string $key
-     * @param  mixed  $default
-     *
-     * @return mixed
-     */
-    public function getConfig($key, $default = null)
-    {
-        return array_get($this->config, $key, $default);
-    }
-
-    /**
-     * Get the default bot name.
-     *
-     * @return string
-     */
-    public function getDefaultBot()
-    {
-        return $this->getConfig('default');
-    }
-
-    /**
-     * Set the default bot name.
+     * Get a bot instance.
      *
      * @param string $name
      *
-     * @return $this
+     * @return Api
      */
-    public function setDefaultBot($name)
+    public function bot($name = null)
     {
-        array_set($this->config, 'default', $name);
+        $name = $name ?: $this->getDefaultBot();
 
-        return $this;
-    }
+        if ( ! isset($this->bots[ $name ])) {
+            $this->bots[ $name ] = $this->makeBot($name);
+        }
 
-    /**
-     * Return all of the created bots.
-     *
-     * @return Api[]
-     */
-    public function getBots()
-    {
-        return $this->bots;
-    }
-
-    /**
-     * De-duplicate an array.
-     *
-     * @param array $array
-     *
-     * @return array
-     */
-    protected function deduplicateArray(array $array)
-    {
-        return array_values(array_unique($array));
+        return $this->bots[ $name ];
     }
 
     /**
@@ -184,8 +102,9 @@ class BotsManager
     {
         $config = $this->getBotConfig($name);
 
-        $token = array_get($config, 'token');
-        $commands = array_get($config, 'commands', []);
+        $token     = array_get($config, 'token');
+        $commands  = array_get($config, 'commands', []);
+        $callbacks = array_get($config, 'callbacks', []);
 
         $telegram = new Api(
             $token,
@@ -198,12 +117,60 @@ class BotsManager
             $telegram->setContainer($this->container);
         }
 
-        $commands = $this->parseBotCommands($commands);
+        $commands  = $this->parseBotCommands($commands);
+        $callbacks = $this->parseCallbacks($callbacks);
 
         // Register Commands
         $telegram->addCommands($commands);
+        $telegram->getCallbackBus()->addCallbackCommands($callbacks);
 
         return $telegram;
+    }
+
+    /**
+     * Get the configuration for a bot.
+     *
+     * @param string|null $name
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return array
+     */
+    public function getBotConfig($name = null)
+    {
+        $name = $name ?: $this->getDefaultBot();
+
+        $bots = $this->getConfig('bots');
+        if ( ! is_array($config = array_get($bots, $name)) && ! $config) {
+            throw new InvalidArgumentException("Bot [$name] not configured.");
+        }
+
+        $config[ 'bot' ] = $name;
+
+        return $config;
+    }
+
+    /**
+     * Get the default bot name.
+     *
+     * @return string
+     */
+    public function getDefaultBot()
+    {
+        return $this->getConfig('default');
+    }
+
+    /**
+     * Get the specified configuration value for Telegram.
+     *
+     * @param  string $key
+     * @param  mixed  $default
+     *
+     * @return mixed
+     */
+    public function getConfig($key, $default = null)
+    {
+        return array_get($this->config, $key, $default);
     }
 
     /**
@@ -230,20 +197,20 @@ class BotsManager
      */
     protected function parseCommands(array $commands)
     {
-        if (!is_array($commands)) {
+        if ( ! is_array($commands)) {
             return $commands;
         }
 
-        $commandGroups = $this->getConfig('command_groups');
+        $commandGroups  = $this->getConfig('command_groups');
         $sharedCommands = $this->getConfig('shared_commands');
 
         $results = [];
         foreach ($commands as $command) {
             // If the command is a group, we'll parse through the group of commands
             // and resolve the full class name.
-            if (isset($commandGroups[$command])) {
+            if (isset($commandGroups[ $command ])) {
                 $results = array_merge(
-                    $results, $this->parseCommands($commandGroups[$command])
+                    $results, $this->parseCommands($commandGroups[ $command ])
                 );
 
                 continue;
@@ -252,16 +219,95 @@ class BotsManager
 
             // If this command is actually a shared command, we'll extract the full
             // class name out of the command list now.
-            if (isset($sharedCommands[$command])) {
-                $command = $sharedCommands[$command];
+            if (isset($sharedCommands[ $command ])) {
+                $command = $sharedCommands[ $command ];
             }
 
-            if (!in_array($command, $results)) {
+            if ( ! in_array($command, $results)) {
                 $results[] = $command;
             }
         }
 
         return $results;
+    }
+
+    /**
+     * De-duplicate an array.
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    protected function deduplicateArray(array $array)
+    {
+        return array_values(array_unique($array));
+    }
+
+    /**
+     * Parse an array of commands and build a list.
+     *
+     * @param array $commands
+     *
+     * @return array
+     */
+    protected function parseCallbacks(array $commands)
+    {
+        if ( ! is_array($commands)) {
+            return $commands;
+        }
+
+        $commandGroups  = $this->getConfig('callback_groups');
+        $sharedCommands = $this->getConfig('shared_callbacks');
+
+        $results = [];
+        foreach ($commands as $command) {
+            // If the command is a group, we'll parse through the group of commands
+            // and resolve the full class name.
+            if (isset($commandGroups[ $command ])) {
+                $results = array_merge(
+                    $results, $this->parseCallbacks($commandGroups[ $command ])
+                );
+
+                continue;
+
+            }
+
+            // If this command is actually a shared command, we'll extract the full
+            // class name out of the command list now.
+            if (isset($sharedCommands[ $command ])) {
+                $command = $sharedCommands[ $command ];
+            }
+
+            if ( ! in_array($command, $results)) {
+                $results[] = $command;
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Set the default bot name.
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setDefaultBot($name)
+    {
+        array_set($this->config, 'default', $name);
+
+        return $this;
+    }
+
+    /**
+     * Return all of the created bots.
+     *
+     * @return Api[]
+     */
+    public function getBots()
+    {
+        return $this->bots;
     }
 
     /**

@@ -115,6 +115,10 @@ class Update extends BaseObject
         switch ($this->detectType()) {
             case 'message':
                 return $this->getMessage()->getChat();
+            case 'edited_message':
+                return $this->getEditedMessage()->getChat();
+            case 'channel_post':
+                return $this->getChannelPost()->getChat();
             case 'callback_query':
                 return $this->getCallbackQuery()->getMessage()->getChat();
             default:

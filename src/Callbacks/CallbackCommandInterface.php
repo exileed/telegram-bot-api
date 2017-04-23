@@ -1,7 +1,7 @@
 <?php
 /**
- * @package yetanotherstatsbot
  * @author  Dmitriy Kuts <me@exileed.com>
+ *
  * @link    http://exileed.com
  */
 
@@ -12,7 +12,7 @@ use Telegram\Bot\Objects\CallbackQuery;
 use Telegram\Bot\Objects\Update;
 
 /**
- * Interface CallbackQueryInterface
+ * Interface CallbackQueryInterface.
  */
 interface CallbackCommandInterface
 {
@@ -29,7 +29,7 @@ interface CallbackCommandInterface
     public function setArguments($arguments);
 
     /**
-     * Get Callback Query Command Name
+     * Get Callback Query Command Name.
      *
      * The name of the Telegram callback query command.
      *
@@ -38,7 +38,7 @@ interface CallbackCommandInterface
     public function getName();
 
     /**
-     * Set Callback Query Command Name
+     * Set Callback Query Command Name.
      *
      * @param string $name
      *
@@ -47,14 +47,14 @@ interface CallbackCommandInterface
     public function setName($name);
 
     /**
-     * Unique identifier for the query to be answered
+     * Unique identifier for the query to be answered.
      *
-     * @return integer
+     * @return int
      */
     public function getCallbackQueryId();
 
     /**
-     * Unique identifier for the query to be answered
+     * Unique identifier for the query to be answered.
      *
      * @param int $callbackQueryId
      *
@@ -63,7 +63,7 @@ interface CallbackCommandInterface
     public function setCallbackQueryId($callbackQueryId);
 
     /**
-     * Make command
+     * Make command.
      *
      * @param Telegram      $telegram
      * @param array         $arguments
@@ -72,5 +72,5 @@ interface CallbackCommandInterface
      *
      * @return
      */
-    public function make(Telegram $telegram, $arguments = [], Update $update, CallbackQuery $callbackQuery);
+    public function make(Telegram $telegram, $arguments, Update $update, CallbackQuery $callbackQuery);
 }

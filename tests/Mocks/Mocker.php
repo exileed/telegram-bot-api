@@ -2,15 +2,15 @@
 
 namespace Telegram\Bot\Tests\Mocks;
 
-use Telegram\Bot\Api;
-use Prophecy\Prophet;
-use Prophecy\Argument;
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Telegram\Bot\Objects\Update;
-use GuzzleHttp\Handler\MockHandler;
+use Prophecy\Argument;
+use Prophecy\Prophet;
+use Telegram\Bot\Api;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Objects\Update;
 
 class Mocker
 {
@@ -25,7 +25,7 @@ class Mocker
     public static function createApi($withContainer = false)
     {
         if ($withContainer) {
-            $container = Mocker::createContainer();
+            $container = self::createContainer();
             $container->make(Argument::any())->willReturn(new \stdClass());
         } else {
             $container = null;
@@ -39,7 +39,7 @@ class Mocker
     }
 
     /**
-     * Create an IOC container that can be added to the API
+     * Create an IOC container that can be added to the API.
      *
      * @return \Prophecy\Prophecy\ObjectProphecy
      */
@@ -49,7 +49,7 @@ class Mocker
     }
 
     /**
-     * Create a mocked Update Object
+     * Create a mocked Update Object.
      *
      * @return \Prophecy\Prophecy\ObjectProphecy
      */
@@ -130,7 +130,6 @@ class Mocker
     {
         return self::createUpdateResponse(['text' => $message]);
     }
-
 
     /**
      * This creates a raw api response to simulate what Telegram replies

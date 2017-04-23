@@ -61,7 +61,7 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * Get Command Aliases
+     * Get Command Aliases.
      *
      * @return array
      */
@@ -129,7 +129,7 @@ abstract class Command implements CommandInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function make(Api $telegram, $arguments, Update $update)
     {

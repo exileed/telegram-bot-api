@@ -20,9 +20,8 @@ class File extends BaseObject
         return [];
     }
 
-
     /**
-     * @param  string $token the bot token
+     * @param string $token the bot token
      *
      * @return string the http url of the file
      */

@@ -7,7 +7,6 @@ use Telegram\Bot\Helpers\Emojify;
 
 class EmojiSupportTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @test
      * @expectedException \Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException
@@ -73,9 +72,9 @@ class EmojiSupportTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $reflection = new ReflectionClass(Emojify::class);
-        $property = $reflection->getProperty("instance");
+        $property = $reflection->getProperty('instance');
         $property->setAccessible(true); // instance is gone
-        $property->setValue(null);// now we can modify that :)
+        $property->setValue(null); // now we can modify that :)
         $property->setAccessible(false); // clean up
     }
 }

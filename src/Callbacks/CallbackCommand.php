@@ -1,7 +1,7 @@
 <?php
 /**
- * @package yetanotherstatsbot
  * @author  Dmitriy Kuts <me@exileed.com>
+ *
  * @link    http://exileed.com
  */
 
@@ -13,8 +13,7 @@ use Telegram\Bot\Objects\CallbackQuery;
 use Telegram\Bot\Objects\Update;
 
 /**
- * Class CallbackCommand
- *
+ * Class CallbackCommand.
  */
 abstract class CallbackCommand implements CallbackCommandInterface
 {
@@ -26,9 +25,9 @@ abstract class CallbackCommand implements CallbackCommandInterface
      */
     protected $name;
     /**
-     * Unique identifier for the query to be answered
+     * Unique identifier for the query to be answered.
      *
-     * @var integer
+     * @var int
      */
     protected $callbackQueryId;
     /**
@@ -65,7 +64,7 @@ abstract class CallbackCommand implements CallbackCommandInterface
     }
 
     /**
-     * Get Callback Query Command Name
+     * Get Callback Query Command Name.
      *
      * The name of the Telegram callback query command.
      *
@@ -77,7 +76,7 @@ abstract class CallbackCommand implements CallbackCommandInterface
     }
 
     /**
-     * Set Callback Query Command Name
+     * Set Callback Query Command Name.
      *
      * @param string $name
      *
@@ -91,9 +90,9 @@ abstract class CallbackCommand implements CallbackCommandInterface
     }
 
     /**
-     * Unique identifier for the query to be answered
+     * Unique identifier for the query to be answered.
      *
-     * @return integer
+     * @return int
      */
     public function getCallbackQueryId()
     {
@@ -101,7 +100,7 @@ abstract class CallbackCommand implements CallbackCommandInterface
     }
 
     /**
-     * Unique identifier for the query to be answered
+     * Unique identifier for the query to be answered.
      *
      * @param int $callbackQueryId
      *
@@ -120,18 +119,18 @@ abstract class CallbackCommand implements CallbackCommandInterface
      * @param Update        $update
      * @param CallbackQuery $callbackQuery
      */
-    public function make(Telegram $telegram, $arguments = [], Update $update, CallbackQuery $callbackQuery)
+    public function make(Telegram $telegram, $arguments, Update $update, CallbackQuery $callbackQuery)
     {
-        $this->telegram        = $telegram;
-        $this->arguments       = $arguments;
-        $this->update          = $update;
-        $this->callbackQuery   = $callbackQuery;
+        $this->telegram = $telegram;
+        $this->arguments = $arguments;
+        $this->update = $update;
+        $this->callbackQuery = $callbackQuery;
         $this->callbackQueryId = $callbackQuery->getId();
         $this->handle($arguments);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     abstract public function handle($arguments);
 }

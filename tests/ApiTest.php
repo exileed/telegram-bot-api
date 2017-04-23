@@ -2,18 +2,18 @@
 
 namespace Telegram\Bot\Tests;
 
-use Telegram\Bot\Api;
-use Prophecy\Argument;
 use InvalidArgumentException;
-use Telegram\Bot\Objects\File;
-use Telegram\Bot\Objects\User;
-use Telegram\Bot\TelegramClient;
-use Telegram\Bot\Objects\Update;
-use Telegram\Bot\Objects\Message;
-use Telegram\Bot\TelegramResponse;
-use Telegram\Bot\Tests\Mocks\Mocker;
+use Prophecy\Argument;
+use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\HttpClients\GuzzleHttpClient;
+use Telegram\Bot\Objects\File;
+use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\Update;
+use Telegram\Bot\Objects\User;
+use Telegram\Bot\TelegramClient;
+use Telegram\Bot\TelegramResponse;
+use Telegram\Bot\Tests\Mocks\Mocker;
 
 class ApiTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,6 +40,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider badTypes
      * @expectedException InvalidArgumentException
+     *
      * @link         https://phpunit.de/manual/3.7/en/appendixes.annotations.html#appendixes.annotations.dataProvider
      *
      * @param mixed $type The item under test
@@ -249,7 +250,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($forwardFromId, $response->getForwardFrom()->getId());
     }
 
-
     /** @test */
     public function it_checks_a_message_object_is_returned_with_photo_information_when_sendPhoto_is_sent()
     {
@@ -349,7 +349,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 'latitude'  => 99.9,
             ],
         ];
-
 
         $this->api = Mocker::createApiResponse($requiredFields);
 

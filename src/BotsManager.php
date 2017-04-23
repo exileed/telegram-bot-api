@@ -6,7 +6,7 @@ use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
 
 /**
- * Class BotsManager
+ * Class BotsManager.
  *
  * @TODO Add methods in docblock for autocompletion from Api file.
  */
@@ -70,7 +70,7 @@ class BotsManager
     public function disconnect($name = null)
     {
         $name = $name ?: $this->getDefaultBot();
-        unset($this->bots[ $name ]);
+        unset($this->bots[$name]);
     }
 
     /**
@@ -84,11 +84,11 @@ class BotsManager
     {
         $name = $name ?: $this->getDefaultBot();
 
-        if ( ! isset($this->bots[ $name ])) {
-            $this->bots[ $name ] = $this->makeBot($name);
+        if (!isset($this->bots[$name])) {
+            $this->bots[$name] = $this->makeBot($name);
         }
 
-        return $this->bots[ $name ];
+        return $this->bots[$name];
     }
 
     /**
@@ -102,8 +102,8 @@ class BotsManager
     {
         $config = $this->getBotConfig($name);
 
-        $token     = array_get($config, 'token');
-        $commands  = array_get($config, 'commands', []);
+        $token = array_get($config, 'token');
+        $commands = array_get($config, 'commands', []);
         $callbacks = array_get($config, 'callbacks', []);
 
         $telegram = new Api(
@@ -117,7 +117,7 @@ class BotsManager
             $telegram->setContainer($this->container);
         }
 
-        $commands  = $this->parseBotCommands($commands);
+        $commands = $this->parseBotCommands($commands);
         $callbacks = $this->parseCallbacks($callbacks);
 
         // Register Commands
@@ -141,11 +141,11 @@ class BotsManager
         $name = $name ?: $this->getDefaultBot();
 
         $bots = $this->getConfig('bots');
-        if ( ! is_array($config = array_get($bots, $name)) && ! $config) {
+        if (!is_array($config = array_get($bots, $name)) && !$config) {
             throw new InvalidArgumentException("Bot [$name] not configured.");
         }
 
-        $config[ 'bot' ] = $name;
+        $config['bot'] = $name;
 
         return $config;
     }
@@ -163,8 +163,8 @@ class BotsManager
     /**
      * Get the specified configuration value for Telegram.
      *
-     * @param  string $key
-     * @param  mixed  $default
+     * @param string $key
+     * @param mixed  $default
      *
      * @return mixed
      */
@@ -197,33 +197,32 @@ class BotsManager
      */
     protected function parseCommands(array $commands)
     {
-        if ( ! is_array($commands)) {
+        if (!is_array($commands)) {
             return $commands;
         }
 
-        $commandGroups  = $this->getConfig('command_groups');
+        $commandGroups = $this->getConfig('command_groups');
         $sharedCommands = $this->getConfig('shared_commands');
 
         $results = [];
         foreach ($commands as $command) {
             // If the command is a group, we'll parse through the group of commands
             // and resolve the full class name.
-            if (isset($commandGroups[ $command ])) {
+            if (isset($commandGroups[$command])) {
                 $results = array_merge(
-                    $results, $this->parseCommands($commandGroups[ $command ])
+                    $results, $this->parseCommands($commandGroups[$command])
                 );
 
                 continue;
-
             }
 
             // If this command is actually a shared command, we'll extract the full
             // class name out of the command list now.
-            if (isset($sharedCommands[ $command ])) {
-                $command = $sharedCommands[ $command ];
+            if (isset($sharedCommands[$command])) {
+                $command = $sharedCommands[$command];
             }
 
-            if ( ! in_array($command, $results)) {
+            if (!in_array($command, $results)) {
                 $results[] = $command;
             }
         }
@@ -252,33 +251,32 @@ class BotsManager
      */
     protected function parseCallbacks(array $commands)
     {
-        if ( ! is_array($commands)) {
+        if (!is_array($commands)) {
             return $commands;
         }
 
-        $commandGroups  = $this->getConfig('callback_groups');
+        $commandGroups = $this->getConfig('callback_groups');
         $sharedCommands = $this->getConfig('shared_callbacks');
 
         $results = [];
         foreach ($commands as $command) {
             // If the command is a group, we'll parse through the group of commands
             // and resolve the full class name.
-            if (isset($commandGroups[ $command ])) {
+            if (isset($commandGroups[$command])) {
                 $results = array_merge(
-                    $results, $this->parseCallbacks($commandGroups[ $command ])
+                    $results, $this->parseCallbacks($commandGroups[$command])
                 );
 
                 continue;
-
             }
 
             // If this command is actually a shared command, we'll extract the full
             // class name out of the command list now.
-            if (isset($sharedCommands[ $command ])) {
-                $command = $sharedCommands[ $command ];
+            if (isset($sharedCommands[$command])) {
+                $command = $sharedCommands[$command];
             }
 
-            if ( ! in_array($command, $results)) {
+            if (!in_array($command, $results)) {
                 $results[] = $command;
             }
         }

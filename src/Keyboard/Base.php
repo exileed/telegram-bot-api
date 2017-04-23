@@ -1,4 +1,5 @@
 <?php
+
 namespace Telegram\Bot\Keyboard;
 
 use Illuminate\Support\Collection;

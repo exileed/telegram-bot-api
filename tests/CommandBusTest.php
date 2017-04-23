@@ -2,13 +2,12 @@
 
 namespace Telegram\Bot\Tests;
 
-use Prophecy\Argument;
-use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Commands\Command;
-use Telegram\Bot\Tests\Mocks\Mocker;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Tests\Mocks\MockCommand;
 use Telegram\Bot\Tests\Mocks\MockCommandTwo;
+use Telegram\Bot\Tests\Mocks\Mocker;
 
 class CommandBusTest extends \PHPUnit_Framework_TestCase
 {
@@ -85,7 +84,6 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         $this->commandBus->addCommand('nonexistclass');
     }
 
-
     /**
      * @test
      * @expectedException \InvalidArgumentException
@@ -157,5 +155,4 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('mycommandwithdependency', $allCommands);
         $this->assertInstanceOf(Command::class, $allCommands['mycommandwithdependency']);
     }
-
 }

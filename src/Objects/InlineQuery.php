@@ -11,6 +11,7 @@ namespace Telegram\Bot\Objects;
  * @method Location     getLocation()   (Optional). Sender location, only for bots that request user location.
  * @method string       getQuery()      Text of the query.
  * @method string       getOffset()     Offset of the results to be returned.
+ *
  * @link https://core.telegram.org/bots/api#inlinequery
  */
 class InlineQuery extends BaseObject

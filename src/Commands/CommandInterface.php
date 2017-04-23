@@ -21,7 +21,7 @@ interface CommandInterface
     public function getName();
 
     /**
-     * Get Command Aliases
+     * Get Command Aliases.
      *
      * Helpful when you want to trigger command with more than one name.
      *
@@ -41,7 +41,7 @@ interface CommandInterface
     /**
      * Process Inbound Command.
      *
-     * @param Api $telegram
+     * @param Api    $telegram
      * @param string $arguments
      * @param Update $update
      *

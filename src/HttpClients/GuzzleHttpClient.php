@@ -158,6 +158,4 @@ class GuzzleHttpClient implements HttpClientInterface
     {
         return $this->connectTimeOut;
     }
-
-
 }

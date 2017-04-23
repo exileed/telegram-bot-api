@@ -6,7 +6,6 @@ use Telegram\Bot\Commands\Command;
 
 class MockCommandWithDependency extends Command
 {
-
     /**
      * @var \stdClass
      */
@@ -16,7 +15,6 @@ class MockCommandWithDependency extends Command
     {
         $this->stdClass = $stdClass;
     }
-
 
     protected $name = 'mycommandwithdependency';
 

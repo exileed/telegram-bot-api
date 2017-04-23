@@ -88,11 +88,11 @@ class Message extends BaseObject
     {
         return $this->get('caption');
     }
-    
+
     /**
-     * Determine if the message is of given type
+     * Determine if the message is of given type.
      *
-     * @param string         $type
+     * @param string $type
      *
      * @return bool
      */
@@ -104,8 +104,7 @@ class Message extends BaseObject
 
         return $this->detectType() === $type;
     }
-    
-    
+
     /**
      * Detect type based on properties.
      *

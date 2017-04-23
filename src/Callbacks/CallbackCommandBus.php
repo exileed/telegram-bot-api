@@ -71,8 +71,8 @@ class CallbackCommandBus extends AnswerBus
      */
     public function addCallbackCommand($command)
     {
-        if ( ! is_object($command)) {
-            if ( ! class_exists($command)) {
+        if (!is_object($command)) {
+            if (!class_exists($command)) {
                 throw new TelegramSDKException(
                     sprintf(
                         'Command class "%s" not found! Please make sure the class exists.',
@@ -90,12 +90,12 @@ class CallbackCommandBus extends AnswerBus
 
         if ($command instanceof CallbackCommandInterface) {
 
-            /**
+            /*
              * At this stage we definitely have a proper command to use.
              *
              * @var CallbackCommand $command
              */
-            $this->commands[ $command->getName() ] = $command;
+            $this->commands[$command->getName()] = $command;
 
             return $this;
         }
@@ -133,7 +133,7 @@ class CallbackCommandBus extends AnswerBus
      */
     public function removeCommand($name)
     {
-        unset($this->commands[ $name ]);
+        unset($this->commands[$name]);
 
         return $this;
     }
@@ -150,12 +150,10 @@ class CallbackCommandBus extends AnswerBus
      */
     protected function handler($message, Update $update)
     {
-
         $match = $this->parseArguments($message);
 
-        $command = strtolower($match[ 0 ]); //All commands must be lowercase.
+        $command = strtolower($match[0]); //All commands must be lowercase.
         array_shift($match);
-
 
         $this->execute($command, $match, $update, $update->getCallbackQuery());
 
@@ -164,7 +162,6 @@ class CallbackCommandBus extends AnswerBus
 
     private function parseArguments($message)
     {
-
         return explode(' ', $message);
     }
 
@@ -180,9 +177,8 @@ class CallbackCommandBus extends AnswerBus
      */
     protected function execute($name, $arguments, $message, $callback)
     {
-
         if (array_key_exists($name, $this->commands)) {
-            return $this->commands[ $name ]->make($this->telegram, $arguments, $message, $callback);
+            return $this->commands[$name]->make($this->telegram, $arguments, $message, $callback);
         }
 
         return 'ok';

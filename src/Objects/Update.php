@@ -46,7 +46,7 @@ class Update extends BaseObject
     }
 
     /**
-     * Determine if the update is of given type
+     * Determine if the update is of given type.
      *
      * @param string $type
      *
@@ -101,12 +101,10 @@ class Update extends BaseObject
         } elseif ($this->has('edited_channel_post')) {
             return $this->getEditedChannelPost();
         }
-
-        return null;
     }
 
     /**
-     * Get message object (if exists)
+     * Get message object (if exists).
      *
      * @return null|Chat
      */
@@ -123,7 +121,7 @@ class Update extends BaseObject
                 return $this->getCallbackQuery()->getMessage()->getChat();
             default:
                 // nothing to return
-                return null;
+                return;
         }
     }
 
@@ -149,7 +147,5 @@ class Update extends BaseObject
         } elseif ($this->has('edited_channel_post')) {
             return $this->getEditedChannelPost()->getFrom();
         }
-
-        return null;
     }
 }

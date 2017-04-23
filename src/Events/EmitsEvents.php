@@ -14,7 +14,9 @@ trait EmitsEvents
 
     /**
      * @param EventInterface|string $event
+     *
      * @throws \InvalidArgumentException
+     *
      * @return bool true if emitted, false otherwise
      */
     private function emitEvent($event)
@@ -34,7 +36,9 @@ trait EmitsEvents
 
     /**
      * @param EventInterface[]|string[] $events
+     *
      * @throws \InvalidArgumentException
+     *
      * @return bool true if all emitted, false otherwise
      */
     private function emitBatchOfEvents(array $events)

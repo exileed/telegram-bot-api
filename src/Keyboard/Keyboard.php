@@ -1,8 +1,9 @@
 <?php
+
 namespace Telegram\Bot\Keyboard;
 
 /**
- * Class Keyboard
+ * Class Keyboard.
  *
  * <code>
  * // For Standard Keyboard
@@ -30,7 +31,7 @@ namespace Telegram\Bot\Keyboard;
 class Keyboard extends Base
 {
     /**
-     * Make an Inline Keyboard
+     * Make an Inline Keyboard.
      *
      * @var bool
      */
@@ -99,9 +100,9 @@ class Keyboard extends Base
      *
      * @param string|array $params
      *
-     * @var string         $params ['text']
-     * @var bool           $params ['request_contact']
-     * @var bool           $params ['request_location']
+     * @var string $params ['text']
+     * @var bool   $params ['request_contact']
+     * @var bool   $params ['request_location']
      *
      * @return mixed
      */
@@ -133,10 +134,10 @@ class Keyboard extends Base
      *
      * @param string|array $params
      *
-     * @var string         $params ['text']
-     * @var string         $params ['url']
-     * @var string         $params ['callback_data']
-     * @var string         $params ['switch_inline_query']
+     * @var string $params ['text']
+     * @var string $params ['url']
+     * @var string $params ['callback_data']
+     * @var string $params ['switch_inline_query']
      *
      * @return string
      */
@@ -159,8 +160,8 @@ class Keyboard extends Base
      *
      * @param array $params
      *
-     * @var bool    $params ['hide_keyboard']
-     * @var bool    $params ['selective']
+     * @var bool $params ['hide_keyboard']
+     * @var bool $params ['selective']
      *
      * @return string
      */
@@ -183,8 +184,8 @@ class Keyboard extends Base
      *
      * @param array $params
      *
-     * @var bool    $params ['force_reply']
-     * @var bool    $params ['selective']
+     * @var bool $params ['force_reply']
+     * @var bool $params ['selective']
      *
      * @return string
      */

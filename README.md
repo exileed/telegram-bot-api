@@ -1,15 +1,13 @@
 Telegram Bot API - PHP SDK
 ==========================
-[![Join the chat at https://phpchat.co](https://img.shields.io/badge/Join-PHP%20Chat-blue.svg?style=flat-square)](https://telegram-bot-sdk.readme.io/blog/join-php-chat-slack-community-for-support)
 
-> The (Unofficial) [Telegram Bot API](https://core.telegram.org/bots) PHP SDK. Lets you develop Telegram Bots easily! Supports Laravel out of the box.
-
-[![Telegram Bot API PHP SDK](https://cloud.githubusercontent.com/assets/1915268/8475216/fe774802-20d3-11e5-9692-f54502716d64.png)][link-author]
+> [Telegram Bot API](https://core.telegram.org/bots) PHP SDK. Lets you develop Telegram Bots easily! Supports Laravel out of the box.
 
 <p align="center">
-<a href="https://travis-ci.org/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/travis/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Build Status"/></a>
-<a href="https://github.com/irazasyed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Latest Version"/></a>
-<a href="https://packagist.org/packages/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/packagist/dt/irazasyed/telegram-bot-sdk.svg?style=flat-square" alt="Total Downloads"/></a>
+<a href="https://travis-ci.org/irazasyed/telegram-bot-sdk"><img src="https://img.shields.io/travis/exileed/telegram-bot-sdk.svg?style=flat-square" alt="Build Status"/></a>
+<a href="https://github.com/exileed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/exileed/telegram-bot-sdk.svg?style=flat-square" alt="Latest Version"/></a>
+<a href="https://packagist.org/packages/exileed/telegram-bot-sdk"><img src="https://img.shields.io/packagist/dt/exileed/telegram-bot-sdk.svg?style=flat-square" alt="Total Downloads"/></a>
+<a href="https://styleci.io/repos/82008756"><img src="https://styleci.io/repos/82008756/shield?branch=master" alt="StyleCI"></a>
 </p>
 
 ## Overview
@@ -27,8 +25,6 @@ Documentation for the SDK can be found on the [website][link-docs].
 ## Are You Using Telegram Bot SDK?
 
 If you're using this SDK to build your Telegram Bots, We'd love to know and share the bot with the world. Tell us about it - **[here][link-sdk-users]**
-
-Check out the [Who's Using Telegram Bot SDK][link-sdk-users] wiki page to know more about what people have been building with this SDK.
 
 ## Additional information
 
@@ -55,10 +51,10 @@ This project is released under the [BSD 3-Clause][link-license] License.
 © 2015-16 [Syed Irfaq R.][link-author], All rights reserved.
 
 [link-author]: https://github.com/irazasyed
-[link-repo]: https://github.com/irazasyed/telegram-bot-sdk
-[link-issues]: https://github.com/irazasyed/telegram-bot-sdk/issues
-[link-contributors]: https://github.com/irazasyed/telegram-bot-sdk/contributors
+[link-repo]: https://github.com/exileed/telegram-bot-sdk
+[link-issues]: https://github.com/exileed/telegram-bot-sdk/issues
+[link-contributors]: https://github.com/exileed/telegram-bot-sdk/contributors
 [link-docs]: https://telegram-bot-sdk.readme.io/docs
-[link-license]: https://github.com/irazasyed/telegram-bot-sdk/blob/master/LICENSE
-[link-sdk-users]: https://github.com/irazasyed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
+[link-license]: https://github.com/exileed/telegram-bot-sdk/blob/master/LICENSE
+[link-sdk-users]: https://github.com/exileed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
 

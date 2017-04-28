@@ -102,7 +102,7 @@ class CallbackCommandBus extends AnswerBus
 
         throw new TelegramSDKException(
             sprintf(
-                'Command class "%s" should be an instance of "Telegram\Bot\Commands\CommandInterface"',
+                'Command class "%s" should be an instance of "Telegram\Bot\Callback\CallbackCommandInterface"',
                 get_class($command)
             )
         );

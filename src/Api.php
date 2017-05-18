@@ -378,7 +378,6 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
-
     /**
      * Delete a message.
      *
@@ -734,7 +733,6 @@ class Api
 
         return new Message($response->getDecodedBody());
     }
-
 
     /**
      * Method to send video messages.
@@ -1449,26 +1447,26 @@ class Api
      *
      * @param array $params
      *
-     * @var int       $params ['chat_id']
-     * @var string    $params ['title']
-     * @var string    $params ['description']
-     * @var string    $params ['payload']
-     * @var string    $params ['provider_token']
-     * @var string    $params ['start_parameter']
-     * @var string    $params ['currency']
-     * @var array     $params ['prices']
-     * @var string    $params ['photo_url']
-     * @var int|null  $params ['photo_size']
-     * @var int|null  $params ['photo_width']
-     * @var int|null  $params ['photo_height']
-     * @var bool      $params ['need_name']
-     * @var bool      $params ['need_phone_number']
-     * @var bool      $params ['need_email']
-     * @var bool      $params ['need_shipping_address']
-     * @var bool      $params ['is_flexible']
-     * @var bool      $params ['disable_notification']
-     * @var int|null  $params ['reply_to_message_id']
-     * @var string    $params ['reply_markup']
+     * @var int      $params ['chat_id']
+     * @var string   $params ['title']
+     * @var string   $params ['description']
+     * @var string   $params ['payload']
+     * @var string   $params ['provider_token']
+     * @var string   $params ['start_parameter']
+     * @var string   $params ['currency']
+     * @var array    $params ['prices']
+     * @var string   $params ['photo_url']
+     * @var int|null $params ['photo_size']
+     * @var int|null $params ['photo_width']
+     * @var int|null $params ['photo_height']
+     * @var bool     $params ['need_name']
+     * @var bool     $params ['need_phone_number']
+     * @var bool     $params ['need_email']
+     * @var bool     $params ['need_shipping_address']
+     * @var bool     $params ['is_flexible']
+     * @var bool     $params ['disable_notification']
+     * @var int|null $params ['reply_to_message_id']
+     * @var string   $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *

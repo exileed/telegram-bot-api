@@ -378,6 +378,35 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
+
+    /**
+     * Delete a message.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#deletemessage
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function deleteMessage(array $params)
+    {
+        $response = $this->post('deleteMessage', $params);
+
+        return $response->getDecodedBody();
+    }
+
     /**
      * Forward messages of any kind.
      *
@@ -706,6 +735,46 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
+
+    /**
+     * Method to send video messages.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'video'                => '',
+     *   'duration'             => '',
+     *   'length'               => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @see  sendDocumen
+     * @link https://core.telegram.org/bots/api#sendvideonote
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['video_note']
+     * @var int        $params ['duration']
+     * @var int        $params ['length']
+     * @var bool       $params ['disable_notification']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message
+     */
+    public function sendVideoNote(array $params)
+    {
+        $response = $this->uploadFile('sendVideoNote', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
     /**
      * Send voice audio files.
      *
@@ -890,6 +959,8 @@ class Api
             'upload_audio',
             'upload_document',
             'find_location',
+            'record_video_note',
+            'upload_video_note',
         ];
 
         if (isset($params['action']) && in_array($params['action'], $validActions)) {
@@ -1342,6 +1413,132 @@ class Api
         }
 
         $this->post('answerInlineQuery', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to send invoices.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                => '',
+     *   'title'                  => '',
+     *   'description'            => '',
+     *   'payload'                => '',
+     *   'provider_token'         => '',
+     *   'start_parameter'        => '',
+     *   'currency'               => '',
+     *   'prices'                 => '',
+     *   'photo_url'              => '',
+     *   'photo_size'             => '',
+     *   'photo_width'            => '',
+     *   'photo_height'           => '',
+     *   'need_name'              => true,
+     *   'need_phone_number'      => true,
+     *   'need_email'             => true,
+     *   'need_shipping_address'  => true,
+     *   'is_flexible'            => true,
+     *   'disable_notification'   => '',
+     *   'reply_to_message_id'    => '',
+     *   'reply_markup'           => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendinvoice
+     *
+     * @param array $params
+     *
+     * @var int       $params ['chat_id']
+     * @var string    $params ['title']
+     * @var string    $params ['description']
+     * @var string    $params ['payload']
+     * @var string    $params ['provider_token']
+     * @var string    $params ['start_parameter']
+     * @var string    $params ['currency']
+     * @var array     $params ['prices']
+     * @var string    $params ['photo_url']
+     * @var int|null  $params ['photo_size']
+     * @var int|null  $params ['photo_width']
+     * @var int|null  $params ['photo_height']
+     * @var bool      $params ['need_name']
+     * @var bool      $params ['need_phone_number']
+     * @var bool      $params ['need_email']
+     * @var bool      $params ['need_shipping_address']
+     * @var bool      $params ['is_flexible']
+     * @var bool      $params ['disable_notification']
+     * @var int|null  $params ['reply_to_message_id']
+     * @var string    $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message
+     */
+    public function sendInvoice(array $params = [])
+    {
+        $response = $this->post('sendInvoice', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Use this method to send answers to an inline query.
+     *
+     * <code>
+     * $params = [
+     *   'shipping_query_id' => '',
+     *   'ok'                => true,
+     *   'shipping_options'  => [],
+     *   'error_message'     => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#answershippingquery
+     *
+     * @param array $params
+     *
+     * @var string $params ['shipping_query_id']
+     * @var bool   $params ['ok']
+     * @var array  $params ['shipping_options']
+     * @var string $params ['error_message']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function answerShippingQuery(array $params = [])
+    {
+        $this->post('answerShippingQuery', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to send pre-checkout queries to an inline query.
+     *
+     * <code>
+     * $params = [
+     *   'pre_checkout_query_id' => '',
+     *   'ok'                    => true,
+     *   'error_message'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#answerprecheckoutquery
+     *
+     * @param array $params
+     *
+     * @var string $params ['pre_checkout_query_id']
+     * @var bool   $params ['ok']
+     * @var string $params ['error_message']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function answerPreCheckoutQuery(array $params = [])
+    {
+        $this->post('answerPreCheckoutQuery', $params);
 
         return true;
     }

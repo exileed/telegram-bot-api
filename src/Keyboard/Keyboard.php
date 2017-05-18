@@ -123,10 +123,13 @@ class Keyboard extends Base
      *
      * <code>
      * $params = [
-     *   'text'                 => '',
-     *   'url'                  => '',
-     *   'callback_data'        => '',
-     *   'switch_inline_query'  => '',
+     *   'text'                              => '',
+     *   'url'                               => '',
+     *   'callback_data'                     => '',
+     *   'switch_inline_query'               => '',
+     *   'switch_inline_query_current_chat'  => '',
+     *   'callback_game'                     => '',
+     *   'pay'                               => '',
      * ];
      * </code>
      *
@@ -138,6 +141,9 @@ class Keyboard extends Base
      * @var string $params ['url']
      * @var string $params ['callback_data']
      * @var string $params ['switch_inline_query']
+     * @var string $params ['switch_inline_query_current_chat']
+     * @var string $params ['callback_game']
+     * @var bool   $params ['pay']
      *
      * @return string
      */

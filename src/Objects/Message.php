@@ -11,7 +11,7 @@ namespace Telegram\Bot\Objects;
  * @method int              getDate()                   Date the message was sent in Unix time.
  * @method Chat             getChat()                   Conversation the message belongs to.
  * @method User             getForwardFrom()            (Optional). For forwarded messages, sender of the original message.
- * @method Chat             getForwardFromChat()            (Optional). 	Optional. For messages forwarded from a channel, information about the original channel
+ * @method Chat             getForwardFromChat()            (Optional).    Optional. For messages forwarded from a channel, information about the original channel
  * @method int              getForwardDate()            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @method int              getEditDate()               (Optional). Date the message was last edited in Unix time.
@@ -23,6 +23,7 @@ namespace Telegram\Bot\Objects;
  * @method Sticker          getSticker()                (Optional). Message is a sticker, information about the sticker.
  * @method Video            getVideo()                  (Optional). Message is a video, information about the video.
  * @method Voice            getVoice()                  (Optional). Message is a voice message, information about the file.
+ * @method Voice            getVideoNote()              (Optional). Message is a video note, information about the video message
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method Venue            getVenue()                  (Optional). Message is a venue, information about the venue.
@@ -37,6 +38,8 @@ namespace Telegram\Bot\Objects;
  * @method int              getMigrateToChatId()        (Optional). The group has been migrated to a supergroup with the specified identifier, not exceeding 1e13 by absolute value.
  * @method int              getMigrateFromChatId()      (Optional). The supergroup has been migrated from a group with the specified identifier, not exceeding 1e13 by absolute value.
  * @method Message          getPinnedMessage()          (Optional). Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
+ * @method Invoice          getInvoice()                (Optional). Message is an invoice for a payment, information about the invoice.
+ * @method SuccessfulPayment getSuccessfulPayment()     (Optional). Message is a service message about a successful payment, information about the payment.
  */
 class Message extends BaseObject
 {
@@ -46,26 +49,30 @@ class Message extends BaseObject
     public function relations()
     {
         return [
-            'from'             => User::class,
-            'chat'             => Chat::class,
-            'forward_from'     => User::class,
-            'forward_from_chat'=> Chat::class,
-            'reply_to_message' => self::class,
-            'entities'         => MessageEntity::class,
-            'audio'            => Audio::class,
-            'document'         => Document::class,
-            'game'             => Game::class,
-            'photo'            => PhotoSize::class,
-            'sticker'          => Sticker::class,
-            'video'            => Video::class,
-            'voice'            => Voice::class,
-            'contact'          => Contact::class,
-            'location'         => Location::class,
-            'venue'            => Venue::class,
-            'new_chat_member'  => User::class,
-            'left_chat_member' => User::class,
-            'new_chat_photo'   => PhotoSize::class,
-            'pinned_message'   => self::class,
+            'from'               => User::class,
+            'chat'               => Chat::class,
+            'forward_from'       => User::class,
+            'forward_from_chat'  => Chat::class,
+            'reply_to_message'   => self::class,
+            'entities'           => MessageEntity::class,
+            'audio'              => Audio::class,
+            'document'           => Document::class,
+            'game'               => Game::class,
+            'photo'              => PhotoSize::class,
+            'sticker'            => Sticker::class,
+            'video'              => Video::class,
+            'voice'              => Voice::class,
+            'video_note'         => VideoNote::class,
+            'contact'            => Contact::class,
+            'location'           => Location::class,
+            'venue'              => Venue::class,
+            'new_chat_member'    => User::class,
+            'new_chat_members'   => User::class,
+            'left_chat_member'   => User::class,
+            'new_chat_photo'     => PhotoSize::class,
+            'pinned_message'     => self::class,
+            'invoice'            => Invoice::class,
+            'successful_payment' => SuccessfulPayment::class,
         ];
     }
 
@@ -121,10 +128,12 @@ class Message extends BaseObject
             'sticker',
             'video',
             'voice',
+            'video_note',
             'contact',
             'location',
             'venue',
             'new_chat_member',
+            'new_chat_members',
             'left_chat_member',
             'new_chat_title',
             'new_chat_photo',
@@ -135,10 +144,12 @@ class Message extends BaseObject
             'migrate_to_chat_id',
             'migrate_from_chat_id',
             'pinned_message',
+            'invoice',
+            'successful_payment',
         ];
 
         return $this->keys()
-            ->intersect($types)
-            ->pop();
+                    ->intersect($types)
+                    ->pop();
     }
 }

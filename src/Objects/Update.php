@@ -14,6 +14,8 @@ namespace Telegram\Bot\Objects;
  * @method InlineQuery          getInlineQuery()            (Optional). New incoming inline query.
  * @method ChosenInlineResult   getChosenInlineResult()     (Optional). A result of an inline query that was chosen by the user and sent to their chat partner.
  * @method CallbackQuery        getCallbackQuery()          (Optional). Incoming callback query.
+ * @method ShippingQuery        getShippingQuery()          (Optional). New incoming shipping query.
+ * @method PreCheckoutQuery     getPreCheckoutQuery()       (Optional). New incoming pre-checkout query.
  *
  * @link https://core.telegram.org/bots/api#update
  */
@@ -32,6 +34,8 @@ class Update extends BaseObject
             'inline_query'         => InlineQuery::class,
             'chosen_inline_result' => ChosenInlineResult::class,
             'callback_query'       => CallbackQuery::class,
+            'shipping_query'       => ShippingQuery::class,
+            'pre_checkout_query'   => PreCheckoutQuery::class,
         ];
     }
 

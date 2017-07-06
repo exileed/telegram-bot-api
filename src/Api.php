@@ -96,7 +96,7 @@ class Api
     public function __construct($token = null, $async = false, $httpClientHandler = null)
     {
         $this->accessToken = isset($token) ? $token : getenv(static::BOT_TOKEN_ENV_NAME);
-        if (!$this->accessToken) {
+        if ( ! $this->accessToken) {
             throw new TelegramSDKException(
                 'Required "token" not supplied in config and could not find fallback environment variable "'.static::BOT_TOKEN_ENV_NAME.'"'
             );
@@ -106,8 +106,8 @@ class Api
             $this->setAsyncRequest($async);
         }
 
-        $this->client = new TelegramClient($httpClientHandler);
-        $this->commandBus = new CommandBus($this);
+        $this->client      = new TelegramClient($httpClientHandler);
+        $this->commandBus  = new CommandBus($this);
         $this->callbackBus = new CallbackCommandBus($this);
     }
 
@@ -201,7 +201,7 @@ class Api
             $params = ['multipart' => $params];
         } else {
             if (array_key_exists('reply_markup', $params)) {
-                $params['reply_markup'] = (string) $params['reply_markup'];
+                $params[ 'reply_markup' ] = (string)$params[ 'reply_markup' ];
             }
 
             $params = ['form_params' => $params];
@@ -357,7 +357,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendmessage
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['text']
@@ -391,7 +391,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#deletemessage
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['message_id']
@@ -421,7 +421,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#forwardmessage
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['from_chat_id']
@@ -455,7 +455,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendphoto
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['photo']
@@ -496,7 +496,7 @@ class Api
             )
             ->map(
                 function ($contents, $name) {
-                    if (!is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
+                    if ( ! is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
                         $contents = (new InputFile($contents))->open();
                     }
 
@@ -562,7 +562,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['audio']
@@ -599,7 +599,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendgame
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['game_short_name']
@@ -634,7 +634,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#senddocument
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['document']
@@ -669,7 +669,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendsticker
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['sticker']
@@ -683,7 +683,7 @@ class Api
      */
     public function sendSticker(array $params)
     {
-        if (is_file($params['sticker']) && (pathinfo($params['sticker'], PATHINFO_EXTENSION) !== 'webp')) {
+        if (is_file($params[ 'sticker' ]) && (pathinfo($params[ 'sticker' ], PATHINFO_EXTENSION) !== 'webp')) {
             throw new TelegramSDKException('Invalid Sticker Provided. Supported Format: Webp');
         }
 
@@ -712,7 +712,7 @@ class Api
      * @see  sendDocument
      * @link https://core.telegram.org/bots/api#sendvideo
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['video']
@@ -754,7 +754,7 @@ class Api
      * @see  sendDocumen
      * @link https://core.telegram.org/bots/api#sendvideonote
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['video_note']
@@ -791,7 +791,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendaudio
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['voice']
@@ -827,7 +827,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendlocation
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var float      $params ['latitude']
@@ -866,7 +866,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendvenue
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var float      $params ['latitude']
@@ -906,7 +906,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendcontact
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['phone_number']
@@ -939,7 +939,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendchataction
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var string     $params ['action']
@@ -963,7 +963,7 @@ class Api
             'upload_video_note',
         ];
 
-        if (isset($params['action']) && in_array($params['action'], $validActions)) {
+        if (isset($params[ 'action' ]) && in_array($params[ 'action' ], $validActions)) {
             $this->post('sendChatAction', $params);
 
             return true;
@@ -987,9 +987,9 @@ class Api
      *
      * @param array $params
      *
-     * @var int $params ['user_id']
-     * @var int $params ['offset']
-     * @var int $params ['limit']
+     * @var int     $params ['user_id']
+     * @var int     $params ['offset']
+     * @var int     $params ['limit']
      *
      * @throws TelegramSDKException
      *
@@ -1019,7 +1019,7 @@ class Api
      *
      * @param array $params
      *
-     * @var string $params ['file_id']
+     * @var string  $params ['file_id']
      *
      * @throws TelegramSDKException
      *
@@ -1044,15 +1044,17 @@ class Api
      * $params = [
      *   'chat_id'              => '',
      *   'user_id'              => '',
+     *   'until_date'           => '',
      * ];
      * </code>
      *
      * @link https://core.telegram.org/bots/api#kickchatmember
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['user_id']
+     * @var int        $params ['until_date']
      *
      * @throws TelegramSDKException
      *
@@ -1077,7 +1079,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#leavechat
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      *
@@ -1108,7 +1110,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#unbanchatmember
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['user_id']
@@ -1136,7 +1138,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchat
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      *
@@ -1162,7 +1164,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchatadministrators
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername);
      *
@@ -1194,7 +1196,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchatmemberscount
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      *
@@ -1221,7 +1223,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getchatmember
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var string|int $params ['chat_id'] Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)
      * @var int        $params ['user_id'] Unique identifier of the target user.
@@ -1255,10 +1257,10 @@ class Api
      *
      * @param array $params
      *
-     * @var string $params ['callback_query_id'] Unique identifier for the query to be answered
-     * @var string $params ['text'] Text of the notification.
-     * @var bool   $params ['show_alert']
-     * @var int    $params ['cache_time']
+     * @var string  $params ['callback_query_id'] Unique identifier for the query to be answered
+     * @var string  $params ['text'] Text of the notification.
+     * @var bool    $params ['show_alert']
+     * @var int     $params ['cache_time']
      *
      * @throws TelegramSDKException
      *
@@ -1288,7 +1290,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#editMessageText
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['message_id']
@@ -1324,7 +1326,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#editMessageCaption
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['message_id']
@@ -1357,7 +1359,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#editMessageReplyMarkup
      *
-     * @param array $params
+     * @param array    $params
      *
      * @var int|string $params ['chat_id']
      * @var int        $params ['message_id']
@@ -1392,7 +1394,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#answerinlinequery
      *
-     * @param array $params
+     * @param array     $params
      *
      * @var string      $params ['inline_query_id']
      * @var array       $params ['results']
@@ -1408,8 +1410,8 @@ class Api
      */
     public function answerInlineQuery(array $params = [])
     {
-        if (is_array($params['results'])) {
-            $params['results'] = json_encode($params['results']);
+        if (is_array($params[ 'results' ])) {
+            $params[ 'results' ] = json_encode($params[ 'results' ]);
         }
 
         $this->post('answerInlineQuery', $params);
@@ -1447,28 +1449,28 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#sendinvoice
      *
-     * @param array $params
+     * @param array  $params
      *
-     * @var int       $params ['chat_id']
-     * @var string    $params ['title']
-     * @var string    $params ['description']
-     * @var string    $params ['payload']
-     * @var string    $params ['provider_token']
-     * @var string    $params ['start_parameter']
-     * @var string    $params ['currency']
-     * @var array     $params ['prices']
-     * @var string    $params ['photo_url']
-     * @var int|null  $params ['photo_size']
-     * @var int|null  $params ['photo_width']
-     * @var int|null  $params ['photo_height']
-     * @var bool      $params ['need_name']
-     * @var bool      $params ['need_phone_number']
-     * @var bool      $params ['need_email']
-     * @var bool      $params ['need_shipping_address']
-     * @var bool      $params ['is_flexible']
-     * @var bool      $params ['disable_notification']
-     * @var int|null  $params ['reply_to_message_id']
-     * @var string    $params ['reply_markup']
+     * @var int      $params ['chat_id']
+     * @var string   $params ['title']
+     * @var string   $params ['description']
+     * @var string   $params ['payload']
+     * @var string   $params ['provider_token']
+     * @var string   $params ['start_parameter']
+     * @var string   $params ['currency']
+     * @var array    $params ['prices']
+     * @var string   $params ['photo_url']
+     * @var int|null $params ['photo_size']
+     * @var int|null $params ['photo_width']
+     * @var int|null $params ['photo_height']
+     * @var bool     $params ['need_name']
+     * @var bool     $params ['need_phone_number']
+     * @var bool     $params ['need_email']
+     * @var bool     $params ['need_shipping_address']
+     * @var bool     $params ['is_flexible']
+     * @var bool     $params ['disable_notification']
+     * @var int|null $params ['reply_to_message_id']
+     * @var string   $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -1480,6 +1482,281 @@ class Api
 
         return new Message($response->getDecodedBody());
     }
+
+    /**
+     * Use this method to restrict a user in a supergroup.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                   => '',
+     *   'user_id'                   => '',
+     *   'until_date'                => '',
+     *   'can_send_messages'         => '',
+     *   'can_send_media_messages'   => '',
+     *   'can_send_other_messages'   => '',
+     *   'can_add_web_page_previews' => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#restrictchatmember
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int|string $params ['user_id']
+     * @var int        $params ['until_date']
+     * @var bool       $params ['can_send_messages']
+     * @var bool       $params ['can_send_media_messages']
+     * @var bool       $params ['can_send_other_messages']
+     * @var bool       $params ['can_add_web_page_previews']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function restrictChatMember(array $params)
+    {
+        $this->post('restrictChatMember', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to promote or demote a user in a supergroup or a channel.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'user_id'              => '',
+     *   'can_change_info'      => '',
+     *   'can_post_messages'    => '',
+     *   'can_edit_messages'    => '',
+     *   'can_delete_messages'  => '',
+     *   'can_invite_users'     => '',
+     *   'can_restrict_members' => '',
+     *   'can_pin_messages'     => '',
+     *   'can_promote_members'  => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#promotechatmember
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int|string $params ['user_id']
+     * @var bool       $params ['can_change_info']
+     * @var bool       $params ['can_post_messages']
+     * @var bool       $params ['can_edit_messages']
+     * @var bool       $params ['can_delete_messages']
+     * @var bool       $params ['can_invite_users']
+     * @var bool       $params ['can_restrict_members']
+     * @var bool       $params ['can_pin_messages']
+     * @var bool       $params ['can_promote_members']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function promoteChatMember(array $params)
+    {
+        $this->post('promoteChatMember', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to export an invite link to a supergroup or a channel.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#exportchatinvitelink
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return string
+     */
+    public function exportChatInviteLink(array $params)
+    {
+        $result = $this->post('exportChatInviteLink', $params);
+
+        return $result->getBody();
+    }
+
+    /**
+     * Use this method to set a new profile photo for the chat.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'photo'                => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchatphoto
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var InputFile  $params ['photo']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatPhoto(array $params)
+    {
+        $this->uploadFile('setChatPhoto', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to delete a chat photo.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#deletechatphoto
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function deleteChatPhoto(array $params)
+    {
+        $this->post('deleteChatPhoto', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to change the title of a chat.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'title'                => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchattitle
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['title']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatTitle(array $params)
+    {
+        $this->post('setChatTitle', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to change the description of a supergroup or a channel..
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'description'          => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchatdescription
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['description']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatDescription(array $params)
+    {
+        $this->post('setChatDescription', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to pin a message in a supergroup.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'               => '',
+     *   'message_id'            => '',
+     *   'disable_notification'  => true,
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#pinchatmessage
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var bool       $params ['disable_notification']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function pinChatMessage(array $params)
+    {
+        $this->post('pinChatMessage', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to unpin a message in a supergroup chat.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'               => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#unpinchatmessage
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function unpinChatMessage(array $params)
+    {
+        $this->post('unpinChatMessage', $params);
+
+        return true;
+    }
+
 
     /**
      * Use this method to send answers to an inline query.
@@ -1497,10 +1774,10 @@ class Api
      *
      * @param array $params
      *
-     * @var string $params ['shipping_query_id']
-     * @var bool   $params ['ok']
-     * @var array  $params ['shipping_options']
-     * @var string $params ['error_message']
+     * @var string  $params ['shipping_query_id']
+     * @var bool    $params ['ok']
+     * @var array   $params ['shipping_options']
+     * @var string  $params ['error_message']
      *
      * @throws TelegramSDKException
      *
@@ -1528,9 +1805,9 @@ class Api
      *
      * @param array $params
      *
-     * @var string $params ['pre_checkout_query_id']
-     * @var bool   $params ['ok']
-     * @var string $params ['error_message']
+     * @var string  $params ['pre_checkout_query_id']
+     * @var bool    $params ['ok']
+     * @var string  $params ['error_message']
      *
      * @throws TelegramSDKException
      *
@@ -1560,7 +1837,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#setgamescore
      *
-     * @param array $params
+     * @param array   $params
      *
      * @var int       $params ['user_id']
      * @var int       $params ['score']
@@ -1595,7 +1872,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#setwebhook
      *
-     * @param array $params
+     * @param array      $params
      *
      * @var string       $params ['url']         HTTPS url to send updates to.
      * @var string       $params ['certificate'] Upload your public key certificate so that the root certificate in
@@ -1609,11 +1886,11 @@ class Api
      */
     public function setWebhook(array $params)
     {
-        if (filter_var($params['url'], FILTER_VALIDATE_URL) === false) {
+        if (filter_var($params[ 'url' ], FILTER_VALIDATE_URL) === false) {
             throw new TelegramSDKException('Invalid URL Provided');
         }
 
-        if (parse_url($params['url'], PHP_URL_SCHEME) !== 'https') {
+        if (parse_url($params[ 'url' ], PHP_URL_SCHEME) !== 'https') {
             throw new TelegramSDKException('Invalid URL, should be a HTTPS url.');
         }
 
@@ -1685,7 +1962,7 @@ class Api
             return $update;
         }
 
-        $updates = $this->getUpdates();
+        $updates   = $this->getUpdates();
         $highestId = -1;
 
         foreach ($updates as $update) {
@@ -1696,9 +1973,9 @@ class Api
 
         //An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id.
         if ($highestId != -1) {
-            $params = [];
-            $params['offset'] = $highestId + 1;
-            $params['limit'] = 1;
+            $params             = [];
+            $params[ 'offset' ] = $highestId + 1;
+            $params[ 'limit' ]  = 1;
             $this->markUpdateAsRead($params);
         }
 
@@ -1788,8 +2065,8 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#getupdates
      *
-     * @param array $params
-     * @param bool  $shouldEmitEvents
+     * @param array    $params
+     * @param bool     $shouldEmitEvents
      *
      * @var int|null   $params ['offset']
      * @var int|null   $params ['limit']
@@ -1857,15 +2134,15 @@ class Api
     public function __call($method, $arguments)
     {
         if (preg_match('/^\w+Commands?/', $method, $matches)) {
-            return call_user_func_array([$this->getCommandBus(), $matches[0]], $arguments);
+            return call_user_func_array([$this->getCommandBus(), $matches[ 0 ]], $arguments);
         }
 
         $action = substr($method, 0, 3);
         if ($action === 'get') {
             /* @noinspection PhpUndefinedFunctionInspection */
             $class_name = studly_case(substr($method, 3));
-            $class = 'Telegram\Bot\Objects\\'.$class_name;
-            $response = $this->post($method, $arguments[0] ?: []);
+            $class      = 'Telegram\Bot\Objects\\'.$class_name;
+            $response   = $this->post($method, $arguments[ 0 ] ?: []);
 
             if (class_exists($class)) {
                 return new $class($response->getDecodedBody());
@@ -1873,7 +2150,7 @@ class Api
 
             return $response;
         }
-        $response = $this->post($method, $arguments[0]);
+        $response = $this->post($method, $arguments[ 0 ]);
 
         return new UnknownObject($response->getDecodedBody());
     }
@@ -1911,7 +2188,7 @@ class Api
     protected function get($endpoint, $params = [])
     {
         if (array_key_exists('reply_markup', $params)) {
-            $params['reply_markup'] = (string) $params['reply_markup'];
+            $params[ 'reply_markup' ] = (string)$params[ 'reply_markup' ];
         }
 
         return $this->sendRequest(

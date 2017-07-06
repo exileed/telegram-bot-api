@@ -7,7 +7,7 @@ namespace Telegram\Bot\Objects;
  *
  *
  * @method string    getLabel()  	Portion label
- * @method integer   getAmount()   	Price of the product in the smallest units of the currency
+ * @method int   getAmount()   	Price of the product in the smallest units of the currency
  */
 class LabeledPrice extends BaseObject
 {

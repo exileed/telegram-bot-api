@@ -378,7 +378,6 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
-
     /**
      * Delete a message.
      *
@@ -734,7 +733,6 @@ class Api
 
         return new Message($response->getDecodedBody());
     }
-
 
     /**
      * Method to send video messages.

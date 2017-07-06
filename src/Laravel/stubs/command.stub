@@ -1,0 +1,40 @@
+<?php
+namespace dd;
+
+use Telegram\Bot\Commands\Command;
+
+/**
+ * Class HelpCommand.
+ */
+class HelpCommand extends Command
+{
+    /**
+     * @var string Command Name
+     */
+    protected $name = '{{name}}';
+
+    /**
+     * @var array Command Aliases
+     */
+    protected $aliases = [];
+
+    /**
+     * @var string Command Description
+     */
+    protected $description = '{{description}}';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function handle($arguments)
+    {
+        $commands = $this->telegram->getCommands();
+
+        $text = '';
+        foreach ($commands as $name => $handler) {
+            $text .= sprintf('/%s - %s'.PHP_EOL, $name, $handler->getDescription());
+        }
+
+        $this->replyWithMessage(compact('text'));
+    }
+}

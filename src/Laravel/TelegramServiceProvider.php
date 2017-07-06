@@ -2,12 +2,12 @@
 
 namespace Telegram\Bot\Laravel;
 
+use Illuminate\Contracts\Container\Container as Application;
+use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Support\ServiceProvider;
 use Laracasts\Generators\Commands\MakeTelegramCommand;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Container\Container as Application;
-use Illuminate\Foundation\Application as LaravelApplication;
 
 /**
  * Class TelegramServiceProvider.
@@ -15,7 +15,8 @@ use Illuminate\Foundation\Application as LaravelApplication;
 class TelegramServiceProvider extends ServiceProvider
 {
     /**
-     * List of artisan commands
+     * List of artisan commands.
+     *
      * @var array
      */
     protected $commands = [
@@ -81,7 +82,7 @@ class TelegramServiceProvider extends ServiceProvider
     protected function registerManager(Application $app)
     {
         $app->singleton('telegram', function ($app) {
-            $config = (array)$app['config']['telegram'];
+            $config = (array) $app['config']['telegram'];
 
             return (new BotsManager($config))->setContainer($app);
         });

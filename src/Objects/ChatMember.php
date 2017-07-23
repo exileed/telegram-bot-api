@@ -7,7 +7,7 @@ namespace Telegram\Bot\Objects;
  *
  * @method User            getUser()             Information about the user.
  * @method string          getStatus()           (Optional). The member's status in the chat. Can be “creator”, “administrator”, “member”, “left” or “kicked”
- * @method integer         getUntilDate()               (Optional). Restictred and kicked only. Date when restrictions will be lifted for this user, unix time
+ * @method int         getUntilDate()               (Optional). Restictred and kicked only. Date when restrictions will be lifted for this user, unix time
  * @method bool            getCanBeEdited()             (Optional). Administrators only. True, if the bot is allowed to edit administrator privileges of that user
  * @method bool            getCanChangeInfo()           (Optional). Administrators only. True, if the administrator can change the chat title, photo and other settings
  * @method bool            getCanPostMessages()         (Optional). Administrators only. True, if the administrator can post in the channel, channels only

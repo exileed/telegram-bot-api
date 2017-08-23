@@ -14,6 +14,7 @@ use Telegram\Bot\Objects\Chat;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\StickerSet;
 use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Objects\User;
@@ -1479,6 +1480,97 @@ class Api
         $response = $this->post('sendInvoice', $params);
 
         return new Message($response->getDecodedBody());
+    }
+
+    /**
+     * Use this method to get a sticker set.
+     *
+     * <code>
+     * $params = [
+     *   'name'                => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#getstickerset
+     *
+     * @param array $params
+     *
+     * @var string  $params ['name']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return StickerSet
+     */
+    public function getStickerSet(array $params = [])
+    {
+        $response = $this->post('getStickerSet', $params);
+
+        return new StickerSet($response->getDecodedBody());
+    }
+
+    /**
+     * Use this method to upload a .png file with a sticker.
+     *
+     * <code>
+     * $params = [
+     *   'user_id'              => '',
+     *   'png_sticker'          => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#uploadstickerfile
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['user_id']
+     * @var InputFile  $params ['png_sticker']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function uploadStickerFile(array $params)
+    {
+
+        $this->post('uploadStickerFile', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to upload a .png file with a sticker.
+     *
+     * <code>
+     * $params = [
+     *   'user_id'              => '',
+     *   'name'          => '',
+     *   'title'          => '',
+     *   'png_sticker'          => '',
+     *   'emojis'          => '',
+     *   'contains_masks'          => '',
+     *   'mask_position'          => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#uploadstickerfile
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['user_id']
+     * @var string $params ['name']
+     * @var string $params ['title']
+     * @var InputFile  $params ['png_sticker']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function createNewStickerSet(array $params)
+    {
+
+        $this->post('createNewStickerSet', $params);
+
+        return true;
     }
 
     /**

@@ -1495,7 +1495,7 @@ class Api
      *
      * @param array $params
      *
-     * @var string  $params ['name']
+     * @var string $params ['name']
      *
      * @throws TelegramSDKException
      *
@@ -1520,7 +1520,7 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#uploadstickerfile
      *
-     * @param array    $params
+     * @param array $params
      *
      * @var int|string $params ['user_id']
      * @var InputFile  $params ['png_sticker']
@@ -1531,7 +1531,6 @@ class Api
      */
     public function uploadStickerFile(array $params)
     {
-
         $this->post('uploadStickerFile', $params);
 
         return true;
@@ -1554,11 +1553,11 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#uploadstickerfile
      *
-     * @param array    $params
+     * @param array $params
      *
      * @var int|string $params ['user_id']
-     * @var string $params ['name']
-     * @var string $params ['title']
+     * @var string     $params ['name']
+     * @var string     $params ['title']
      * @var InputFile  $params ['png_sticker']
      *
      * @throws TelegramSDKException
@@ -1567,7 +1566,6 @@ class Api
      */
     public function createNewStickerSet(array $params)
     {
-
         $this->post('createNewStickerSet', $params);
 
         return true;

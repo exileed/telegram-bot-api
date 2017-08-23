@@ -195,7 +195,7 @@ class CommandBus extends AnswerBus
         $match = $this->parseCommand($message);
         if (!empty($match)) {
             $command = strtolower($match[1]); //All commands must be lowercase.
-//            $bot = (!empty($match[2])) ? $match[2] : '';
+            //            $bot = (!empty($match[2])) ? $match[2] : '';
             $arguments = $match[3];
 
             $this->execute($command, $arguments, $update);

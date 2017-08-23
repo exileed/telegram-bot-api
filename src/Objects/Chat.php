@@ -18,23 +18,26 @@ namespace Telegram\Bot\Objects;
  * @method string     getInviteLink()                   ( Optional ). Chat invite link, for supergroups and channel chats.
  * @method Message    getPinnedMessage()		        (Optional). Pinned message, for supergroups. Returned only in getChat.
  */
-class Chat extends BaseObject {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function relations() {
-		return [
-			'photo'          => ChatPhoto::class,
-			'pinned_message' => Message::class,
-		];
-	}
+class Chat extends BaseObject
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function relations()
+    {
+        return [
+            'photo'          => ChatPhoto::class,
+            'pinned_message' => Message::class,
+        ];
+    }
 
-	/**
-	 * Check if this is a private chat.
-	 *
-	 * @return bool
-	 */
-	public function isPrivate() {
-		return $this->getType() === 'private';
-	}
+    /**
+     * Check if this is a private chat.
+     *
+     * @return bool
+     */
+    public function isPrivate()
+    {
+        return $this->getType() === 'private';
+    }
 }

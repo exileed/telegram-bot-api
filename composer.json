@@ -37,7 +37,6 @@
     }
   },
   "suggest": {
-    "irazasyed/larasupport": "Allows you to use any Laravel Package in Lumen by adding support!",
     "illuminate/container": "Hold dependencies to be injected in commands constructors"
   },
   "scripts": {
@@ -52,7 +51,7 @@
         "Telegram\\Bot\\Laravel\\TelegramServiceProvider"
       ],
       "aliases": {
-        "Debugbar": "Telegram\\Bot\\Laravel\\Facades\\Telegram"
+        "Telegram": "Telegram\\Bot\\Laravel\\Facades\\Telegram"
       }
     }
   },

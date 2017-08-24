@@ -5,116 +5,100 @@ namespace Telegram\Bot\Laravel;
 use Illuminate\Contracts\Container\Container as Application;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
-use Laracasts\Generators\Commands\MakeTelegramCommand;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
 
 /**
  * Class TelegramServiceProvider.
  */
-class TelegramServiceProvider extends ServiceProvider
-{
-    /**
-     * List of artisan commands.
-     *
-     * @var array
-     */
-    protected $commands = [
-        MakeTelegramCommand::class,
-    ];
+class TelegramServiceProvider extends ServiceProvider {
 
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
 
-    /**
-     * Boot the service provider.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->setupConfig($this->app);
-    }
+	/**
+	 * Indicates if loading of the provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected $defer = true;
 
-    /**
-     * Setup the config.
-     *
-     * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return void
-     */
-    protected function setupConfig(Application $app)
-    {
-        $source = __DIR__.'/config/telegram.php';
+	/**
+	 * Boot the service provider.
+	 *
+	 * @return void
+	 */
+	public function boot() {
+		$this->setupConfig( $this->app );
+	}
 
-        if ($app instanceof LaravelApplication && $app->runningInConsole()) {
-            $this->publishes([$source => config_path('telegram.php')]);
-        } elseif ($app instanceof LumenApplication) {
-            $app->configure('telegram');
-        }
+	/**
+	 * Setup the config.
+	 *
+	 * @param \Illuminate\Contracts\Container\Container $app
+	 *
+	 * @return void
+	 */
+	protected function setupConfig( Application $app ) {
+		$source = __DIR__ . '/config/telegram.php';
 
-        $this->mergeConfigFrom($source, 'telegram');
-    }
+		if ( $app instanceof LaravelApplication && $app->runningInConsole() ) {
+			$this->publishes( [ $source => config_path( 'telegram.php' ) ] );
+		} elseif ( $app instanceof LumenApplication ) {
+			$app->configure( 'telegram' );
+		}
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->registerManager($this->app);
-        $this->registerBindings($this->app);
-        $this->commands($this->commands);
-    }
+		$this->mergeConfigFrom( $source, 'telegram' );
+	}
 
-    /**
-     * Register the manager class.
-     *
-     * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return void
-     */
-    protected function registerManager(Application $app)
-    {
-        $app->singleton('telegram', function ($app) {
-            $config = (array) $app['config']['telegram'];
+	/**
+	 * Register the service provider.
+	 *
+	 * @return void
+	 */
+	public function register() {
+		$this->registerManager( $this->app );
+		$this->registerBindings( $this->app );
+	}
 
-            return (new BotsManager($config))->setContainer($app);
-        });
+	/**
+	 * Register the manager class.
+	 *
+	 * @param \Illuminate\Contracts\Container\Container $app
+	 *
+	 * @return void
+	 */
+	protected function registerManager( Application $app ) {
+		$app->singleton( 'telegram', function ( $app ) {
+			$config = (array) $app[ 'config' ][ 'telegram' ];
 
-        $app->alias('telegram', BotsManager::class);
-    }
+			return ( new BotsManager( $config ) )->setContainer( $app );
+		} );
 
-    /**
-     * Register the bindings.
-     *
-     * @param \Illuminate\Contracts\Container\Container $app
-     *
-     * @return void
-     */
-    protected function registerBindings(Application $app)
-    {
-        $app->bind('telegram.bot', function ($app) {
-            $manager = $app['telegram'];
+		$app->alias( 'telegram', BotsManager::class );
+	}
 
-            return $manager->bot();
-        });
+	/**
+	 * Register the bindings.
+	 *
+	 * @param \Illuminate\Contracts\Container\Container $app
+	 *
+	 * @return void
+	 */
+	protected function registerBindings( Application $app ) {
+		$app->bind( 'telegram.bot', function ( $app ) {
+			$manager = $app[ 'telegram' ];
 
-        $app->alias('telegram.bot', Api::class);
-    }
+			return $manager->bot();
+		} );
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['telegram', 'telegram.bot', BotsManager::class, Api::class];
-    }
+		$app->alias( 'telegram.bot', Api::class );
+	}
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides() {
+		return [ 'telegram', 'telegram.bot', BotsManager::class, Api::class ];
+	}
 }

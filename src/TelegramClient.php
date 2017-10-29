@@ -108,11 +108,7 @@ class TelegramClient
         $timeOut = $request->getTimeOut();
         $connectTimeOut = $request->getConnectTimeOut();
 
-        if ($method === 'POST') {
-            $options = $request->getPostParams();
-        } else {
-            $options = ['query' => $request->getParams()];
-        }
+	    $options = $this->getOptions($request, $method);
 
         $rawResponse = $this->httpClientHandler->send($url, $method, $headers, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
@@ -137,4 +133,18 @@ class TelegramClient
     {
         return new TelegramResponse($request, $response);
     }
+	/**
+	+     * @param \Telegram\Bot\TelegramRequest $request
+	+     * @param $method
+	+     * @return array
+	+     */
+    private function getOptions(TelegramRequest $request, $method)
+    {
+        if ($method === 'POST') {
+            return $request->getPostParams();
+        }
+
+        return ['query' => $request->getParams()];
+    }
+
 }

@@ -17,6 +17,8 @@ namespace Telegram\Bot\Objects;
  * @method string     getDescription()                  ( Optional ). Description, for supergroups and channel chats.
  * @method string     getInviteLink()                   ( Optional ). Chat invite link, for supergroups and channel chats.
  * @method Message    getPinnedMessage()		        (Optional). Pinned message, for supergroups. Returned only in getChat.
+ * @method string     getStickerSetName()		        (Optional). For supergroups, name of group sticker set. Returned only in getChat.
+ * @method bool       getCanSetStickerSet()		        (Optional). True, if the bot can change the group sticker set. Returned only in getChat.
  */
 class Chat extends BaseObject
 {

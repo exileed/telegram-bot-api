@@ -17,10 +17,11 @@ namespace Telegram\Bot\Objects;
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @method int              getEditDate()               (Optional). Date the message was last edited in Unix time.
  * @method string           getAuthorSignature()        (Optional). Signature of the post author for messages in channels
- * @method MessageEntity[]  getEntities()               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.      (Optional). Message is a game, information about the Game.
+ * @method MessageEntity[]  getEntities()               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
+ * @method MessageEntity[]  getCaptionEntities()        (Optional).For messages with a caption, special entities like
  * @method Audio            getAudio()                  (Optional). Message is an audio file, information about the file.
  * @method Document         getDocument()               (Optional). Message is a general file, information about the file.
- * @method Game             getGame()
+ * @method Game             getGame()                   (Optional). Message is a game, information about the Game.
  * @method PhotoSize[]      getPhoto()                  (Optional). Message is a photo, available sizes of the photo.
  * @method Sticker          getSticker()                (Optional). Message is a sticker, information about the sticker.
  * @method Video            getVideo()                  (Optional). Message is a video, information about the video.
@@ -30,7 +31,7 @@ namespace Telegram\Bot\Objects;
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method Venue            getVenue()                  (Optional). Message is a venue, information about the venue.
  * @method User             getNewChatMember()          (Optional). A new member was added to the group, information about them (this member may be the bot itself).
- * @method User[]           getNewChatMembers()         Optional. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
+ * @method User[]           getNewChatMembers()         (Optional). New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
  * @method User             getLeftChatMember()         (Optional). A member was removed from the group, information about them (this member may be the bot itself).
  * @method string           getNewChatTitle()           (Optional). A chat title was changed to this value.
  * @method PhotoSize[]      getNewChatPhoto()           (Optional). A chat photo was change to this value.
@@ -76,6 +77,7 @@ class Message extends BaseObject
             'pinned_message'     => self::class,
             'invoice'            => Invoice::class,
             'successful_payment' => SuccessfulPayment::class,
+	        'caption_entities'   => MessageEntity::class
         ];
     }
 
@@ -149,6 +151,7 @@ class Message extends BaseObject
             'pinned_message',
             'invoice',
             'successful_payment',
+            'caption_entities',
         ];
 
         return $this->keys()

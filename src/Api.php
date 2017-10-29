@@ -5,8 +5,6 @@ namespace Telegram\Bot;
 use Illuminate\Contracts\Container\Container;
 use Telegram\Bot\Callbacks\CallbackCommandBus;
 use Telegram\Bot\Commands\CommandBus;
-use Telegram\Bot\Events\EmitsEvents;
-use Telegram\Bot\Events\UpdateWasReceived;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
@@ -25,20 +23,15 @@ use Telegram\Bot\Objects\WebhookInfo;
  * Class Api.
  *
  * @mixin Commands\CommandBus
+ * @mixin Callbacks\CallbackCommandBus
  */
 class Api
 {
-    use EmitsEvents;
-
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '0.1.0';
+    const VERSION = '0.2.0';
 
-    /**
-     * @var string The name of the environment variable that contains the Telegram Bot API Access Token.
-     */
-    const BOT_TOKEN_ENV_NAME = 'TELEGRAM_BOT_TOKEN';
     /**
      * @var Container IoC Container
      */
@@ -94,14 +87,9 @@ class Api
      *
      * @throws TelegramSDKException
      */
-    public function __construct($token = null, $async = false, $httpClientHandler = null)
+    public function __construct($token, $async = false, $httpClientHandler = null)
     {
-        $this->accessToken = isset($token) ? $token : getenv(static::BOT_TOKEN_ENV_NAME);
-        if (!$this->accessToken) {
-            throw new TelegramSDKException(
-                'Required "token" not supplied in config and could not find fallback environment variable "'.static::BOT_TOKEN_ENV_NAME.'"'
-            );
-        }
+        $this->accessToken = $token;
 
         if (isset($async)) {
             $this->setAsyncRequest($async);
@@ -818,6 +806,7 @@ class Api
      *   'chat_id'              => '',
      *   'latitude'             => '',
      *   'longitude'            => '',
+     *   'live_period'          => '',
      *   'disable_notification' => '',
      *   'reply_to_message_id'  => '',
      *   'reply_markup'         => '',
@@ -831,6 +820,7 @@ class Api
      * @var int|string $params ['chat_id']
      * @var float      $params ['latitude']
      * @var float      $params ['longitude']
+     * @var int        $params ['live_period']
      * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']
@@ -845,6 +835,74 @@ class Api
 
         return new Message($response->getDecodedBody());
     }
+
+	/**
+	 * Edit live location messages sent by the bot or via the bot.
+	 *
+	 * <code>
+	 * $params = [
+	 *   'chat_id'              => '',
+	 *   'message_id'           => '',
+	 *   'inline_message_id'    => '',
+	 *   'latitude'             => '',
+	 *   'longitude'            => '',
+	 *   'reply_markup'         => '',
+	 * ];
+	 * </code>
+	 *
+	 * @link https://core.telegram.org/bots/api#editmessagelivelocation
+	 *
+	 * @param array $params
+	 *
+	 * @var int|string $params ['chat_id']
+	 * @var int        $params ['message_id']
+	 * @var int        $params ['inline_message_id']
+	 * @var float      $params ['latitude']
+	 * @var float      $params ['longitude']
+	 * @var string     $params ['reply_markup']
+	 *
+	 * @throws TelegramSDKException
+	 *
+	 * @return bool
+	 */
+	public function editMessageLiveLocation(array $params)
+	{
+		$this->post('editMessageLiveLocation', $params);
+
+		return true;
+	}
+
+	/**
+	 * Stop updating a live location message sent by the bot or via the bot.
+	 *
+	 * <code>
+	 * $params = [
+	 *   'chat_id'              => '',
+	 *   'message_id'           => '',
+	 *   'inline_message_id'    => '',
+	 *   'reply_markup'         => '',
+	 * ];
+	 * </code>
+	 *
+	 * @link https://core.telegram.org/bots/api#stopMessageLiveLocation
+	 *
+	 * @param array $params
+	 *
+	 * @var int|string $params ['chat_id']
+	 * @var int        $params ['message_id']
+	 * @var int        $params ['inline_message_id']
+	 * @var string     $params ['reply_markup']
+	 *
+	 * @throws TelegramSDKException
+	 *
+	 * @return bool
+	 */
+	public function stopMessageLiveLocation(array $params)
+	{
+		$this->post('stopMessageLiveLocation', $params);
+
+		return true;
+	}
 
     /**
      * Send information about a venue.
@@ -1789,6 +1847,60 @@ class Api
         return true;
     }
 
+	/**
+ * Set a new group sticker set for a supergroup.
+ *
+ * <code>
+ * $params = [
+ *   'chat_id'              => '',
+ *   'sticker_set_name'     => '',
+ * ];
+ * </code>
+ *
+ * @link https://core.telegram.org/bots/api#setChatStickerSet
+ *
+ * @param array $params
+ *
+ * @var int|string $params ['chat_id']
+ * @var string     $params ['sticker_set_name']
+ *
+ * @throws TelegramSDKException
+ *
+ * @return bool
+ */
+	public function setChatStickerSet(array $params)
+	{
+		$this->post('setChatStickerSet', $params);
+
+		return true;
+	}
+
+	/**
+	 * Delete a group sticker set from a supergroup.
+	 *
+	 * <code>
+	 * $params = [
+	 *   'chat_id'              => '',
+	 * ];
+	 * </code>
+	 *
+	 * @link https://core.telegram.org/bots/api#deleteChatStickerSet
+	 *
+	 * @param array $params
+	 *
+	 * @var int|string $params ['chat_id']
+	 *
+	 * @throws TelegramSDKException
+	 *
+	 * @return bool
+	 */
+	public function deleteChatStickerSet(array $params)
+	{
+		$this->post('deleteChatStickerSet', $params);
+
+		return true;
+	}
+
     /**
      * Use this method to pin a message in a supergroup.
      *
@@ -2077,17 +2189,12 @@ class Api
      *
      * @return Update
      */
-    public function getWebhookUpdate($shouldEmitEvent = true)
+    public function getWebhookUpdate()
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
-        $update = new Update($body);
+        return new Update($body);
 
-        if ($shouldEmitEvent) {
-            $this->emitEvent(new UpdateWasReceived($update, $this));
-        }
-
-        return $update;
     }
 
     /**
@@ -2171,13 +2278,7 @@ class Api
         return collect($response->getResult())
             ->map(
                 function ($data) use ($shouldEmitEvents) {
-                    $update = new Update($data);
-
-                    if ($shouldEmitEvents) {
-                        $this->emitEvent(new UpdateWasReceived($update, $this));
-                    }
-
-                    return $update;
+	                return new Update($data);
                 }
             )
             ->all();

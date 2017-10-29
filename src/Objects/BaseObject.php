@@ -48,7 +48,7 @@ abstract class BaseObject extends Collection
     /**
      * Map property relatives to appropriate objects.
      *
-     * @return array|void
+     * @return array|bool
      */
     public function mapRelatives()
     {

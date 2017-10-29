@@ -1,7 +1,23 @@
 <?php
+
+
+use PHPUnit\Framework\TestCase;
+use Telegram\Bot\BotsManager;
+
 /**
- * @author  Dmitriy Kuts <me@exileed.com>
- *
- * @link    http://bookinganalytics.com
+ * Class ApiTest
  */
-declare(strict_types=1);
+class BotsManagerTest extends TestCase {
+
+
+	/**
+	 * @var BotsManager
+	 */
+	protected $manager;
+
+	public function setUp()
+	{
+		$this->manager = new BotsManager('token');
+	}
+
+}

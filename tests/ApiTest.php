@@ -32,14 +32,6 @@ class ApiTest extends TestCase
 		$this->api = new Api('token');
 	}
 
-	/**
-	 * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
-	 */
-	public function test_it_throws_exception_when_no_token_is_provided()
-	{
-		new Api();
-	}
-
 	public function test_it_checks_the_passed_api_token_is_returned()
 	{
 		$this->assertEquals('token', $this->api->getAccessToken());
@@ -396,7 +388,7 @@ class ApiTest extends TestCase
 	/** @test */
 	public function it_returns_a_successful_response_bool_if_correct_webhook_is_sent()
 	{
-		$this->api = Mocker::createApiResponse(true);
+		$this->api = Mocker::createApiResponse([true]);
 
 		$response = $this->api->setWebhook(['url' => 'https://example.com']);
 
@@ -407,7 +399,7 @@ class ApiTest extends TestCase
 	/** @test */
 	public function it_returns_a_successful_response_object_when_webhook_removed()
 	{
-		$this->api = Mocker::createApiResponse(true);
+		$this->api = Mocker::createApiResponse([true]);
 
 		$response = $this->api->removeWebhook();
 
@@ -418,7 +410,7 @@ class ApiTest extends TestCase
 
 	public function test_delete_message()
 	{
-		$api = Mocker::createApiResponse(true);
+		$api = Mocker::createApiResponse([true]);
 		$this->assertTrue($api->deleteMessage(['chat_id' => 123, 'message_id' => 456]));
 	}
 

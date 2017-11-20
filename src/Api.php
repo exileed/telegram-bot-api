@@ -43,7 +43,7 @@ class Api
     /**
      * @var string Telegram Bot API Access Token.
      */
-    protected $accessToken = null;
+    protected $accessToken;
     /**
      * @var TelegramResponse|null Stores the last request made to Telegram Bot API.
      */
@@ -91,7 +91,7 @@ class Api
     {
         $this->accessToken = $token;
 
-        if (isset($async)) {
+        if ($async) {
             $this->setAsyncRequest($async);
         }
 
@@ -182,6 +182,7 @@ class Api
      * @param array  $params
      * @param bool   $fileUpload Set true if a file is being uploaded.
      *
+     * @throws TelegramSDKException
      * @return TelegramResponse
      */
     protected function post($endpoint, array $params = [], $fileUpload = false)
@@ -1489,6 +1490,7 @@ class Api
      *   'start_parameter'        => '',
      *   'currency'               => '',
      *   'prices'                 => '',
+     *   'provider_data'          => '',
      *   'photo_url'              => '',
      *   'photo_size'             => '',
      *   'photo_width'            => '',
@@ -1516,6 +1518,7 @@ class Api
      * @var string   $params ['start_parameter']
      * @var string   $params ['currency']
      * @var array    $params ['prices']
+     * @var string   $params ['provider_data']
      * @var string   $params ['photo_url']
      * @var int|null $params ['photo_size']
      * @var int|null $params ['photo_width']
@@ -1538,6 +1541,39 @@ class Api
         $response = $this->post('sendInvoice', $params);
 
         return new Message($response->getDecodedBody());
+    }
+
+
+	/**
+	 * Use this method to send a group of photos or videos as an album.
+	 *
+	 * <code>
+	 * $params = [
+	 *   'chat_id'                => '',
+	 *   'media'                  => [],
+	 *   'disable_notification'   => false,
+	 *   'reply_to_message_id'    => '',
+	 * ];
+	 * </code>
+	 *
+	 * @link https://core.telegram.org/bots/api#sendmediagroup
+	 *
+	 * @param array $params
+	 *
+	 * @var int      $params ['chat_id']
+	 * @var array    $params ['media']
+	 * @var bool     $params ['disable_notification']
+	 * @var int|null $params ['reply_to_message_id']
+	 *
+	 * @throws TelegramSDKException
+	 *
+	 * @return Message
+	 */
+    public function sendMediaGroup(array $params = []){
+
+	    $response = $this->post('sendMediaGroup', $params);
+
+	    return new Message($response->getDecodedBody());
     }
 
     /**
@@ -1589,7 +1625,7 @@ class Api
      */
     public function uploadStickerFile(array $params)
     {
-        $this->post('uploadStickerFile', $params);
+        $this->uploadFile('uploadStickerFile', $params);
 
         return true;
     }
@@ -1624,7 +1660,7 @@ class Api
      */
     public function createNewStickerSet(array $params)
     {
-        $this->post('createNewStickerSet', $params);
+        $this->uploadFile('createNewStickerSet', $params);
 
         return true;
     }

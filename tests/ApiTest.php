@@ -461,4 +461,11 @@ class ApiTest extends TestCase
 		];
 	}
 
+
+	public function test_send_media_group()
+	{
+		$api = Mocker::createApiResponse([true]);
+		$this->assertTrue($api->sendMediaGroup(['chat_id' => 123,'']));
+	}
+
 }

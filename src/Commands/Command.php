@@ -36,7 +36,7 @@ abstract class Command implements CommandInterface
      * Command Aliases
      * Helpful when you want to trigger command with more than one name.
      *
-     * @var array
+     * @var string[]
      */
     protected $aliases = [];
 
@@ -46,9 +46,9 @@ abstract class Command implements CommandInterface
     protected $description;
 
     /**
-     * @var string Arguments passed to the command.
+     * @var array Arguments passed to the command.
      */
-    protected $arguments;
+    protected $arguments = [];
 
     /**
      * Get Command Name.
@@ -111,7 +111,7 @@ abstract class Command implements CommandInterface
     /**
      * Get Arguments passed to the command.
      *
-     * @return string
+     * @return array
      */
     public function getArguments()
     {
@@ -137,7 +137,7 @@ abstract class Command implements CommandInterface
         $this->arguments = $arguments;
         $this->update = $update;
 
-        return $this->handle($arguments);
+	    return call_user_func_array([$this, 'handle'], $this->getArguments());
     }
 
     /**

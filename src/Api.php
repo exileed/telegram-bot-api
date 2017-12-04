@@ -2313,7 +2313,7 @@ class Api
 
         return collect($response->getResult())
             ->map(
-                function ($data) use ($shouldEmitEvents) {
+                function ($data) {
 	                return new Update($data);
                 }
             )

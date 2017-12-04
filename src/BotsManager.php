@@ -8,7 +8,6 @@ use InvalidArgumentException;
 /**
  * Class BotsManager.
  *
- * @TODO Add methods in docblock for autocompletion from Api file.
  */
 class BotsManager
 {

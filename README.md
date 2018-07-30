@@ -6,8 +6,7 @@ Telegram Bot API - PHP SDK
 <p align="center">
 <a href="https://travis-ci.org/exileed/telegram-bot-sdk"><img src="https://img.shields.io/travis/exileed/telegram-bot-sdk.svg?style=flat-square" alt="Build Status"/></a>
 <a href="https://github.com/exileed/telegram-bot-sdk/releases"><img src="https://img.shields.io/github/release/exileed/telegram-bot-sdk.svg?style=flat-square" alt="Latest Version"/></a>
-<a href="https://packagist.org/packages/exileed/telegram-bot-api"><img src="https://img.shields.io/packagist/dt/exileed/telegram-bot-sdk.svg?style=flat-square" alt="Total Downloads"/></a>
-<a href="https://styleci.io/repos/82008756"><img src="https://styleci.io/repos/82008756/shield?branch=master" alt="StyleCI"></a>
+<a href="https://packagist.org/packages/exileed/telegram-bot-api"><img src="https://img.shields.io/packagist/dt/exileed/telegram-bot-api.svg?style=flat-square" alt="Total Downloads"/></a>
 </p>
 
 ## Overview

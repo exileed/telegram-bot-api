@@ -29,15 +29,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
-     */
-    public function it_throws_exception_when_no_token_is_provided()
-    {
-        new Api();
-    }
-
-    /**
-     * @test
      * @dataProvider badTypes
      * @expectedException InvalidArgumentException
      *

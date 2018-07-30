@@ -642,6 +642,54 @@ class Api
         return new Message($response->getDecodedBody());
     }
 
+
+    /**
+     *  Send animation files.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'               => '',
+     *   'animation'             => '',
+     *   'duration'              => '',
+     *   'duration'              => '',
+     *   'width'                 => '',
+     *   'height'                => '',
+     *   'thumb'                 => '',
+     *   'caption'               => '',
+     *   'parse_mode'            => '',
+     *   'disable_notification'  => '',
+     *   'reply_to_message_id'   => '',
+     *   'reply_markup'          => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendanimation
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['animation']
+     * @var string     $params ['duration']
+     * @var string     $params ['width']
+     * @var string     $params ['height']
+     * @var string     $params ['thumb']
+     * @var string     $params ['caption']
+     * @var string     $params ['parse_mode']
+     * @var bool       $params ['disable_notification']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message
+     */
+    public function sendAnimation(array $params)
+    {
+        $response = $this->uploadFile('sendAnimation', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
     /**
      * Send .webp stickers.
      *
@@ -872,6 +920,43 @@ class Api
 		return true;
 	}
 
+    /**
+     * Edit edit audio, document, photo, or video messages.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'message_id'           => '',
+     *   'inline_message_id'    => '',
+     *   'media'                => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#editmessagemedia
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var int        $params ['inline_message_id']
+     * @var float      $params ['media']
+     * @var string     $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function editMessageMedia(array $params)
+    {
+        $this->post('editMessageMedia', $params);
+
+        return true;
+    }
+
+
+
+
 	/**
 	 * Stop updating a live location message sent by the bot or via the bot.
 	 *
@@ -955,6 +1040,7 @@ class Api
      *   'phone_number'         => '',
      *   'first_name'           => '',
      *   'last_name'            => '',
+     *   'vcard'                => '',
      *   'disable_notification' => '',
      *   'reply_to_message_id'  => '',
      *   'reply_markup'         => '',
@@ -969,6 +1055,7 @@ class Api
      * @var string     $params ['phone_number']
      * @var string     $params ['first_name']
      * @var string     $params ['last_name']
+     * @var string     $params ['vcard']
      * @var bool       $params ['disable_notification']
      * @var int        $params ['reply_to_message_id']
      * @var string     $params ['reply_markup']

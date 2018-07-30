@@ -30,6 +30,7 @@ namespace Telegram\Bot\Objects\InlineQuery;
  * @method $this setThumbUrl($string)               Optional. Url of the thumbnail for the result
  * @method $this setThumbWidth($int)                Optional. Thumbnail width
  * @method $this setThumbHeight($int)               Optional. Thumbnail height
+ * @method $this setVcard()                         Optional. Additional data about the contact in the form of a vCard.
  */
 class InlineQueryResultContact extends InlineBaseObject
 {

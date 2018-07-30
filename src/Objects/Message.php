@@ -21,12 +21,13 @@ namespace Telegram\Bot\Objects;
  * @method MessageEntity[]  getCaptionEntities()        (Optional).For messages with a caption, special entities like
  * @method Audio            getAudio()                  (Optional). Message is an audio file, information about the file.
  * @method Document         getDocument()               (Optional). Message is a general file, information about the file.
+ * @method Animation        getAnimation()              (Optional). Message is an animation, information about the animation.
  * @method Game             getGame()                   (Optional). Message is a game, information about the Game.
  * @method PhotoSize[]      getPhoto()                  (Optional). Message is a photo, available sizes of the photo.
  * @method Sticker          getSticker()                (Optional). Message is a sticker, information about the sticker.
  * @method Video            getVideo()                  (Optional). Message is a video, information about the video.
  * @method Voice            getVoice()                  (Optional). Message is a voice message, information about the file.
- * @method Voice            getVideoNote()              (Optional). Message is a video note, information about the video message
+ * @method VideoNote        getVideoNote()              (Optional). Message is a video note, information about the video message
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method Venue            getVenue()                  (Optional). Message is a venue, information about the venue.
@@ -42,8 +43,10 @@ namespace Telegram\Bot\Objects;
  * @method int              getMigrateToChatId()        (Optional). The group has been migrated to a supergroup with the specified identifier, not exceeding 1e13 by absolute value.
  * @method int              getMigrateFromChatId()      (Optional). The supergroup has been migrated from a group with the specified identifier, not exceeding 1e13 by absolute value.
  * @method Message          getPinnedMessage()          (Optional). Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
- * @method Invoice          getInvoice()                (Optional). Message is an invoice for a payment, information about the invoice.
+ * @method Invoice           getInvoice()               (Optional). Message is an invoice for a payment, information about the invoice.
  * @method SuccessfulPayment getSuccessfulPayment()     (Optional). Message is a service message about a successful payment, information about the payment.
+ * @method string            getConnectedWebsite()      (Optional). The domain name of the website on which the user has logged in.
+ * @method PassportData      getPassportData()          (Optional). Telegram Passport data
  */
 class Message extends BaseObject
 {

@@ -22,6 +22,7 @@ use Telegram\Bot\Objects\InlineQuery\InlineBaseObject;
  * @method $this setTitle($string)               Name of the venue
  * @method $this setAddress($string)             Address of the venue
  * @method $this setFoursquareIdTitle($string)   Optional. Foursquare identifier of the venue, if known
+ * @method $this setFoursquareType()             Optional. Foursquare type of the venue.
  */
 class InputVenueMessageContent extends InlineBaseObject
 {

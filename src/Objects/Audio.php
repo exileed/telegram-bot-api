@@ -12,6 +12,7 @@ namespace Telegram\Bot\Objects;
  * @method string   getTitle()      (Optional). Title of the audio as defined by sender or by audio tags.
  * @method string   getMimeType()   (Optional). MIME type of the file as defined by sender.
  * @method int      getFileSize()   (Optional). File size.
+ * @method int      getThumb()      (Optional). Thumbnail of the album cover to which the music file belongs
  */
 class Audio extends BaseObject
 {

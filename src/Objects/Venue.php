@@ -10,6 +10,7 @@ namespace Telegram\Bot\Objects;
  * @method string      getTitle()           Name of the venue.
  * @method string      getAddress()         Address of the venue.
  * @method string      getFoursquareId()    (Optional). Foursquare identifier of the venue.
+ * @method string      getFoursquareType()  (Optional). Foursquare type of the venue.
  */
 class Venue extends BaseObject
 {

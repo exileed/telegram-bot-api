@@ -30,7 +30,7 @@ class Api
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '1.0.0';
+    const VERSION = '0.2.0';
 
     /**
      * @var Container IoC Container

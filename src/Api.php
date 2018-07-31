@@ -2345,7 +2345,6 @@ class Api
      * @link https://core.telegram.org/bots/api#getupdates
      *
      * @param array    $params
-     * @param bool     $shouldEmitEvents
      *
      * @var int|null   $params ['offset']
      * @var int|null   $params ['limit']
@@ -2356,13 +2355,13 @@ class Api
      *
      * @return Update[]
      */
-    public function getUpdates(array $params = [], $shouldEmitEvents = true)
+    public function getUpdates(array $params = [])
     {
         $response = $this->post('getUpdates', $params);
 
         return collect($response->getResult())
             ->map(
-                function ($data) use ($shouldEmitEvents) {
+                function ($data) {
                     return new Update($data);
                 }
             )

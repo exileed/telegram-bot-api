@@ -15,7 +15,7 @@ use Telegram\Bot\TelegramClient;
 use Telegram\Bot\TelegramResponse;
 use Telegram\Bot\Tests\Mocks\Mocker;
 
-class ApiTest extends \PHPUnit_Framework_TestCase
+class ApiTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Api

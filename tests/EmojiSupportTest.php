@@ -5,7 +5,7 @@ namespace Telegram\Bot\Tests;
 use ReflectionClass;
 use Telegram\Bot\Helpers\Emojify;
 
-class EmojiSupportTest extends \PHPUnit_Framework_TestCase
+class EmojiSupportTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test

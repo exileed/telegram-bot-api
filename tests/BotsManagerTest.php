@@ -1,7 +1,8 @@
 <?php
-/**
- * @author  Dmitriy Kuts <me@exileed.com>
- *
- * @link    http://bookinganalytics.com
- */
-declare(strict_types=1);
+
+namespace Telegram\Bot\Tests;
+
+
+class BotsManagerTest extends \PHPUnit\Framework\TestCase
+{
+}

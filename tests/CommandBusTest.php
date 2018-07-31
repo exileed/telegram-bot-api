@@ -9,7 +9,7 @@ use Telegram\Bot\Tests\Mocks\MockCommand;
 use Telegram\Bot\Tests\Mocks\MockCommandTwo;
 use Telegram\Bot\Tests\Mocks\Mocker;
 
-class CommandBusTest extends \PHPUnit_Framework_TestCase
+class CommandBusTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var CommandBus

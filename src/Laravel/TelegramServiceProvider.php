@@ -66,7 +66,7 @@ class TelegramServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	protected function registerManager( Application $app ) {
+	protected function registerManager( Application $app ):void {
 		$app->singleton( 'telegram', function ( $app ) {
 			$config = (array) $app[ 'config' ][ 'telegram' ];
 
@@ -83,7 +83,7 @@ class TelegramServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	protected function registerBindings( Application $app ) {
+	protected function registerBindings( Application $app ):void {
 		$app->bind( 'telegram.bot', function ( $app ) {
 			$manager = $app[ 'telegram' ];
 
@@ -98,7 +98,7 @@ class TelegramServiceProvider extends ServiceProvider {
 	 *
 	 * @return array
 	 */
-	public function provides() {
+	public function provides():array {
 		return [ 'telegram', 'telegram.bot', BotsManager::class, Api::class ];
 	}
 }

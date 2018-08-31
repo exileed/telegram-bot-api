@@ -3,7 +3,7 @@
   "description": "The Telegram Bot API PHP",
   "keywords": ["telegram", "telegram bot", "telegram bot api", "telegram sdk", "telegram php", "laravel telegram", "laravel"],
   "type": "library",
-  "homepage": "https://github.com/exileed/telegram-bot-sdk",
+  "homepage": "https://github.com/exileed/telegram-bot-api",
   "license": "BSD-3-Clause",
   "authors": [
     {
@@ -20,6 +20,7 @@
   "require": {
     "php": "^7.1",
     "guzzlehttp/guzzle": "~6.0",
+    "psr/container": "^1.0",
     "illuminate/support": "~5.0"
   },
   "require-dev": {

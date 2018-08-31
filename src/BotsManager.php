@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
+use Psr\Container\ContainerInterface;
 use InvalidArgumentException;
 
 /**
@@ -15,7 +15,7 @@ class BotsManager
     /** @var array The config instance. */
     protected $config;
 
-    /** @var Container The container instance. */
+    /** @var ContainerInterface The container instance. */
     protected $container;
 
     /** @var Api[] The active bot instances. */
@@ -34,11 +34,11 @@ class BotsManager
     /**
      * Set the IoC Container.
      *
-     * @param $container Container instance
+     * @param $container ContainerInterface instance
      *
      * @return $this
      */
-    public function setContainer(Container $container):self
+    public function setContainer(ContainerInterface $container):self
     {
         $this->container = $container;
 

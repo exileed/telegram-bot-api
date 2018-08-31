@@ -2,7 +2,7 @@
 
 namespace Telegram\Bot;
 
-use Illuminate\Contracts\Container\Container;
+use Psr\Container\ContainerInterface;
 use Telegram\Bot\Callbacks\CallbackCommandBus;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -33,7 +33,7 @@ class Api
     const VERSION = '0.2.0';
 
     /**
-     * @var Container IoC Container
+     * @var ContainerInterface IoC Container
      */
     protected static $container = null;
     /**
@@ -129,11 +129,11 @@ class Api
     /**
      * Set the IoC Container.
      *
-     * @param $container Container instance
+     * @param $container ContainerInterface instance
      *
      * @return void
      */
-    public static function setContainer(Container $container): void
+    public static function setContainer(ContainerInterface $container): void
     {
         self::$container = $container;
     }
@@ -153,7 +153,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    public function getLastResponse(): TelegramResponse
+    public function getLastResponse(): ?TelegramResponse
     {
         return $this->lastResponse;
     }
@@ -2465,9 +2465,9 @@ class Api
     /**
      * Get the IoC Container.
      *
-     * @return Container
+     * @return ContainerInterface
      */
-    public function getContainer():Container
+    public function getContainer():ContainerInterface
     {
         return self::$container;
     }

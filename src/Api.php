@@ -43,7 +43,7 @@ class Api
     /**
      * @var string Telegram Bot API Access Token.
      */
-    protected $accessToken = null;
+    protected $accessToken;
     /**
      * @var TelegramResponse|null Stores the last request made to Telegram Bot API.
      */
@@ -107,7 +107,7 @@ class Api
      *
      * @return Api
      */
-    public function setAsyncRequest($isAsyncRequest)
+    public function setAsyncRequest($isAsyncRequest): Api
     {
         $this->isAsyncRequest = $isAsyncRequest;
 
@@ -121,7 +121,7 @@ class Api
      *
      * @return BotsManager
      */
-    public static function manager($config)
+    public static function manager($config): BotsManager
     {
         return new BotsManager($config);
     }
@@ -133,7 +133,7 @@ class Api
      *
      * @return void
      */
-    public static function setContainer(Container $container)
+    public static function setContainer(Container $container): void
     {
         self::$container = $container;
     }
@@ -143,7 +143,7 @@ class Api
      *
      * @return TelegramClient
      */
-    public function getClient()
+    public function getClient(): TelegramClient
     {
         return $this->client;
     }
@@ -153,7 +153,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    public function getLastResponse()
+    public function getLastResponse(): TelegramResponse
     {
         return $this->lastResponse;
     }
@@ -168,7 +168,7 @@ class Api
      *
      * @return User
      */
-    public function getMe()
+    public function getMe(): User
     {
         $response = $this->post('getMe');
 
@@ -184,7 +184,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    protected function post($endpoint, array $params = [], $fileUpload = false)
+    protected function post($endpoint, array $params = [], $fileUpload = false): TelegramResponse
     {
         if ($fileUpload) {
             $params = ['multipart' => $params];
@@ -218,7 +218,7 @@ class Api
         $method,
         $endpoint,
         array $params = []
-    ) {
+    ): TelegramResponse {
         $request = $this->request($method, $endpoint, $params);
 
         return $this->lastResponse = $this->client->sendRequest($request);
@@ -237,7 +237,7 @@ class Api
         $method,
         $endpoint,
         array $params = []
-    ) {
+    ): TelegramRequest {
         return new TelegramRequest(
             $this->getAccessToken(),
             $method,
@@ -254,7 +254,7 @@ class Api
      *
      * @return string
      */
-    public function getAccessToken()
+    public function getAccessToken(): string
     {
         return $this->accessToken;
     }
@@ -268,9 +268,9 @@ class Api
      *
      * @return Api
      */
-    public function setAccessToken($accessToken)
+    public function setAccessToken($accessToken): Api
     {
-        if (is_string($accessToken)) {
+        if (\is_string($accessToken)) {
             $this->accessToken = $accessToken;
 
             return $this;
@@ -284,7 +284,7 @@ class Api
      *
      * @return bool
      */
-    public function isAsyncRequest()
+    public function isAsyncRequest(): bool
     {
         return $this->isAsyncRequest;
     }
@@ -292,7 +292,7 @@ class Api
     /**
      * @return int
      */
-    public function getTimeOut()
+    public function getTimeOut(): int
     {
         return $this->timeOut;
     }
@@ -302,7 +302,7 @@ class Api
      *
      * @return $this
      */
-    public function setTimeOut($timeOut)
+    public function setTimeOut($timeOut): self
     {
         $this->timeOut = $timeOut;
 
@@ -312,7 +312,7 @@ class Api
     /**
      * @return int
      */
-    public function getConnectTimeOut()
+    public function getConnectTimeOut(): int
     {
         return $this->connectTimeOut;
     }
@@ -322,7 +322,7 @@ class Api
      *
      * @return $this
      */
-    public function setConnectTimeOut($connectTimeOut)
+    public function setConnectTimeOut($connectTimeOut): self
     {
         $this->connectTimeOut = $connectTimeOut;
 
@@ -360,7 +360,7 @@ class Api
      *
      * @return Message
      */
-    public function sendMessage(array $params)
+    public function sendMessage(array $params): Message
     {
         $response = $this->post('sendMessage', $params);
 
@@ -388,7 +388,7 @@ class Api
      *
      * @return bool
      */
-    public function deleteMessage(array $params)
+    public function deleteMessage(array $params):bool
     {
         $response = $this->post('deleteMessage', $params);
 
@@ -420,7 +420,7 @@ class Api
      *
      * @return Message
      */
-    public function forwardMessage(array $params)
+    public function forwardMessage(array $params):Message
     {
         $response = $this->post('forwardMessage', $params);
 
@@ -456,7 +456,7 @@ class Api
      *
      * @return Message
      */
-    public function sendPhoto(array $params)
+    public function sendPhoto(array $params):Message
     {
         $response = $this->uploadFile('sendPhoto', $params);
 
@@ -474,7 +474,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    protected function uploadFile($endpoint, array $params = [])
+    protected function uploadFile($endpoint, array $params = []):TelegramResponse
     {
         $multipart_params = collect($params)
             ->reject(
@@ -484,7 +484,7 @@ class Api
             )
             ->map(
                 function ($contents, $name) {
-                    if ( ! is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
+                    if ( ! \is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
                         $contents = (new InputFile($contents))->open();
                     }
 
@@ -510,7 +510,7 @@ class Api
      *
      * @return bool
      */
-    protected function isValidFileOrUrl($name, $contents)
+    protected function isValidFileOrUrl($name, $contents):bool
     {
         //Don't try to open a url as an actual file when using this method to setWebhook.
         if ($name == 'url') {
@@ -565,7 +565,7 @@ class Api
      *
      * @return Message
      */
-    public function sendAudio(array $params)
+    public function sendAudio(array $params):Message
     {
         $response = $this->uploadFile('sendAudio', $params);
 
@@ -599,7 +599,7 @@ class Api
      *
      * @return Message
      */
-    public function sendGame(array $params)
+    public function sendGame(array $params):Message
     {
         $response = $this->uploadFile('sendGame', $params);
 
@@ -635,7 +635,7 @@ class Api
      *
      * @return Message
      */
-    public function sendDocument(array $params)
+    public function sendDocument(array $params):Message
     {
         $response = $this->uploadFile('sendDocument', $params);
 
@@ -683,7 +683,7 @@ class Api
      *
      * @return Message
      */
-    public function sendAnimation(array $params)
+    public function sendAnimation(array $params):Message
     {
         $response = $this->uploadFile('sendAnimation', $params);
 
@@ -717,7 +717,7 @@ class Api
      *
      * @return Message
      */
-    public function sendSticker(array $params)
+    public function sendSticker(array $params):Message
     {
         if (is_file($params[ 'sticker' ]) && (pathinfo($params[ 'sticker' ], PATHINFO_EXTENSION) !== 'webp')) {
             throw new TelegramSDKException('Invalid Sticker Provided. Supported Format: Webp');
@@ -764,7 +764,7 @@ class Api
      *
      * @return Message
      */
-    public function sendVideo(array $params)
+    public function sendVideo(array $params):Message
     {
         $response = $this->uploadFile('sendVideo', $params);
 
@@ -803,7 +803,7 @@ class Api
      *
      * @return Message
      */
-    public function sendVideoNote(array $params)
+    public function sendVideoNote(array $params):Message
     {
         $response = $this->uploadFile('sendVideoNote', $params);
 
@@ -839,7 +839,7 @@ class Api
      *
      * @return Message
      */
-    public function sendVoice(array $params)
+    public function sendVoice(array $params):Message
     {
         $response = $this->uploadFile('sendVoice', $params);
 
@@ -877,7 +877,7 @@ class Api
      *
      * @return Message
      */
-    public function sendLocation(array $params)
+    public function sendLocation(array $params):Message
     {
         $response = $this->post('sendLocation', $params);
 
@@ -913,7 +913,7 @@ class Api
      *
      * @return bool
      */
-    public function editMessageLiveLocation(array $params)
+    public function editMessageLiveLocation(array $params):bool
     {
         $this->post('editMessageLiveLocation', $params);
 
@@ -947,7 +947,7 @@ class Api
      *
      * @return bool
      */
-    public function editMessageMedia(array $params)
+    public function editMessageMedia(array $params):bool
     {
         $this->post('editMessageMedia', $params);
 
@@ -980,7 +980,7 @@ class Api
      *
      * @return bool
      */
-    public function stopMessageLiveLocation(array $params)
+    public function stopMessageLiveLocation(array $params):bool
     {
         $this->post('stopMessageLiveLocation', $params);
 
@@ -1022,7 +1022,7 @@ class Api
      *
      * @return Message
      */
-    public function sendVenue(array $params)
+    public function sendVenue(array $params):Message
     {
         $response = $this->post('sendVenue', $params);
 
@@ -1062,7 +1062,7 @@ class Api
      *
      * @return Message
      */
-    public function sendContact(array $params)
+    public function sendContact(array $params):Message
     {
         $response = $this->post('sendContact', $params);
 
@@ -1090,7 +1090,7 @@ class Api
      *
      * @return bool
      */
-    public function sendChatAction(array $params)
+    public function sendChatAction(array $params):bool
     {
         $validActions = [
             'typing',
@@ -1105,7 +1105,7 @@ class Api
             'upload_video_note',
         ];
 
-        if (isset($params[ 'action' ]) && in_array($params[ 'action' ], $validActions)) {
+        if (isset($params[ 'action' ]) && \in_array($params[ 'action' ], $validActions)) {
             $this->post('sendChatAction', $params);
 
             return true;
@@ -1137,7 +1137,7 @@ class Api
      *
      * @return UserProfilePhotos
      */
-    public function getUserProfilePhotos(array $params)
+    public function getUserProfilePhotos(array $params):UserProfilePhotos
     {
         $response = $this->post('getUserProfilePhotos', $params);
 
@@ -1167,7 +1167,7 @@ class Api
      *
      * @return File
      */
-    public function getFile(array $params)
+    public function getFile(array $params):File
     {
         $response = $this->post('getFile', $params);
 
@@ -1202,7 +1202,7 @@ class Api
      *
      * @return bool
      */
-    public function kickChatMember(array $params)
+    public function kickChatMember(array $params):bool
     {
         $this->post('kickChatMember', $params);
 
@@ -1229,7 +1229,7 @@ class Api
      *
      * @return bool
      */
-    public function leaveChat(array $params)
+    public function leaveChat(array $params):bool
     {
         $this->post('leaveChat', $params);
 
@@ -1261,7 +1261,7 @@ class Api
      *
      * @return bool
      */
-    public function unbanChatMember(array $params)
+    public function unbanChatMember(array $params):bool
     {
         $this->post('unbanChatMember', $params);
 
@@ -1288,7 +1288,7 @@ class Api
      *
      * @return Chat
      */
-    public function getChat(array $params)
+    public function getChat(array $params):Chat
     {
         $response = $this->post('getChat', $params);
 
@@ -1314,7 +1314,7 @@ class Api
      *
      * @return ChatMember[]
      */
-    public function getChatAdministrators(array $params)
+    public function getChatAdministrators(array $params):ChatMember
     {
         $response = $this->post('getChatAdministrators', $params);
 
@@ -1346,7 +1346,7 @@ class Api
      *
      * @return int
      */
-    public function getChatMembersCount(array $params)
+    public function getChatMembersCount(array $params):int
     {
         $response = $this->post('getChatMembersCount', $params);
 
@@ -1374,7 +1374,7 @@ class Api
      *
      * @return ChatMember
      */
-    public function getChatMember(array $params)
+    public function getChatMember(array $params):ChatMember
     {
         $response = $this->post('getChatMember', $params);
 
@@ -1408,7 +1408,7 @@ class Api
      *
      * @return bool
      */
-    public function answerCallbackQuery(array $params)
+    public function answerCallbackQuery(array $params):bool
     {
         $this->post('answerCallbackQuery', $params);
 
@@ -1550,9 +1550,9 @@ class Api
      *
      * @return bool
      */
-    public function answerInlineQuery(array $params = [])
+    public function answerInlineQuery(array $params = []):bool
     {
-        if (is_array($params[ 'results' ])) {
+        if (\is_array($params[ 'results' ])) {
             $params[ 'results' ] = json_encode($params[ 'results' ]);
         }
 
@@ -1618,7 +1618,7 @@ class Api
      *
      * @return Message
      */
-    public function sendInvoice(array $params = [])
+    public function sendInvoice(array $params = []):Message
     {
         $response = $this->post('sendInvoice', $params);
 
@@ -1644,7 +1644,7 @@ class Api
      *
      * @return StickerSet
      */
-    public function getStickerSet(array $params = [])
+    public function getStickerSet(array $params = []):StickerSet
     {
         $response = $this->post('getStickerSet', $params);
 
@@ -1672,7 +1672,7 @@ class Api
      *
      * @return bool
      */
-    public function uploadStickerFile(array $params)
+    public function uploadStickerFile(array $params):bool
     {
         $this->post('uploadStickerFile', $params);
 
@@ -1707,7 +1707,7 @@ class Api
      *
      * @return bool
      */
-    public function createNewStickerSet(array $params)
+    public function createNewStickerSet(array $params):bool
     {
         $this->post('createNewStickerSet', $params);
 
@@ -1745,7 +1745,7 @@ class Api
      *
      * @return bool
      */
-    public function restrictChatMember(array $params)
+    public function restrictChatMember(array $params):bool
     {
         $this->post('restrictChatMember', $params);
 
@@ -1789,7 +1789,7 @@ class Api
      *
      * @return bool
      */
-    public function promoteChatMember(array $params)
+    public function promoteChatMember(array $params):bool
     {
         $this->post('promoteChatMember', $params);
 
@@ -1843,7 +1843,7 @@ class Api
      *
      * @return bool
      */
-    public function setChatPhoto(array $params)
+    public function setChatPhoto(array $params):bool
     {
         $this->uploadFile('setChatPhoto', $params);
 
@@ -1869,7 +1869,7 @@ class Api
      *
      * @return bool
      */
-    public function deleteChatPhoto(array $params)
+    public function deleteChatPhoto(array $params):bool
     {
         $this->post('deleteChatPhoto', $params);
 
@@ -1897,7 +1897,7 @@ class Api
      *
      * @return bool
      */
-    public function setChatTitle(array $params)
+    public function setChatTitle(array $params):bool
     {
         $this->post('setChatTitle', $params);
 
@@ -1925,7 +1925,7 @@ class Api
      *
      * @return bool
      */
-    public function setChatDescription(array $params)
+    public function setChatDescription(array $params):bool
     {
         $this->post('setChatDescription', $params);
 
@@ -1953,7 +1953,7 @@ class Api
      *
      * @return bool
      */
-    public function setChatStickerSet(array $params)
+    public function setChatStickerSet(array $params):bool
     {
         $this->post('setChatStickerSet', $params);
 
@@ -1979,7 +1979,7 @@ class Api
      *
      * @return bool
      */
-    public function deleteChatStickerSet(array $params)
+    public function deleteChatStickerSet(array $params):bool
     {
         $this->post('deleteChatStickerSet', $params);
 
@@ -2009,7 +2009,7 @@ class Api
      *
      * @return bool
      */
-    public function pinChatMessage(array $params)
+    public function pinChatMessage(array $params):bool
     {
         $this->post('pinChatMessage', $params);
 
@@ -2035,7 +2035,7 @@ class Api
      *
      * @return bool
      */
-    public function unpinChatMessage(array $params)
+    public function unpinChatMessage(array $params):bool
     {
         $this->post('unpinChatMessage', $params);
 
@@ -2067,7 +2067,7 @@ class Api
      *
      * @return bool
      */
-    public function answerShippingQuery(array $params = [])
+    public function answerShippingQuery(array $params = []):bool
     {
         $this->post('answerShippingQuery', $params);
 
@@ -2097,7 +2097,7 @@ class Api
      *
      * @return bool
      */
-    public function answerPreCheckoutQuery(array $params = [])
+    public function answerPreCheckoutQuery(array $params = []):bool
     {
         $this->post('answerPreCheckoutQuery', $params);
 
@@ -2135,7 +2135,7 @@ class Api
      *
      * @return Message
      */
-    public function setGameScore(array $params = [])
+    public function setGameScore(array $params = []):Message
     {
         $response = $this->post('setGameScore', $params);
 
@@ -2168,7 +2168,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    public function setWebhook(array $params)
+    public function setWebhook(array $params):TelegramResponse
     {
         if (filter_var($params[ 'url' ], FILTER_VALIDATE_URL) === false) {
             throw new TelegramSDKException('Invalid URL Provided');
@@ -2193,7 +2193,7 @@ class Api
      *
      * @return WebhookInfo
      */
-    public function getWebhookInfo()
+    public function getWebhookInfo():WebhookInfo
     {
         $response = $this->post('getWebhookInfo');
 
@@ -2208,11 +2208,12 @@ class Api
      *
      * @throws TelegramSDKException
      *
-     * @return TelegramResponse
+     * @return bool
      */
-    public function deleteWebhook()
+    public function deleteWebhook():bool
     {
-        return $this->uploadFile('deleteWebhook');
+        $this->post('deleteWebhook');
+        return true;
     }
 
     /**
@@ -2222,7 +2223,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    public function removeWebhook()
+    public function removeWebhook():TelegramResponse
     {
         $url = '';
 
@@ -2274,7 +2275,7 @@ class Api
      *
      * @return Update
      */
-    public function getWebhookUpdate()
+    public function getWebhookUpdate():Update
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
@@ -2286,8 +2287,10 @@ class Api
      * Check update object for a command and process.
      *
      * @param Update $update
+     *
+     * @throws TelegramSDKException
      */
-    public function processCommand(Update $update)
+    public function processCommand(Update $update):void
     {
         $message = $update->getMessage();
 
@@ -2301,7 +2304,7 @@ class Api
      *
      * @return CommandBus
      */
-    public function getCommandBus()
+    public function getCommandBus():CommandBus
     {
         return $this->commandBus;
     }
@@ -2310,6 +2313,8 @@ class Api
      * Check update object for a command and process.
      *
      * @param Update $update
+     *
+     * @throws TelegramSDKException
      */
     public function processCallback(Update $update)
     {
@@ -2325,7 +2330,7 @@ class Api
      *
      * @return CallbackCommandBus
      */
-    public function getCallbackBus()
+    public function getCallbackBus():CallbackCommandBus
     {
         return $this->callbackBus;
     }
@@ -2355,7 +2360,7 @@ class Api
      *
      * @return Update[]
      */
-    public function getUpdates(array $params = [])
+    public function getUpdates(array $params = []):array
     {
         $response = $this->post('getUpdates', $params);
 
@@ -2381,16 +2386,16 @@ class Api
      *
      * @link https://core.telegram.org/bots/api#setpassportdataerrors
      *
-     * @param array    $params
+     * @param array $params
      *
-     * @var int    $params ['user_id']
-     * @var array  $params ['errors']
+     * @var int     $params ['user_id']
+     * @var array   $params ['errors']
      *
      * @throws TelegramSDKException
      *
      * @return bool
      */
-    public function setPassportDataErrors(array $params)
+    public function setPassportDataErrors(array $params):bool
     {
 
         $this->post('setPassportDataErrors', $params);
@@ -2462,7 +2467,7 @@ class Api
      *
      * @return Container
      */
-    public function getContainer()
+    public function getContainer():Container
     {
         return self::$container;
     }
@@ -2472,7 +2477,7 @@ class Api
      *
      * @return bool
      */
-    public function hasContainer()
+    public function hasContainer():bool
     {
         return self::$container !== null;
     }
@@ -2487,7 +2492,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    protected function get($endpoint, $params = [])
+    protected function get($endpoint, array $params = []):TelegramResponse
     {
         if (array_key_exists('reply_markup', $params)) {
             $params[ 'reply_markup' ] = (string)$params[ 'reply_markup' ];

@@ -38,7 +38,7 @@ class BotsManager
      *
      * @return $this
      */
-    public function setContainer(Container $container)
+    public function setContainer(Container $container):self
     {
         $this->container = $container;
 
@@ -52,7 +52,7 @@ class BotsManager
      *
      * @return Api
      */
-    public function reconnect($name = null)
+    public function reconnect($name = null):Api
     {
         $name = $name ?: $this->getDefaultBot();
         $this->disconnect($name);
@@ -67,7 +67,7 @@ class BotsManager
      *
      * @return void
      */
-    public function disconnect($name = null)
+    public function disconnect($name = null):void
     {
         $name = $name ?: $this->getDefaultBot();
         unset($this->bots[$name]);
@@ -80,7 +80,7 @@ class BotsManager
      *
      * @return Api
      */
-    public function bot($name = null)
+    public function bot($name = null):Api
     {
         $name = $name ?: $this->getDefaultBot();
 
@@ -98,7 +98,7 @@ class BotsManager
      *
      * @return Api
      */
-    protected function makeBot($name)
+    protected function makeBot($name):Api
     {
         $config = $this->getBotConfig($name);
 
@@ -136,12 +136,12 @@ class BotsManager
      *
      * @return array
      */
-    public function getBotConfig($name = null)
+    public function getBotConfig($name = null):array
     {
         $name = $name ?: $this->getDefaultBot();
 
         $bots = $this->getConfig('bots');
-        if (!is_array($config = array_get($bots, $name)) && !$config) {
+        if (!\is_array($config = array_get($bots, $name)) && !$config) {
             throw new InvalidArgumentException("Bot [$name] not configured.");
         }
 
@@ -155,7 +155,7 @@ class BotsManager
      *
      * @return string
      */
-    public function getDefaultBot()
+    public function getDefaultBot():string
     {
         return $this->getConfig('default');
     }
@@ -180,7 +180,7 @@ class BotsManager
      *
      * @return array An array of commands which includes global and bot specific commands.
      */
-    protected function parseBotCommands(array $commands)
+    protected function parseBotCommands(array $commands):array
     {
         $globalCommands = $this->getConfig('commands', []);
         $parsedCommands = $this->parseCommands($commands);
@@ -195,7 +195,7 @@ class BotsManager
      *
      * @return array
      */
-    protected function parseCommands(array $commands)
+    protected function parseCommands(array $commands):array
     {
         if (!is_array($commands)) {
             return $commands;
@@ -237,7 +237,7 @@ class BotsManager
      *
      * @return array
      */
-    protected function deduplicateArray(array $array)
+    protected function deduplicateArray(array $array):array
     {
         return array_values(array_unique($array));
     }
@@ -249,7 +249,7 @@ class BotsManager
      *
      * @return array
      */
-    protected function parseCallbacks(array $commands)
+    protected function parseCallbacks(array $commands):array
     {
         if (!is_array($commands)) {
             return $commands;
@@ -291,7 +291,7 @@ class BotsManager
      *
      * @return $this
      */
-    public function setDefaultBot($name)
+    public function setDefaultBot($name):self
     {
         array_set($this->config, 'default', $name);
 
@@ -303,7 +303,7 @@ class BotsManager
      *
      * @return Api[]
      */
-    public function getBots()
+    public function getBots():array
     {
         return $this->bots;
     }
@@ -318,6 +318,6 @@ class BotsManager
      */
     public function __call($method, $parameters)
     {
-        return call_user_func_array([$this->bot(), $method], $parameters);
+        return \call_user_func_array([$this->bot(), $method], $parameters);
     }
 }

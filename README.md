@@ -9,13 +9,7 @@ Telegram Bot API - PHP SDK
 <a href="https://packagist.org/packages/exileed/telegram-bot-api"><img src="https://img.shields.io/packagist/dt/exileed/telegram-bot-api.svg?style=flat-square" alt="Total Downloads"/></a>
 </p>
 
-## Overview
-
-> Telegram Bot API is an HTTP-based interface created for developers keen on building bots for Telegram.
-> 
-> To learn more about the Telegram Bot API, please consult the [Introduction to Bots](https://core.telegram.org/bots) and [Bot FAQ](https://core.telegram.org/bots/faq) on official Telegram site.
->
-> To get started writing your bots using this SDK, Please refer the [documentation][link-docs].
+### '0.2-dev' branch unstable use '0.1.*' branch 
 
 ## Install 
 
@@ -61,5 +55,3 @@ This project is released under the [BSD 3-Clause][link-license] License.
 [link-contributors]: https://github.com/exileed/telegram-bot-sdk/contributors
 [link-docs]: https://telegram-bot-sdk.readme.io/docs
 [link-license]: https://github.com/exileed/telegram-bot-sdk/blob/master/LICENSE
-[link-sdk-users]: https://github.com/exileed/telegram-bot-sdk/wiki/Who's-Using-Telegram-Bot-SDK%3F
-

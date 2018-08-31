@@ -14,7 +14,8 @@ use Telegram\Bot\Objects\BaseObject;
  * @method string              getEmail()         (Optional). User's verified email address, available only for “email” type.
  * @method PassportFile[]      getFiles()         (Optional). Array of encrypted files with documents.
  * @method PassportFile        getFrontSide()     (Optional). Encrypted file with the front side of the document.
- * @method PassportFile        getReverseSide()   (Optional). ncrypted file with the reverse side of the document.
+ * @method PassportFile        getReverseSide()   (Optional). Encrypted file with the reverse side of the document.
+ * @method PassportFile[]      getTranslation()   (Optional). Array of encrypted files with translated versions of documents provided by the user. Available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types.
  * @method PassportFile        getSelfie()        (Optional). Array of encrypted files with documents.
  */
 class EncryptedPassportElement extends BaseObject

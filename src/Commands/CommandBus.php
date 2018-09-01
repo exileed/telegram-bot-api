@@ -71,8 +71,8 @@ class CommandBus extends AnswerBus
      */
     public function addCommand($command)
     {
-        if (!is_object($command)) {
-            if (!class_exists($command)) {
+        if ( ! is_object($command)) {
+            if ( ! class_exists($command)) {
                 throw new TelegramSDKException(
                     sprintf(
                         'Command class "%s" not found! Please make sure the class exists.',
@@ -95,7 +95,7 @@ class CommandBus extends AnswerBus
              *
              * @var Command $command
              */
-            $this->commands[$command->getName()] = $command;
+            $this->commands[ $command->getName() ] = $command;
 
             $aliases = $command->getAliases();
 
@@ -104,7 +104,7 @@ class CommandBus extends AnswerBus
             }
 
             foreach ($command->getAliases() as $alias) {
-                if (isset($this->commands[$alias])) {
+                if (isset($this->commands[ $alias ])) {
                     throw new TelegramSDKException(sprintf(
                         '[Error] Alias [%s] conflicts with command name of "%s" try with another name or remove this alias from the list.',
                         $alias,
@@ -112,7 +112,7 @@ class CommandBus extends AnswerBus
                     ));
                 }
 
-                if (isset($this->commandAliases[$alias])) {
+                if (isset($this->commandAliases[ $alias ])) {
                     throw new TelegramSDKException(sprintf(
                         '[Error] Alias [%s] conflicts with another command\'s alias list: "%s", try with another name or remove this alias from the list.',
                         $alias,
@@ -120,7 +120,7 @@ class CommandBus extends AnswerBus
                     ));
                 }
 
-                $this->commandAliases[$alias] = $command;
+                $this->commandAliases[ $alias ] = $command;
             }
 
             return $this;
@@ -132,20 +132,6 @@ class CommandBus extends AnswerBus
                 get_class($command)
             )
         );
-    }
-
-    /**
-     * Remove a command from the list.
-     *
-     * @param $name
-     *
-     * @return CommandBus
-     */
-    public function removeCommand($name)
-    {
-        unset($this->commands[$name]);
-
-        return $this;
     }
 
     /**
@@ -165,6 +151,44 @@ class CommandBus extends AnswerBus
     }
 
     /**
+     * Remove a command from the list.
+     *
+     * @param $name
+     *
+     * @return CommandBus
+     */
+    public function removeCommand($name)
+    {
+        unset($this->commands[ $name ]);
+
+        return $this;
+    }
+
+    /**
+     * Handles Inbound Messages and Executes Appropriate Command.
+     *
+     * @param $message
+     * @param $update
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Update
+     */
+    protected function handler($message, Update $update)
+    {
+        $match = $this->parseCommand($message);
+        if ( ! empty($match)) {
+            $command = strtolower($match[ 1 ]); //All commands must be lowercase.
+            //            $bot = (!empty($match[2])) ? $match[2] : '';
+            $arguments = $match[ 3 ];
+
+            $this->execute($command, $arguments, $update);
+        }
+
+        return $update;
+    }
+
+    /**
      * Parse a Command for a Match.
      *
      * @param $text
@@ -181,48 +205,23 @@ class CommandBus extends AnswerBus
     }
 
     /**
-     * Handles Inbound Messages and Executes Appropriate Command.
-     *
-     * @param $message
-     * @param $update
-     *
-     * @throws TelegramSDKException
-     *
-     * @return Update
-     */
-    protected function handler($message, Update $update)
-    {
-        $match = $this->parseCommand($message);
-        if (!empty($match)) {
-            $command = strtolower($match[1]); //All commands must be lowercase.
-            //            $bot = (!empty($match[2])) ? $match[2] : '';
-            $arguments = $match[3];
-
-            $this->execute($command, $arguments, $update);
-        }
-
-        return $update;
-    }
-
-    /**
      * Execute the command.
      *
-     * @param $name
-     * @param $arguments
-     * @param $message
+     * @param        $name
+     * @param        $arguments
+     * @param Update $update
      *
      * @return mixed
      */
-    protected function execute($name, $arguments, $message)
+    protected function execute($name, $arguments, Update $update)
     {
-        if (array_key_exists($name, $this->commands)) {
-            return $this->commands[$name]->make($this->telegram, $arguments, $message);
-        } elseif (array_key_exists($name, $this->commandAliases)) {
-            return $this->commandAliases[$name]->make($this->telegram, $arguments, $message);
-        } elseif (array_key_exists('help', $this->commands)) {
-            return $this->commands['help']->make($this->telegram, $arguments, $message);
-        }
 
-        return 'Ok';
+        $command = $this->commands[ $name ] ??
+                   $this->commandAliases[ $name ] ??
+                   collect($this->commands)->filter(function ($command) use ($name) {
+                       return $command instanceof $name;
+                   })->first() ?? null;
+
+        return $command ? $command->make($this->telegram, $arguments, $update) : false;
     }
 }

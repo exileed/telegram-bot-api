@@ -74,7 +74,7 @@ return [
     | Possible Values: (Boolean) "true" OR "false"
     |
     */
-    'async_requests' => 'TELEGRAM_ASYNC_REQUESTS',
+    'async_requests' => false,
 
     /*
     |--------------------------------------------------------------------------

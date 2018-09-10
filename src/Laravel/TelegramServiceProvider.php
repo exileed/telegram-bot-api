@@ -37,7 +37,7 @@ class TelegramServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	protected function setupConfig( Application $app ) {
+	protected function setupConfig( Application $app ):void {
 		$source = __DIR__ . '/config/telegram.php';
 
 		if ( $app instanceof LaravelApplication && $app->runningInConsole() ) {
@@ -54,7 +54,7 @@ class TelegramServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register():void {
 		$this->registerManager( $this->app );
 		$this->registerBindings( $this->app );
 	}

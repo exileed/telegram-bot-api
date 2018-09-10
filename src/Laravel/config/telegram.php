@@ -94,7 +94,7 @@ return [
     | Resolve Injected Dependencies in commands [Optional]
     |--------------------------------------------------------------------------
     |
-    | Using Laravel's IoC container, we can easily type hint dependencies in
+    | Using PSR Container, we can easily type hint dependencies in
     | our command's constructor and have them automatically resolved for us.
     |
     | Default: true

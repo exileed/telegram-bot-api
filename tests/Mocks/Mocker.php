@@ -39,6 +39,16 @@ class Mocker
     }
 
     /**
+     * Create an IOC container that can be added to the API.
+     *
+     * @return \Prophecy\Prophecy\ObjectProphecy
+     */
+    public static function createContainer()
+    {
+        return (new Prophet())->prophesize(\Psr\Container\ContainerInterface::class);
+    }
+
+    /**
      * Create a mocked Update Object.
      *
      * @return \Prophecy\Prophecy\ObjectProphecy

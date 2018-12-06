@@ -4,6 +4,7 @@ namespace Telegram\Bot\Tests;
 
 use InvalidArgumentException;
 use Prophecy\Argument;
+use Psr\Container\ContainerInterface;
 use Telegram\Bot\Api;
 use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Commands\HelpCommand;
@@ -73,17 +74,19 @@ class ApiTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_checks_an_ioc_container_can_be_set()
     {
-        $this->api->setContainer(Mocker::createContainer()->reveal());
+        $container =  $this->getMockBuilder(ContainerInterface::class)->getMock();
 
-        $this->assertInstanceOf('\Illuminate\Contracts\Container\Container', $this->api->getContainer());
+        $this->api->setContainer($container);
+
+        $this->assertInstanceOf(ContainerInterface::class, $this->api->getContainer());
     }
 
     /** @test */
     public function it_checks_an_update_object_is_returned_when_a_command_is_handled()
     {
         $this->api = Mocker::createMessageResponse('/start');
-        $updates = $this->api->commandsHandler();
-        $this->assertInstanceOf(Update::class, $updates[0]);
+        $updates   = $this->api->commandsHandler();
+        $this->assertInstanceOf(Update::class, $updates[ 0 ]);
     }
 
     /** @test */
@@ -91,8 +94,8 @@ class ApiTest extends \PHPUnit\Framework\TestCase
     {
         $this->markTestSkipped('This test did not perform any assertions');
         $this->api = Mocker::createMessageResponse('/mycommand');
-        $command = Mocker::createMockCommand('mycommand');
-        $command2 = Mocker::createMockCommand('mycommand2');
+        $command   = Mocker::createMockCommand('mycommand');
+        $command2  = Mocker::createMockCommand('mycommand2');
 
         $this->api->addCommands([$command->reveal(), $command2->reveal()]);
 
@@ -164,8 +167,8 @@ class ApiTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_checks_a_message_object_is_returned_when_sendMessage_is_sent()
     {
-        $chatId = 987654321;
-        $text = 'Test message';
+        $chatId    = 987654321;
+        $text      = 'Test message';
         $this->api = Mocker::createApiResponse(
             [
                 'chat' => [
@@ -186,8 +189,8 @@ class ApiTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_checks_ability_to_set_timeouts()
     {
-        $chatId = 987654321;
-        $text = 'Test message';
+        $chatId    = 987654321;
+        $text      = 'Test message';
         $this->api = Mocker::createApiResponse(
             [
                 'chat' => [
@@ -212,11 +215,11 @@ class ApiTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_checks_a_message_object_is_returned_when_forwardMessage_is_sent()
     {
-        $chatId = 987654321;
-        $fromId = 888888888;
+        $chatId        = 987654321;
+        $fromId        = 888888888;
         $forwardFromId = 77777777;
-        $messageId = 123;
-        $this->api = Mocker::createApiResponse(
+        $messageId     = 123;
+        $this->api     = Mocker::createApiResponse(
             [
                 'message_id'   => $messageId,
                 'from'         => [
@@ -248,8 +251,8 @@ class ApiTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_checks_a_message_object_is_returned_with_photo_information_when_sendPhoto_is_sent()
     {
-        $chatId = 987654321;
-        $photo = md5('test'); //A file_id from a previous sent image.
+        $chatId    = 987654321;
+        $photo     = md5('test'); //A file_id from a previous sent image.
         $this->api = Mocker::createApiResponse(
             [
                 'chat'  => [
@@ -304,7 +307,7 @@ class ApiTest extends \PHPUnit\Framework\TestCase
 
         //Photo message is slightly different as it returns multiple file_ids in an array.
         if ($fileType === 'photo') {
-            $extraFileIds = [
+            $extraFileIds                = [
                 [
                     'file_id' => md5('file_id2'),
                 ],
@@ -312,13 +315,13 @@ class ApiTest extends \PHPUnit\Framework\TestCase
                     'file_id' => md5('file_id3'),
                 ],
             ];
-            $requiredFields[$fileType] = array_merge($requiredFields[$fileType], $extraFileIds);
+            $requiredFields[ $fileType ] = array_merge($requiredFields[ $fileType ], $extraFileIds);
         }
 
         $this->api = Mocker::createApiResponse($requiredFields);
 
         /** @var Message $response */
-        $method = 'send'.ucfirst($fileType);
+        $method   = 'send' . ucfirst($fileType);
         $response = $this->api->$method(['chat_id' => $chatId, $fileType => $fileId]);
 
         $this->assertInstanceOf(Message::class, $response);
@@ -378,7 +381,7 @@ class ApiTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_returns_a_file_object_if_getFile_is_sent()
     {
-        $fileId = md5('file_id');
+        $fileId    = md5('file_id');
         $this->api = Mocker::createApiResponse(
             [
                 'file_id'   => $fileId,
@@ -419,7 +422,7 @@ class ApiTest extends \PHPUnit\Framework\TestCase
         $response = $this->api->setWebhook(['url' => 'https://example.com']);
 
         $this->assertInstanceOf(TelegramResponse::class, $response);
-        $this->assertTrue($response->getResult()[0]);
+        $this->assertTrue($response->getResult()[ 0 ]);
     }
 
     /** @test */
@@ -430,7 +433,7 @@ class ApiTest extends \PHPUnit\Framework\TestCase
         $response = $this->api->removeWebhook();
 
         $this->assertInstanceOf(TelegramResponse::class, $response);
-        $this->assertTrue($response->getDecodedBody()['result'][0]);
+        $this->assertTrue($response->getDecodedBody()[ 'result' ][ 0 ]);
         $this->assertEquals(200, $response->getHttpStatusCode());
     }
 

@@ -3,7 +3,8 @@
 namespace Telegram\Bot\Tests;
 
 
-use Illuminate\Contracts\Container\Container;
+
+use Psr\Container\ContainerInterface;
 use Telegram\Bot\Api;
 use Telegram\Bot\BotsManager;
 
@@ -19,7 +20,10 @@ class BotsManagerTest extends \PHPUnit\Framework\TestCase
     {
         $config = require __DIR__ . '/../src/Laravel/config/telegram.php';
 
+        $container =  $this->getMockBuilder(ContainerInterface::class)->getMock();
+
         $this->manager = new BotsManager($config);
+        $this->manager->setContainer($container);
     }
 
     /**
@@ -39,7 +43,7 @@ class BotsManagerTest extends \PHPUnit\Framework\TestCase
     {
         $container = $this->manager->getContainer();
 
-        $this->assertInstanceOf(Container::class, $container);
+        $this->assertInstanceOf(ContainerInterface::class, $container);
     }
 
     /** @test */

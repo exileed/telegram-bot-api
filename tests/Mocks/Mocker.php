@@ -26,7 +26,7 @@ class Mocker
     {
         if ($withContainer) {
             $container = self::createContainer();
-            $container->make(Argument::any())->willReturn(new \stdClass());
+            $container->get(Argument::any())->willReturn(new \stdClass());
         } else {
             $container = null;
         }
@@ -36,16 +36,6 @@ class Mocker
         $api->getContainer()->willReturn($container);
 
         return $api;
-    }
-
-    /**
-     * Create an IOC container that can be added to the API.
-     *
-     * @return \Prophecy\Prophecy\ObjectProphecy
-     */
-    public static function createContainer()
-    {
-        return (new Prophet())->prophesize(\Illuminate\Contracts\Container\Container::class);
     }
 
     /**
@@ -161,14 +151,14 @@ class Mocker
      */
     private static function setTelegramResponse($body)
     {
-        $body = json_encode($body);
-        $mock = new MockHandler([
+        $body    = json_encode($body);
+        $mock    = new MockHandler([
             new Response(200, [], $body),
             new Response(200, [], $body),
             // two times because Api::commandsHandler makes two requests (when not using webhook method).
         ]);
         $handler = HandlerStack::create($mock);
-        $client = new GuzzleHttpClient(new Client(['handler' => $handler]));
+        $client  = new GuzzleHttpClient(new Client(['handler' => $handler]));
 
         return new Api('token', false, $client);
     }

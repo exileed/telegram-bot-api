@@ -45,14 +45,6 @@
   "extra": {
     "branch-alias": {
       "dev-develop": "0.2-dev"
-    },
-    "laravel": {
-      "providers": [
-        "Telegram\\Bot\\Laravel\\TelegramServiceProvider"
-      ],
-      "aliases": {
-        "Telegram": "Telegram\\Bot\\Laravel\\Facades\\Telegram"
-      }
     }
   },
   "config": {

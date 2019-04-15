@@ -12,6 +12,7 @@ use Telegram\Bot\Objects\Chat;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\Objects\File;
 use Telegram\Bot\Objects\Message;
+use Telegram\Bot\Objects\Poll;
 use Telegram\Bot\Objects\StickerSet;
 use Telegram\Bot\Objects\UnknownObject;
 use Telegram\Bot\Objects\Update;
@@ -1070,6 +1071,42 @@ class Api
     }
 
     /**
+     * Send a native pol.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'question'             => '',
+     *   'options'              => '',
+     *   'disable_notification' => '',
+     *   'reply_to_message_id'  => '',
+     *   'reply_markup'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#sendpoll
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var string     $params ['question']
+     * @var string     $params ['options']
+     * @var string     $params ['disable_notification']
+     * @var int        $params ['reply_to_message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message
+     */
+    public function sendPoll(array $params)
+    {
+        $response = $this->post('sendPoll', $params);
+
+        return new Message($response->getDecodedBody());
+    }
+
+    /**
      * Broadcast a Chat Action.
      *
      * <code>
@@ -1517,6 +1554,37 @@ class Api
         $response = $this->post('editMessageReplyMarkup', $params);
 
         return new Message($response->getDecodedBody());
+    }
+
+
+    /**
+     * Stop a poll which was sent by the bot.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'                  => '',
+     *   'message_id'               => '',
+     *   'reply_markup'             => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#stoppoll
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int        $params ['message_id']
+     * @var string     $params ['reply_markup']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Poll
+     */
+    public function stopPoll(array $params)
+    {
+        $response = $this->post('stopPoll', $params);
+
+        return new Poll($response->getDecodedBody());
     }
 
     /**

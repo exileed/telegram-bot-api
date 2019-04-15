@@ -11,8 +11,9 @@ namespace Telegram\Bot\Objects;
  * @method int              getDate()                   Date the message was sent in Unix time.
  * @method Chat             getChat()                   Conversation the message belongs to.
  * @method User             getForwardFrom()            (Optional). For forwarded messages, sender of the original message.
- * @method Chat             getForwardFromChat()        (Optional).    Optional. For messages forwarded from a channel, information about the original channel
+ * @method Chat             getForwardFromChat()        (Optional). For messages forwarded from a channel, information about the original channel
  * @method string           getForwardSignature()	    (Optional). For messages forwarded from channels, signature of the post author if present
+ * @method string           getForwardSenderName()	    (Optional). Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
  * @method int              getForwardDate()            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @method int              getEditDate()               (Optional). Date the message was last edited in Unix time.
@@ -31,6 +32,7 @@ namespace Telegram\Bot\Objects;
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method Venue            getVenue()                  (Optional). Message is a venue, information about the venue.
+ * @method Poll             getPoll()                   (Optional). Message is a native poll, information about the poll.
  * @method User             getNewChatMember()          (Optional). A new member was added to the group, information about them (this member may be the bot itself).
  * @method User[]           getNewChatMembers()         (Optional). New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
  * @method User             getLeftChatMember()         (Optional). A member was removed from the group, information about them (this member may be the bot itself).

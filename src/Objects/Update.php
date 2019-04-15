@@ -16,6 +16,7 @@ namespace Telegram\Bot\Objects;
  * @method CallbackQuery        getCallbackQuery()          (Optional). Incoming callback query.
  * @method ShippingQuery        getShippingQuery()          (Optional). New incoming shipping query.
  * @method PreCheckoutQuery     getPreCheckoutQuery()       (Optional). New incoming pre-checkout query.
+ * @method Poll                 getPoll()                   (Optional). New poll state. Bots receive only updates about polls, which are sent or stopped by the bot.
  *
  * @link https://core.telegram.org/bots/api#update
  */

@@ -9,5 +9,4 @@
             <property phpcs-only="true" name="lineLimit" value="150"/>
         </properties>
     </rule>
-
 </ruleset>

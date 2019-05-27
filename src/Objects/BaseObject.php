@@ -121,7 +121,7 @@ abstract class BaseObject extends Collection
 
             // Map relative property to an object
             $relations = $this->relations();
-            if (null != $response && isset($relations[$property])) {
+            if ($response !== null && isset($relations[$property])) {
                 return new $relations[$property]($response);
             }
 

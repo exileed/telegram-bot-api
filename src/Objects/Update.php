@@ -37,6 +37,7 @@ class Update extends BaseObject
             'callback_query'       => CallbackQuery::class,
             'shipping_query'       => ShippingQuery::class,
             'pre_checkout_query'   => PreCheckoutQuery::class,
+            'poll'                 => Poll::class,
         ];
     }
 

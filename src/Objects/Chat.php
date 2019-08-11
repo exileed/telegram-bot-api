@@ -2,6 +2,8 @@
 
 namespace Telegram\Bot\Objects;
 
+use Telegram\Bot\Objects\Chat\ChatPermissions;
+
 /**
  * Class Chat.
  *
@@ -12,13 +14,16 @@ namespace Telegram\Bot\Objects;
  * @method string     getUsername()                     ( Optional ). Username, for private chats and channels if available
  * @method string     getFirstName()                    ( Optional ). First name of the other party in a private chat
  * @method string     getLastName()                     ( Optional ). Last name of the other party in a private chat
- * @method string     getAllMembersAreAdministrators()  ( Optional ). Last name of the other party in a private chat
  * @method ChatPhoto  getPhoto()                        ( Optional ). Chat photo.
  * @method string     getDescription()                  ( Optional ). Description, for supergroups and channel chats.
  * @method string     getInviteLink()                   ( Optional ). Chat invite link, for supergroups and channel chats.
- * @method Message    getPinnedMessage()		        (Optional). Pinned message, for supergroups. Returned only in getChat.
- * @method string     getStickerSetName()		        (Optional). For supergroups, name of group sticker set. Returned only in getChat.
- * @method bool       getCanSetStickerSet()		        (Optional). True, if the bot can change the group sticker set. Returned only in getChat.
+ * @method Message    getPinnedMessage()                (Optional). Pinned message, for supergroups. Returned only in
+ * getChat.
+ * @method ChatPermissions getPermissions()             (Optional) Default chat member permissions, for groups and supergroups.
+ * @method string     getStickerSetName()               (Optional). For supergroups, name of group sticker set. Returned
+ * only in getChat.
+ * @method bool       getCanSetStickerSet()             (Optional). True, if the bot can change the group sticker set.
+ * Returned only in getChat.
  */
 class Chat extends BaseObject
 {
@@ -30,6 +35,7 @@ class Chat extends BaseObject
         return [
             'photo'          => ChatPhoto::class,
             'pinned_message' => Message::class,
+            'permissions'    => ChatPermissions::class
         ];
     }
 

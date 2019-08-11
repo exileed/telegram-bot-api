@@ -2,6 +2,9 @@
 
 namespace Telegram\Bot\Objects;
 
+use Telegram\Bot\Objects\InlineKeyboard\InlineKeyboardMarkup;
+use Telegram\Bot\Objects\Passport\PassportData;
+
 /**
  * Class Message.
  *
@@ -12,8 +15,10 @@ namespace Telegram\Bot\Objects;
  * @method Chat             getChat()                   Conversation the message belongs to.
  * @method User             getForwardFrom()            (Optional). For forwarded messages, sender of the original message.
  * @method Chat             getForwardFromChat()        (Optional). For messages forwarded from a channel, information about the original channel
- * @method string           getForwardSignature()	    (Optional). For messages forwarded from channels, signature of the post author if present
- * @method string           getForwardSenderName()	    (Optional). Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
+ * @method string           getForwardSignature()       (Optional). For messages forwarded from channels, signature
+ * of the post author if present
+ * @method string           getForwardSenderName()      (Optional). Sender's name for messages forwarded from users
+ * who disallow adding a link to their account in forwarded messages
  * @method int              getForwardDate()            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
  * @method int              getEditDate()               (Optional). Date the message was last edited in Unix time.
@@ -48,7 +53,8 @@ namespace Telegram\Bot\Objects;
  * @method Invoice           getInvoice()               (Optional). Message is an invoice for a payment, information about the invoice.
  * @method SuccessfulPayment getSuccessfulPayment()     (Optional). Message is a service message about a successful payment, information about the payment.
  * @method string            getConnectedWebsite()      (Optional). The domain name of the website on which the user has logged in.
- * @method PassportData      getPassportData()          (Optional). Telegram Passport data
+ * @method PassportData         getPassportData()          (Optional). Telegram Passport data.
+ * @method InlineKeyboardMarkup getReplyMarkup()           (Optional). Inline keyboard attached to the message.
  */
 class Message extends BaseObject
 {
@@ -82,7 +88,8 @@ class Message extends BaseObject
             'pinned_message'     => self::class,
             'invoice'            => Invoice::class,
             'successful_payment' => SuccessfulPayment::class,
-	        'caption_entities'   => MessageEntity::class
+            'caption_entities'   => MessageEntity::class,
+            'passport_data'      => PassportData::class,
         ];
     }
 

@@ -8,6 +8,7 @@ namespace Telegram\Bot\Objects;
  *
  * @method string    getName()          Sticker set name.
  * @method string    getTitle()         Sticker set title.
+ * @method bool      getIsAnimated()    True, if the sticker is animated.
  * @method bool      getContainsMasks() (Optional). True, if the sticker set contains masks.
  * @method Sticker[] getStickers()      List of all set stickers.
  */

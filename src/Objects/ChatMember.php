@@ -20,6 +20,8 @@ namespace Telegram\Bot\Objects;
  * @method bool            getIsMember()                (Optional). Restricted only. True, if the user is a member of the chat at the moment of the request
  * @method bool            getCanSendMessages()         (Optional). Restricted only. True, if the user can send text messages, contacts, locations and venues
  * @method bool            getCanSendMediaMessages()    (Optional). Restricted only. True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages
+ * @method bool            getCanSendPoll()             (Optional). Restricted only. True, if the user is allowed to
+ * send polls.
  * @method bool            getCanSendOtherMessages()    (Optional). Restricted only. True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages
  * @method bool            getCanSendWebPagePreviews()  (Optional). Restricted only. True, if user may add web page previews to his messages, implies can_send_media_messages
  */

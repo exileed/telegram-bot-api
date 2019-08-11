@@ -1790,10 +1790,7 @@ class Api
      *   'chat_id'                   => '',
      *   'user_id'                   => '',
      *   'until_date'                => '',
-     *   'can_send_messages'         => '',
-     *   'can_send_media_messages'   => '',
-     *   'can_send_other_messages'   => '',
-     *   'can_add_web_page_previews' => '',
+     *   'permissions'               => [],
      * ];
      * </code>
      *
@@ -1801,13 +1798,10 @@ class Api
      *
      * @param array    $params
      *
-     * @var int|string $params ['chat_id']
-     * @var int|string $params ['user_id']
-     * @var int        $params ['until_date']
-     * @var bool       $params ['can_send_messages']
-     * @var bool       $params ['can_send_media_messages']
-     * @var bool       $params ['can_send_other_messages']
-     * @var bool       $params ['can_add_web_page_previews']
+     * @var int|string            $params ['chat_id']
+     * @var int|string            $params ['user_id']
+     * @var int                   $params ['until_date']
+     * @var Chat\ChatPermissions  $params ['permissions']
      *
      * @throws TelegramSDKException
      *
@@ -1860,6 +1854,34 @@ class Api
     public function promoteChatMember(array $params)
     {
         $this->post('promoteChatMember', $params);
+
+        return true;
+    }
+
+
+    /**
+     * Use this method to set default chat permissions for all members.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'permissions'          => [],
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setchatpermissions
+     *
+     * @param array    $params
+     *
+     * @var int|string           $params ['chat_id']
+     * @var Chat\ChatPermissions $params ['permissions']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatPermissions(array $params)
+    {
+        $this->post('setChatPermissions', $params);
 
         return true;
     }

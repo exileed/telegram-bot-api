@@ -7,6 +7,8 @@ namespace Telegram\Bot\Objects;
  *
  *
  * @method string       getFileId()       Unique identifier for this file.
+ * @method string       getFileUniqueId() Unique identifier for this file, which is supposed to be the same over
+ * time and for different bots.
  * @method int          getWidth()        Sticker width.
  * @method int          getHeight()       Sticker height.
  * @method bool         getIsAnimated()   True, if the sticker is animated.

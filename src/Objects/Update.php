@@ -82,6 +82,9 @@ class Update extends BaseObject
             'inline_query',
             'chosen_inline_result',
             'callback_query',
+            'shipping_query',
+            'pre_checkout_query',
+            'poll',
         ];
 
         return $this->keys()
@@ -127,7 +130,7 @@ class Update extends BaseObject
                 return $this->getCallbackQuery()->getMessage()->getChat();
             default:
                 // nothing to return
-                return;
+                return null;
         }
     }
 
@@ -153,5 +156,7 @@ class Update extends BaseObject
         } elseif ($this->has('edited_channel_post')) {
             return $this->getEditedChannelPost()->getFrom();
         }
+
+        return null;
     }
 }

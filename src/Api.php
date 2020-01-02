@@ -1858,6 +1858,36 @@ class Api
         return true;
     }
 
+    /**
+     * Use this method to set a custom title for an administrator in a supergroup promoted by the bot.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id'              => '',
+     *   'user_id'              => '',
+     *   'custom_title'         => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setChatAdministratorCustomTitle
+     *
+     * @param array    $params
+     *
+     * @var int|string $params ['chat_id']
+     * @var int|string $params ['user_id']
+     * @var string     $params ['custom_title']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setChatAdministratorCustomTitle(array $params)
+    {
+        $this->post('setChatAdministratorCustomTitle', $params);
+
+        return true;
+    }
+
 
     /**
      * Use this method to set default chat permissions for all members.

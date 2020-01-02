@@ -20,6 +20,8 @@ use Telegram\Bot\Objects\Chat\ChatPermissions;
  * @method Message    getPinnedMessage()                (Optional). Pinned message, for supergroups. Returned only in
  * getChat.
  * @method ChatPermissions getPermissions()             (Optional) Default chat member permissions, for groups and supergroups.
+ * @method integer    getSlowModeDelay()                (Optional) For supergroups, the minimum allowed delay between
+ * consecutive messages sent by each unpriviledged user.
  * @method string     getStickerSetName()               (Optional). For supergroups, name of group sticker set. Returned
  * only in getChat.
  * @method bool       getCanSetStickerSet()             (Optional). True, if the bot can change the group sticker set.

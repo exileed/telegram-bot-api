@@ -3,6 +3,7 @@
 namespace Telegram\Bot\Keyboard;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class Base extends Collection
 {
@@ -19,7 +20,7 @@ class Base extends Collection
         $action = substr($method, 0, 3);
 
         if ($action === 'set') {
-            $property = snake_case(substr($method, 3));
+            $property = Str::snake(substr($method, 3));
             $this->items[$property] = $args[0];
 
             return $this;

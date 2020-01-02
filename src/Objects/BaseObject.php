@@ -4,6 +4,7 @@ namespace Telegram\Bot\Objects;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * Class BaseObject.
@@ -117,7 +118,7 @@ abstract class BaseObject extends Collection
         $action = substr($name, 0, 3);
 
         if ($action === 'get') {
-            $property = snake_case(substr($name, 3));
+            $property = Str::snake(substr($name, 3));
             $response = $this->get($property);
 
             // Map relative property to an object

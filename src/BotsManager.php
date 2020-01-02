@@ -3,12 +3,12 @@
 namespace Telegram\Bot;
 
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
 /**
  * Class BotsManager.
  *
- * @TODO Add methods in docblock for autocompletion from Api file.
  */
 class BotsManager
 {
@@ -102,9 +102,9 @@ class BotsManager
     {
         $config = $this->getBotConfig($name);
 
-        $token = array_get($config, 'token');
-        $commands = array_get($config, 'commands', []);
-        $callbacks = array_get($config, 'callbacks', []);
+        $token = Arr::get($config, 'token');
+        $commands = Arr::get($config, 'commands', []);
+        $callbacks = Arr::get($config, 'callbacks', []);
 
         $telegram = new Api(
             $token,
@@ -141,7 +141,7 @@ class BotsManager
         $name = $name ?: $this->getDefaultBot();
 
         $bots = $this->getConfig('bots');
-        if (!is_array($config = array_get($bots, $name)) && !$config) {
+        if (!is_array($config = Arr::get($bots, $name)) && !$config) {
             throw new InvalidArgumentException("Bot [$name] not configured.");
         }
 
@@ -170,7 +170,7 @@ class BotsManager
      */
     public function getConfig($key, $default = null)
     {
-        return array_get($this->config, $key, $default);
+        return Arr::get($this->config, $key, $default);
     }
 
     /**

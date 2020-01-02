@@ -90,7 +90,7 @@ abstract class BaseObject extends Collection
      */
     public function getRawResult($data)
     {
-        return array_get($data, 'result', $data);
+        return Arr::get($data, 'result', $data);
     }
 
     /**
@@ -100,7 +100,7 @@ abstract class BaseObject extends Collection
      */
     public function getStatus()
     {
-        return array_get($this->items, 'ok', false);
+        return Arr::get($this->items, 'ok', false);
     }
 
     /**

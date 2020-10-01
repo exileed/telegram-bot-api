@@ -2,9 +2,10 @@
 
 namespace Telegram\Bot\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Objects\File;
 
-class FileTest extends \PHPUnit_Framework_TestCase
+class FileTest extends TestCase
 {
     public function test_get_url()
     {
@@ -13,6 +14,6 @@ class FileTest extends \PHPUnit_Framework_TestCase
             'file_size' => '2054',
             'file_path' => '<file_path>',
         ]);
-        $this->assertEquals('https://api.telegram.org/file/bot<token>/<file_path>', $file->getUrl('<token>'));
+        self::assertEquals('https://api.telegram.org/file/bot<token>/<file_path>', $file->getUrl('<token>'));
     }
 }

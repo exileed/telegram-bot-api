@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Contracts\Container\Container;
 use Prophecy\Argument;
 use Prophecy\Prophet;
 use Telegram\Bot\Api;
@@ -45,7 +46,7 @@ class Mocker
      */
     public static function createContainer()
     {
-        return (new Prophet())->prophesize(\Illuminate\Contracts\Container\Container::class);
+        return (new Prophet())->prophesize(Container::class);
     }
 
     /**

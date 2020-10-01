@@ -2,21 +2,24 @@
 
 namespace Telegram\Bot\Tests;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Commands\CommandBus;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Tests\Mocks\MockCommand;
 use Telegram\Bot\Tests\Mocks\MockCommandTwo;
 use Telegram\Bot\Tests\Mocks\Mocker;
 
-class CommandBusTest extends \PHPUnit_Framework_TestCase
+class CommandBusTest extends TestCase
 {
     /**
      * @var CommandBus
      */
     protected $commandBus;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->commandBus = new CommandBus(Mocker::createApi()->reveal());
     }
@@ -26,8 +29,8 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
     {
         $this->commandBus->addCommand(MockCommand::class);
         $commands = $this->commandBus->getCommands();
-        $this->assertInstanceOf(MockCommand::class, $commands['mycommand']);
-        $this->assertCount(1, $commands);
+        self::assertInstanceOf(MockCommand::class, $commands['mycommand']);
+        self::assertCount(1, $commands);
     }
 
     /** @test */
@@ -36,8 +39,8 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         $this->commandBus->addCommands([MockCommand::class, MockCommandTwo::class]);
         $commands = $this->commandBus->getCommands();
 
-        $this->assertInstanceOf(MockCommand::class, $commands['mycommand']);
-        $this->assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
+        self::assertInstanceOf(MockCommand::class, $commands['mycommand']);
+        self::assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
     }
 
     /** @test */
@@ -48,9 +51,9 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commands = $this->commandBus->getCommands();
 
-        $this->assertCount(1, $commands);
-        $this->assertArrayNotHasKey('mycommand', $commands);
-        $this->assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
+        self::assertCount(1, $commands);
+        self::assertArrayNotHasKey('mycommand', $commands);
+        self::assertInstanceOf(MockCommandTwo::class, $commands['mycommand2']);
     }
 
     /** @test */
@@ -61,35 +64,38 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commands = $this->commandBus->getCommands();
 
-        $this->assertCount(0, $commands);
-        $this->assertArrayNotHasKey('mycommand', $commands);
-        $this->assertArrayNotHasKey('mycommand2', $commands);
+        self::assertCount(0, $commands);
+        self::assertArrayNotHasKey('mycommand', $commands);
+        self::assertArrayNotHasKey('mycommand2', $commands);
     }
 
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
     public function it_checks_a_supplied_command_object_is_of_the_correct_type()
     {
+        $this->expectException(TelegramSDKException::class);
+
         $this->commandBus->addCommand(new \stdClass());
     }
 
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramSDKException
      */
     public function it_throws_exception_if_supplied_command_class_does_not_exist()
     {
+        $this->expectException(TelegramSDKException::class);
+
         $this->commandBus->addCommand('nonexistclass');
     }
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      */
     public function it_throws_exception_if_message_is_only_blank_text()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $this->markTestSkipped('todo');
         $this->commandBus->parseCommand('');
     }
@@ -99,9 +105,9 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->commandBus->parseCommand('/userCommand@botname arg1 arg2');
 
-        $this->assertEquals('userCommand', $result[1]);
-        $this->assertEquals('botname', $result[2]);
-        $this->assertEquals('arg1 arg2', $result[3]);
+        self::assertEquals('userCommand', $result[1]);
+        self::assertEquals('botname', $result[2]);
+        self::assertEquals('arg1 arg2', $result[3]);
     }
 
     /** @test */
@@ -109,9 +115,9 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->commandBus->parseCommand('/userCommand arg1 arg2');
 
-        $this->assertEquals('userCommand', $result[1]);
-        $this->assertEmpty($result[2]);
-        $this->assertEquals('arg1 arg2', $result[3]);
+        self::assertEquals('userCommand', $result[1]);
+        self::assertEmpty($result[2]);
+        self::assertEquals('arg1 arg2', $result[3]);
     }
 
     /** @test */
@@ -119,7 +125,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->commandBus->parseCommand('sometext first /userCommand arg1 arg2');
 
-        $this->assertEmpty($result);
+        self::assertEmpty($result);
     }
 
     /** @test */
@@ -130,7 +136,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->commandBus->execute('mycommand', '', Mocker::createUpdateObject()->reveal());
 
-        $this->assertEquals('mycommand handled', $res);
+        self::assertEquals('mycommand handled', $res);
     }
 
     /** @test */
@@ -141,7 +147,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->commandBus->handler('/mycommand', Mocker::createUpdateObject()->reveal());
 
-        $this->assertInstanceOf(Update::class, $result);
+        self::assertInstanceOf(Update::class, $result);
     }
 
     /** @test */
@@ -152,8 +158,8 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         $this->commandBus->addCommand('\Telegram\Bot\Tests\Mocks\MockCommandWithDependency');
         $allCommands = $this->commandBus->getCommands();
 
-        $this->assertCount(1, $allCommands);
-        $this->assertArrayHasKey('mycommandwithdependency', $allCommands);
-        $this->assertInstanceOf(Command::class, $allCommands['mycommandwithdependency']);
+        self::assertCount(1, $allCommands);
+        self::assertArrayHasKey('mycommandwithdependency', $allCommands);
+        self::assertInstanceOf(Command::class, $allCommands['mycommandwithdependency']);
     }
 }

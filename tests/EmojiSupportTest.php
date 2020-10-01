@@ -2,17 +2,20 @@
 
 namespace Telegram\Bot\Tests;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException;
 use Telegram\Bot\Helpers\Emojify;
 
-class EmojiSupportTest extends \PHPUnit_Framework_TestCase
+class EmojiSupportTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Telegram\Bot\Exceptions\TelegramEmojiMapFileNotFoundException
      **/
     public function it_throws_exception_when_missing_emoji_map_is_used()
     {
+        $this->expectException(TelegramEmojiMapFileNotFoundException::class);
+
         Emojify::getInstance()->setEmojiMapFile('wrong_file.json');
     }
 
@@ -24,7 +27,7 @@ class EmojiSupportTest extends \PHPUnit_Framework_TestCase
         // If we can assert the instant is of the correct type, then no exception
         // was thrown during it's creation. A valid emoji file is required
         // during creation.
-        $this->assertInstanceOf(Emojify::class, $emoji);
+        self::assertInstanceOf(Emojify::class, $emoji);
     }
 
     /** @test */
@@ -33,7 +36,7 @@ class EmojiSupportTest extends \PHPUnit_Framework_TestCase
         $plainText = 'This works! :smile:';
         $emojiText = Emojify::text($plainText);
 
-        $this->assertContains('😄', $emojiText);
+        self::assertStringContainsString('😄', $emojiText);
     }
 
     /** @test */
@@ -42,8 +45,8 @@ class EmojiSupportTest extends \PHPUnit_Framework_TestCase
         $plainText = 'This should not work! :smile';
         $emojiText = Emojify::text($plainText);
 
-        $this->assertNotContains('😄', $emojiText);
-        $this->assertContains(':smile', $emojiText);
+        self::assertStringNotContainsString('😄', $emojiText);
+        self::assertStringContainsString(':smile', $emojiText);
     }
 
     /** @test * */
@@ -52,7 +55,7 @@ class EmojiSupportTest extends \PHPUnit_Framework_TestCase
         $plainText = 'This works! 😄';
         $emojiText = Emojify::translate($plainText);
 
-        $this->assertContains(':smile:', $emojiText);
+        self::assertStringContainsString(':smile:', $emojiText);
     }
 
     /** @test * */
@@ -61,15 +64,15 @@ class EmojiSupportTest extends \PHPUnit_Framework_TestCase
         $plainText = 'This  😄 works!';
         $emojiText = Emojify::translate($plainText);
 
-        $this->assertContains(':smile:', $emojiText);
-        $this->assertNotContains(' smile ', $emojiText);
+        self::assertStringContainsString(':smile:', $emojiText);
+        self::assertStringNotContainsString(' smile ', $emojiText);
     }
 
     /**
      * Reset the Singleton so that previous test doesn't interfere with
      * the next one.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $reflection = new ReflectionClass(Emojify::class);
         $property = $reflection->getProperty('instance');

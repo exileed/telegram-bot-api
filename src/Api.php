@@ -88,7 +88,7 @@ class Api
      *
      * @throws TelegramSDKException
      */
-    public function __construct($token, $async = false, $httpClientHandler = null)
+    public function __construct(string $token, bool $async = false, HttpClientInterface $httpClientHandler = null)
     {
         $this->accessToken = $token;
 
@@ -185,7 +185,7 @@ class Api
      *
      * @return TelegramResponse
      */
-    protected function post($endpoint, array $params = [], $fileUpload = false)
+    protected function post(string $endpoint, array $params = [], $fileUpload = false)
     {
         if ($fileUpload) {
             $params = ['multipart' => $params];
@@ -391,9 +391,9 @@ class Api
      */
     public function deleteMessage(array $params)
     {
-        $response = $this->post('deleteMessage', $params);
+        $this->post('deleteMessage', $params);
 
-        return $response->getDecodedBody();
+        return true;
     }
 
     /**

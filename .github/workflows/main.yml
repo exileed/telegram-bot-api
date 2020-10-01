@@ -16,7 +16,7 @@ jobs:
       - name: composer install
         run: composer install
       - name: PHP Unit tests for PHP ${{ matrix.php }}
-        run: composer tests
+        run: composer test
 #  codestyle: #todo
 #    name: Codestyle
 #    runs-on: ubuntu-latest

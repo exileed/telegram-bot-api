@@ -4,7 +4,7 @@ Telegram Bot API - PHP SDK
 > [Telegram Bot API](https://core.telegram.org/bots) PHP SDK. Lets you develop Telegram Bots easily! Supports Laravel out of the box.
 
 <p align="center">
-<a href="https://travis-ci.org/exileed/telegram-bot-api"><img src="https://img.shields.io/travis/exileed/telegram-bot-api.svg?style=flat-square" alt="Build Status"/></a>
+<a href="https://travis-ci.org/exileed/telegram-bot-api"><img src="https://img.shields.io/github/workflow/status/exileed/telegram-bot-api/phpunit" alt="Build Status"/></a>
 <a href="https://github.com/exileed/telegram-bot-api/releases"><img src="https://img.shields.io/github/release/exileed/telegram-bot-api.svg?style=flat-square" alt="Latest Version"/></a>
 <a href="https://packagist.org/packages/exileed/telegram-bot-api"><img src="https://img.shields.io/packagist/dt/exileed/telegram-bot-api.svg?style=flat-square" alt="Total Downloads"/></a>
 </p>

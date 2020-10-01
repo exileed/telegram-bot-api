@@ -1,0 +1,29 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  phpunit:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ 73, 74 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: composer install
+        run: composer install
+      - name: PHP Unit tests for PHP ${{ matrix.php }}
+        run: composer tests
+#  codestyle: #todo
+#    name: Codestyle
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: composer install
+#        run: composer install
+#      - name: Run codestyle check
+#        run: composer phpcs

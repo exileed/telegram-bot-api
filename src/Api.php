@@ -8,9 +8,11 @@ use Telegram\Bot\Commands\CommandBus;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\HttpClients\HttpClientInterface;
+use Telegram\Bot\Objects\BotCommand;
 use Telegram\Bot\Objects\Chat;
 use Telegram\Bot\Objects\ChatMember;
 use Telegram\Bot\Objects\File;
+use Telegram\Bot\Objects\MaskPosition;
 use Telegram\Bot\Objects\Message;
 use Telegram\Bot\Objects\Poll;
 use Telegram\Bot\Objects\StickerSet;
@@ -184,6 +186,8 @@ class Api
      * @param bool   $fileUpload Set true if a file is being uploaded.
      *
      * @return TelegramResponse
+     *
+     * @throws TelegramSDKException
      */
     protected function post(string $endpoint, array $params = [], $fileUpload = false)
     {
@@ -1075,9 +1079,18 @@ class Api
      *
      * <code>
      * $params = [
-     *   'chat_id'              => '',
-     *   'question'             => '',
-     *   'options'              => '',
+     *   'chat_id' => '',
+     *   'question' => '',
+     *   'options' => '',
+     *   'is_anonymous' => true,
+     *   'type' => '',
+     *   'allows_multiple_answers' => true,
+     *   'correct_option_id' => '',
+     *   'explanation' => '',
+     *   'explanation_parse_mode' => '',
+     *   'open_period' => '',
+     *   'close_date' => '',
+     *   'is_closed' => true,
      *   'disable_notification' => '',
      *   'reply_to_message_id'  => '',
      *   'reply_markup'         => '',
@@ -1089,11 +1102,20 @@ class Api
      * @param array $params
      *
      * @var int|string $params ['chat_id']
-     * @var string     $params ['question']
-     * @var string     $params ['options']
-     * @var string     $params ['disable_notification']
-     * @var int        $params ['reply_to_message_id']
-     * @var string     $params ['reply_markup']
+     * @var string $params ['question']
+     * @var string $params ['options']
+     * @var bool $params ['is_anonymous']
+     * @var string $params ['type']
+     * @var bool $params ['allows_multiple_answers']
+     * @var int $params ['correct_option_id']
+     * @var string $params ['explanation']
+     * @var string $params ['explanation_parse_mode']
+     * @var int $params ['open_period']
+     * @var int $params ['close_date']
+     * @var bool $params ['is_closed']
+     * @var bool $params ['disable_notification']
+     * @var int $params ['reply_to_message_id']
+     * @var string $params ['reply_markup']
      *
      * @throws TelegramSDKException
      *
@@ -1453,6 +1475,54 @@ class Api
     }
 
     /**
+     * Use this method to change the list of the bot's commands.
+     *
+     * <code>
+     * $params = [
+     *   'commands'  => [],
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#setmycommands
+     *
+     * @param array $params
+     *
+     * @var BotCommand[] $params['commands']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setMyCommands(array $params): bool
+    {
+        $this->post('setMyCommands', $params);
+
+        return true;
+    }
+
+    /**
+     * Use this method to change the list of the bot's commands.
+     *
+     * @link https://core.telegram.org/bots/api#getmycommands
+     *
+     * @throws TelegramSDKException
+     *
+     * @return BotCommand[]
+     */
+    public function getMyCommands(): array
+    {
+        $response = $this->post('getMyCommands');
+
+        $commands = [];
+
+        foreach ($response->getDecodedBody() as $command){
+            $commands[] = new BotCommand($command);
+        }
+
+        return $commands;
+    }
+
+    /**
      * Edit text messages sent by the bot or via the bot (for inline bots).
      *
      * <code>
@@ -1752,13 +1822,14 @@ class Api
      *
      * <code>
      * $params = [
-     *   'user_id'              => '',
-     *   'name'          => '',
-     *   'title'          => '',
-     *   'png_sticker'          => '',
-     *   'emojis'          => '',
-     *   'contains_masks'          => '',
-     *   'mask_position'          => '',
+     *   'user_id' => '',
+     *   'name' => '',
+     *   'title' => '',
+     *   'png_sticker' => '',
+     *   'tgs_sticker' => '',
+     *   'emojis' => '',
+     *   'contains_masks' => '',
+     *   'mask_position' => '',
      * ];
      * </code>
      *
@@ -1767,9 +1838,13 @@ class Api
      * @param array    $params
      *
      * @var int|string $params ['user_id']
-     * @var string     $params ['name']
-     * @var string     $params ['title']
-     * @var InputFile  $params ['png_sticker']
+     * @var string $params ['name']
+     * @var string $params ['title']
+     * @var InputFile $params ['png_sticker']
+     * @var InputFile $params ['tgs_sticker']
+     * @var string $params ['emojis']
+     * @var bool $params ['contains_masks']
+     * @var MaskPosition $params ['mask_position']
      *
      * @throws TelegramSDKException
      *
@@ -1781,6 +1856,44 @@ class Api
 
         return true;
     }
+
+    /**
+     * Use this method to add a new sticker to a set created by the bot.
+     *
+     * <code>
+     * $params = [
+     *   'user_id' => '',
+     *   'name' => '',
+     *   'png_sticker' => '',
+     *   'tgs_sticker' => '',
+     *   'emojis' => '',
+     *   'mask_position' => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#addstickertoset
+     *
+     * @param array $params
+     *
+     * @var int|string $params ['user_id']
+     * @var string $params ['name']
+     * @var InputFile $params ['png_sticker']
+     * @var InputFile $params ['tgs_sticker']
+     * @var string $params ['emojis']
+     * @var bool $params ['contains_masks']
+     * @var MaskPosition $params ['mask_position']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function addStickerToSet(array $params): bool
+    {
+        $this->post('addStickerToSet', $params);
+
+        return true;
+    }
+
 
     /**
      * Use this method to restrict a user in a supergroup.
@@ -2104,6 +2217,69 @@ class Api
         $this->post('deleteChatStickerSet', $params);
 
         return true;
+    }
+
+    /**
+     * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only.
+     *
+     * <code>
+     * $params = [
+     *   'name' => '',
+     *   'user_id' => '',
+     *   'thumb' => '',
+     * ];
+     * </code>
+     * @link https://core.telegram.org/bots/api#setstickersetthumb
+     *
+     * @param array $params
+     *
+     * @var string $params['name']
+     * @var int|string $params['user_id']
+     * @var InputFile|string $params['thumb']
+     *
+     *
+     * @throws TelegramSDKException
+     *
+     * @return bool
+     */
+    public function setStickerSetThumb(array $params): bool
+    {
+        $this->post('setStickerSetThumb', $params);
+
+        return true;
+    }
+
+    /**
+     *  Use this method to send an animated emoji that will display a random value.
+     *
+     * <code>
+     * $params = [
+     *   'chat_id' => '',
+     *   'emoji' => '',
+     *   'disable_notification' => true,
+     *   'reply_to_message_id' => '',
+     *   'reply_markup' => '',
+     * ];
+     * </code>
+     *
+     * @link https://core.telegram.org/bots/api#senddice
+     *
+     * @param array $params
+     *
+     * @var int|string $params['chat_id']
+     * @var string $params['emoji']
+     * @var bool $params['disable_notification']
+     * @var int $params['reply_to_message_id']
+     *
+     * @throws TelegramSDKException
+     *
+     * @return Message
+     */
+    public function sendDice(array $params): Message
+    {
+        $response = $this->post('sendDice', $params);
+
+        return new Message($response->getDecodedBody());
     }
 
     /**

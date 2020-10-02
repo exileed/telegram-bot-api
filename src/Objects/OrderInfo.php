@@ -19,7 +19,7 @@ class OrderInfo extends BaseObject
     public function relations()
     {
         return [
-            'shipping_address'             => ShippingAddress::class,
+            'shipping_address' => ShippingAddress::class,
         ];
     }
 }

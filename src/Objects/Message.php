@@ -21,6 +21,7 @@ use Telegram\Bot\Objects\Passport\PassportData;
  * who disallow adding a link to their account in forwarded messages
  * @method int              getForwardDate()            (Optional). For forwarded messages, date the original message was sent in Unix time.
  * @method Message          getReplyToMessage()         (Optional). For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+ * @method User             getViaBot()                 (Optional). Bot through which the message was sent
  * @method int              getEditDate()               (Optional). Date the message was last edited in Unix time.
  * @method string           getAuthorSignature()        (Optional). Signature of the post author for messages in channels
  * @method MessageEntity[]  getEntities()               (Optional). For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text.
@@ -35,6 +36,7 @@ use Telegram\Bot\Objects\Passport\PassportData;
  * @method Voice            getVoice()                  (Optional). Message is a voice message, information about the file.
  * @method VideoNote        getVideoNote()              (Optional). Message is a video note, information about the video message
  * @method Contact          getContact()                (Optional). Message is a shared contact, information about the contact.
+ * @method Dice             getDice()                   (Optional). Message is a dice with random value from 1 to 6
  * @method Location         getLocation()               (Optional). Message is a shared location, information about the location.
  * @method Venue            getVenue()                  (Optional). Message is a venue, information about the venue.
  * @method Poll             getPoll()                   (Optional). Message is a native poll, information about the poll.
@@ -69,6 +71,7 @@ class Message extends BaseObject
             'forward_from'       => User::class,
             'forward_from_chat'  => Chat::class,
             'reply_to_message'   => self::class,
+            'via_bot'            => User::class,
             'entities'           => MessageEntity::class,
             'audio'              => Audio::class,
             'document'           => Document::class,
@@ -79,6 +82,7 @@ class Message extends BaseObject
             'voice'              => Voice::class,
             'video_note'         => VideoNote::class,
             'contact'            => Contact::class,
+            'dice'               => Dice::class,
             'location'           => Location::class,
             'venue'              => Venue::class,
             'new_chat_member'    => User::class,
@@ -147,6 +151,7 @@ class Message extends BaseObject
             'voice',
             'video_note',
             'contact',
+            'dice',
             'location',
             'venue',
             'new_chat_member',

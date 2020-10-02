@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -54,7 +55,7 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function __destruct()
     {
-        Promise\unwrap(self::$promises);
+        Utils::unwrap(self::$promises);
     }
 
     /**
@@ -96,7 +97,7 @@ class GuzzleHttpClient implements HttpClientInterface
         $this->timeOut = $timeOut;
         $this->connectTimeOut = $connectTimeOut;
 
-        $body = isset($options['body']) ? $options['body'] : null;
+        $body = $options[ 'body' ] ?? null;
         $options = $this->getOptions($headers, $body, $options, $timeOut, $isAsyncRequest, $connectTimeOut);
 
         try {

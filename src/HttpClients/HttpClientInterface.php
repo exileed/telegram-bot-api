@@ -2,6 +2,8 @@
 
 namespace Telegram\Bot\HttpClients;
 
+use Telegram\Bot\Exceptions\TelegramSDKException;
+
 /**
  * Interface HttpClientInterface.
  */
@@ -15,6 +17,8 @@ interface HttpClientInterface
      * @param int        $timeOut
      * @param bool|false $isAsyncRequest
      * @param int        $connectTimeOut
+     *
+     * @throws TelegramSDKException
      *
      * @return mixed
      */

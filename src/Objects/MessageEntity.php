@@ -11,6 +11,7 @@ namespace Telegram\Bot\Objects;
  * @method int      getLength() Length of the entity in UTF-16 code units
  * @method string   getUrl()    (Optional). For "text_link" only, url that will be opened after user taps on the text.
  * @method User     getUser()   (Optional). For “text_mention” only, the mentioned user.
+ * @method string|null getLanguage() (Optional). For “pre” only, the programming language of the entity text
  */
 class MessageEntity extends BaseObject
 {

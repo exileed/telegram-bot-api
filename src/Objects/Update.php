@@ -17,6 +17,8 @@ namespace Telegram\Bot\Objects;
  * @method ShippingQuery        getShippingQuery()          (Optional). New incoming shipping query.
  * @method PreCheckoutQuery     getPreCheckoutQuery()       (Optional). New incoming pre-checkout query.
  * @method Poll                 getPoll()                   (Optional). New poll state. Bots receive only updates about polls, which are sent or stopped by the bot.
+ * @method PollAnswer           getPollAnswer()             (Optional). User changed their answer in a non-anonymous
+ * poll.
  *
  * @link https://core.telegram.org/bots/api#update
  */
@@ -38,6 +40,7 @@ class Update extends BaseObject
             'shipping_query'       => ShippingQuery::class,
             'pre_checkout_query'   => PreCheckoutQuery::class,
             'poll'                 => Poll::class,
+            'poll_answer'          => PollAnswer::class,
         ];
     }
 
@@ -85,6 +88,7 @@ class Update extends BaseObject
             'shipping_query',
             'pre_checkout_query',
             'poll',
+            'poll_answer',
         ];
 
         return $this->keys()

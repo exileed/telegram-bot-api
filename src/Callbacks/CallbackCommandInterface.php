@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author  Dmitriy Kuts <me@exileed.com>
  *
@@ -20,15 +21,13 @@ interface CallbackCommandInterface
      * @return array
      */
     public function getArguments();
-
-    /**
+/**
      * @param array $arguments
      *
      * @return CallbackCommand
      */
     public function setArguments($arguments);
-
-    /**
+/**
      * Get Callback Query Command Name.
      *
      * The name of the Telegram callback query command.
@@ -36,8 +35,7 @@ interface CallbackCommandInterface
      * @return string
      */
     public function getName();
-
-    /**
+/**
      * Set Callback Query Command Name.
      *
      * @param string $name
@@ -45,15 +43,13 @@ interface CallbackCommandInterface
      * @return CallbackCommand
      */
     public function setName($name);
-
-    /**
+/**
      * Unique identifier for the query to be answered.
      *
      * @return int
      */
     public function getCallbackQueryId();
-
-    /**
+/**
      * Unique identifier for the query to be answered.
      *
      * @param int $callbackQueryId
@@ -61,8 +57,7 @@ interface CallbackCommandInterface
      * @return CallbackCommand
      */
     public function setCallbackQueryId($callbackQueryId);
-
-    /**
+/**
      * Make command.
      *
      * @param Telegram      $telegram

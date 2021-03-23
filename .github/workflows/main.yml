@@ -17,13 +17,13 @@ jobs:
         run: composer install
       - name: PHP Unit tests for PHP ${{ matrix.php }}
         run: composer test
-#  codestyle: #todo
-#    name: Codestyle
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#      - name: composer install
-#        run: composer install
-#      - name: Run codestyle check
-#        run: composer phpcs
+  codestyle:
+    name: Codestyle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: composer install
+        run: composer install
+      - name: Run codestyle check
+        run: composer phpcs

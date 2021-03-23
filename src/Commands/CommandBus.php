@@ -89,7 +89,6 @@ class CommandBus extends AnswerBus
         }
 
         if ($command instanceof CommandInterface) {
-
             /*
              * At this stage we definitely have a proper command to use.
              *

@@ -33,7 +33,7 @@ class Api
     /**
      * @var string Version number of the Telegram Bot PHP SDK.
      */
-    const VERSION = '0.2.0';
+    public const VERSION = '0.2.2';
 
     /**
      * @var Container IoC Container
@@ -489,7 +489,7 @@ class Api
             )
             ->map(
                 function ($contents, $name) {
-                    if ( ! is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
+                    if (! is_resource($contents) && $this->isValidFileOrUrl($name, $contents)) {
                         $contents = (new InputFile($contents))->open();
                     }
 
@@ -1515,7 +1515,7 @@ class Api
 
         $commands = [];
 
-        foreach ($response->getDecodedBody() as $command){
+        foreach ($response->getDecodedBody() as $command) {
             $commands[] = new BotCommand($command);
         }
 
@@ -2575,7 +2575,6 @@ class Api
         $body = json_decode(file_get_contents('php://input'), true);
 
         return new Update($body);
-
     }
 
     /**

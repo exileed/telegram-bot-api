@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author  Dmitriy Kuts <me@exileed.com>
  *
@@ -18,32 +19,32 @@ use Telegram\Bot\Objects\Update;
 abstract class CallbackCommand implements CallbackCommandInterface
 {
     use Answerable;
+
     /**
      * The name of the Telegram callback query command.
      *
      * @var string
      */
     protected $name;
-    /**
+/**
      * Unique identifier for the query to be answered.
      *
      * @var int
      */
     protected $callbackQueryId;
-    /**
+/**
      * Arguments passed to the command.
      *
      * @var array
      */
     protected $arguments = [];
-    /**
+/**
      * This object represents an incoming callback query from a callback button in an inline keyboard.
      *
      * @var CallbackQuery
      */
     protected $callbackQuery;
-
-    /**
+/**
      * @return array
      */
     public function getArguments()
@@ -59,7 +60,6 @@ abstract class CallbackCommand implements CallbackCommandInterface
     public function setArguments($arguments)
     {
         $this->arguments = $arguments;
-
         return $this;
     }
 
@@ -85,7 +85,6 @@ abstract class CallbackCommand implements CallbackCommandInterface
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -109,7 +108,6 @@ abstract class CallbackCommand implements CallbackCommandInterface
     public function setCallbackQueryId($callbackQueryId)
     {
         $this->callbackQueryId = $callbackQueryId;
-
         return $this;
     }
 

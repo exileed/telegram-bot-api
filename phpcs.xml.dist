@@ -7,7 +7,7 @@
 
     <rule ref="Generic.Files.LineLength">
         <properties>
-            <property phpcs-only="true" name="lineLimit" value="150"/>
+            <property phpcs-only="true" name="lineLimit" value="350"/>
         </properties>
     </rule>
 </ruleset>

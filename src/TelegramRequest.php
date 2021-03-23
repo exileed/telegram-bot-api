@@ -288,7 +288,7 @@ class TelegramRequest
     public function getDefaultHeaders()
     {
         return [
-            'User-Agent' => 'Telegram Bot API v'.Api::VERSION.' - (https://github.com/exileed/telegram-bot-sdk)',
+            'User-Agent' => 'Telegram Bot API v' . Api::VERSION . ' - (https://github.com/exileed/telegram-bot-sdk)',
         ];
     }
 

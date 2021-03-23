@@ -155,5 +155,4 @@ class TelegramClient
     {
         return new TelegramResponse($request, $response);
     }
-
 }

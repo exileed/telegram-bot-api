@@ -89,7 +89,6 @@ class CallbackCommandBus extends AnswerBus
         }
 
         if ($command instanceof CallbackCommandInterface) {
-
             /*
              * At this stage we definitely have a proper command to use.
              *

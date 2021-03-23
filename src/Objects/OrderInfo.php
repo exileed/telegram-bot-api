@@ -7,7 +7,7 @@ namespace Telegram\Bot\Objects;
  *
  *
  * @method string           getName()             (Optional) User name
- * @method string           getPhoneNumber()   	  (Optional)  User's phone number
+ * @method string           getPhoneNumber()      (Optional)  User's phone number
  * @method string           getEmail()            (Optional) User email
  * @method ShippingAddress  getShippingAddress()  (Optional) User shipping address
  */

@@ -2,6 +2,7 @@
 
 namespace Telegram\Bot\Answers;
 
+use Illuminate\Support\Str;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Update;
 
@@ -42,7 +43,7 @@ trait Answerable
     {
         $action = substr($method, 0, 9);
         if ($action === 'replyWith') {
-            $reply_name = studly_case(substr($method, 9));
+            $reply_name = Str::studly(substr($method, 9));
             $methodName = 'send'.$reply_name;
 
             if (!method_exists($this->telegram, $methodName)) {
